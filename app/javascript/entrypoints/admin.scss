@@ -1,0 +1,40 @@
+// helper
+@import '../admin/styles/helper/reset.scss';
+@import '../admin/styles/helper/basic_variables.scss';
+@import '../admin/styles/helper/mixin.scss';
+
+// plugins
+@import 'bootstrap/scss/bootstrap';
+@import "flatpickr/dist/flatpickr";
+@import "intro.js/introjs.css";
+@import "intro.js/themes/introjs-modern.css";
+@import "daterangepicker/daterangepicker.css";
+@import 'tom-select/dist/css/tom-select.default.css';
+@import 'c3/c3.css';
+@import 'dropify/dist/css/dropify.min';
+@import '../admin/styles/plugins/c3';
+@import 'sortable-tree/dist/sortable-tree.css';
+@import '../admin/styles/plugins/tree_node';
+// theme
+@import '../admin/styles/helper/theme_variables';
+@import '../admin/styles/helper/element';
+
+// font（待處理）
+@import "@fortawesome/fontawesome-free/css/all";
+@import '../admin/fonts/Comfortaa.css';
+
+// components
+@import '../admin/styles/components/header';
+@import '../admin/styles/components/leftsidebar';
+@import '../admin/styles/components/flash';
+@import '../admin/styles/components/btns';
+@import '../admin/styles/components/tom-select';
+@import '../admin/styles/components/dropify';
+@import '../public/custom_editor';
+
+// pages
+@import '../admin/styles/pages/login';
+@import '../admin/styles/pages/dashboard';
+@import '../admin/styles/pages/index';
+@import '../admin/styles/pages/seo';
+@import '../admin/styles/pages/product';

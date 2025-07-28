@@ -1,0 +1,44 @@
+name: Staging / Slack Notify
+on:
+  workflow_run:
+    workflows: ['部署測試站']
+    types:
+      - completed
+jobs:
+  # on-success 跟 on-failure 只是自訂名稱，實際上是靠底下的 if 控制
+  on-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    env:
+      site_url: https://ezgo.cw1.dev/ # 記得更新這邊的連結
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ github.event.workflow_run.conclusion }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_ICON: https://avatars.slack-edge.com/2024-02-27/6736737634144_3118dcd73447d1c16f4a_512.png
+          SLACK_MESSAGE: ${{ env.site_url }}
+          # SLACK_MESSAGE: |
+          #   測試站連結: ${{ env.site_url }}
+          #   確認更新沒問題後，請到 ${{ github.server_url }}/${{ github.repository }}/actions/workflows/pro_deploy.yml 更新正式站
+          SLACK_TITLE: '${{ github.event.repository.name }}-測試站 已更新'
+          SLACK_USERNAME: 'Github Bot'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+  on-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Slack Notification (Failure)
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ github.event.workflow_run.conclusion }}
+          SLACK_ICON: https://avatars.slack-edge.com/2024-02-27/6736737634144_3118dcd73447d1c16f4a_512.png
+          SLACK_MESSAGE: '${{ github.server_url }}/${{ github.repository }}/actions'
+          SLACK_TITLE: '${{ github.event.repository.name }}-測試站 更新失敗'
+          SLACK_USERNAME: 'Github Bot'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

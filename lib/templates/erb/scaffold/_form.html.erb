@@ -1,0 +1,35 @@
+<% if controller_class_path.present? %><%%= simple_form_for([:<%= controller_class_path[0] %>, @<%= singular_table_name %>], html: { class: "form-horizontal", role: "form" }) do |f| %><% else %>
+<%%= simple_form_for(@<%= singular_table_name %>, html: { class: "form-horizontal", role: "form" }) do |f| %><% end %>
+  <%%= f.error_notification %>
+  <%%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%% if @<%= singular_table_name %>.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%%= pluralize(@<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h4>
+      <ul>
+      <%% @<%= singular_table_name %>.errors.full_messages.each do |msg| %>
+        <li><%%= msg %></li>
+      <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+  <div class="form-inputs">
+  <%- attributes.each do |attribute| -%>
+    <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %> %>
+  <%- end -%>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%%= f.button :submit, class: 'btn btn-primary' %>
+      <%%= link_to t('btn.show'), admin_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-light' if controller.action_name == 'edit' && policy(@<%= singular_table_name %>).show? %>
+    </div>
+    <%%= link_to fa_icon(:"trash-can"), admin_<%= singular_table_name %>_path(@<%= singular_table_name %>),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' && policy(@<%= singular_table_name %>).destroy? %>
+  </div>
+<%% end %>
+

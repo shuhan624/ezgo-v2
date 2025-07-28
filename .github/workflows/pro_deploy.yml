@@ -1,0 +1,291 @@
+name: "手動部署正式站"
+on:
+  workflow_dispatch:
+  # schedule:
+  #    example: '0 10 30 8 *' = 在 UTC 時間 8/30 10:00 執行（台灣時間 8/30 18:00）
+  #    ┌───────────── minute (0 - 59)
+  #    │ ┌───────────── hour (0 - 23)
+  #    │ │ ┌───────────── day of the month (1 - 31)
+  #    │ │ │ ┌───────────── month (1 - 12)
+  #    │ │ │ │ ┌───────────── day of the week (0 - 6)
+  #    * * * * *
+  #   - cron: '0 5 2 9 *'   # 要開啟排程部署時再打開，並且將部署時間 -8 小時(轉換成UTC時間)
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # 使用 appleboy/ssh-action@master 這個 action 遠端連線至正式環境
+      # https://github.com/appleboy/ssh-action
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: pro3.cianwang.com
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          # 執行佈署的指令
+          # 輸入 mina staging deploy -s 產生CD指令並貼在下方
+          script: |
+            cd "/var/www/ezgo" || (
+            echo "! ERROR: not set up."
+            echo "The path '/var/www/ezgo' is not accessible on the server."
+            echo "You may need to run 'mina setup' first."
+            false
+            ) || exit 15
+
+            # Check releases path
+            if [ ! -d "/var/www/ezgo/releases" ]; then
+            echo "! ERROR: not set up."
+            echo "The directory '/var/www/ezgo/releases' does not exist on the server."
+            echo "You may need to run 'mina setup' first."
+            exit 16
+            fi
+
+            # Check lockfile
+            if [ -e "deploy.lock" ]; then
+            echo "! ERROR: another deployment is ongoing."
+            echo "The file 'deploy.lock' was found. File was last modified at $(stat -c %y deploy.lock)"
+            echo "If no other deployment is ongoing, run 'mina deploy:force_unlock' to delete the file."
+            exit 17
+            fi
+
+            # Determine $previous_path and other variables
+            [ -h "/var/www/ezgo/current" ] && [ -d "/var/www/ezgo/current" ] && previous_path=$(cd "/var/www/ezgo/current" >/dev/null && pwd -LP)
+            build_path="./tmp/build-$(date +%s)$RANDOM"
+
+            version="$((`ls -1 /var/www/ezgo/releases | sort -n | tail -n 1`+1))"
+            release_path="/var/www/ezgo/releases/$version"
+
+            # Sanity check
+            if [ -e "$build_path" ]; then
+            echo "! ERROR: Path already exists."
+            exit 18
+            fi
+
+            # Bootstrap script (in deployer)
+            (
+            echo "-----> Creating a temporary build path"
+            touch "deploy.lock" &&
+            mkdir -p "$build_path" &&
+            cd "$build_path" &&
+            (
+              echo "-----> Loading rbenv" &&
+              export RBENV_ROOT="$HOME/.rbenv" &&
+              export PATH="$HOME/.rbenv/bin:$PATH" &&
+              if ! which rbenv >/dev/null; then
+                echo "! rbenv not found"
+                echo "! If rbenv is installed, check your :rbenv_path setting."
+                exit 1
+              fi &&
+              eval "$(rbenv init -)" &&
+              if [ ! -d "/var/www/ezgo/scm/objects" ]; then
+                echo "-----> Cloning the Git repository"
+                git clone "git@github.ezgo:CianWang/ezgo.git" "/var/www/ezgo/scm" --bare
+              else
+                echo "-----> Fetching new git commits"
+                (cd "/var/www/ezgo/scm" && git fetch "git@github.ezgo:CianWang/ezgo.git" "master:master" --force)
+              fi &&
+              echo "-----> Using git branch 'master'" &&
+              git clone "/var/www/ezgo/scm" . --recursive --branch "master" &&
+              echo "-----> Updating submodules" &&
+              git submodule update &&
+              echo "-----> Using this git commit" &&
+              git rev-parse HEAD > .mina_git_revision &&
+              git --no-pager log --format="%aN (%h):%n> %s" -n 1 &&
+              rm -rf .git &&
+              echo "-----> Symlinking shared paths" &&
+              if [ ! -d  "/var/www/ezgo/shared/vendor/bundle" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/vendor/bundle' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./vendor &&
+              rm -rf "./vendor/bundle" &&
+              ln -s "/var/www/ezgo/shared/vendor/bundle" "./vendor/bundle" &&
+              if [ ! -d  "/var/www/ezgo/shared/log" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/log' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p . &&
+              rm -rf "./log" &&
+              ln -s "/var/www/ezgo/shared/log" "./log" &&
+              if [ ! -d  "/var/www/ezgo/shared/tmp/cache" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/tmp/cache' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./tmp &&
+              rm -rf "./tmp/cache" &&
+              ln -s "/var/www/ezgo/shared/tmp/cache" "./tmp/cache" &&
+              if [ ! -d  "/var/www/ezgo/shared/public/assets" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/public/assets' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./public &&
+              rm -rf "./public/assets" &&
+              ln -s "/var/www/ezgo/shared/public/assets" "./public/assets" &&
+              if [ ! -d  "/var/www/ezgo/shared/node_modules" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/node_modules' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p . &&
+              rm -rf "./node_modules" &&
+              ln -s "/var/www/ezgo/shared/node_modules" "./node_modules" &&
+              if [ ! -d  "/var/www/ezgo/shared/log" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/log' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p . &&
+              rm -rf "./log" &&
+              ln -s "/var/www/ezgo/shared/log" "./log" &&
+              if [ ! -d  "/var/www/ezgo/shared/tmp/pids" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/tmp/pids' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./tmp &&
+              rm -rf "./tmp/pids" &&
+              ln -s "/var/www/ezgo/shared/tmp/pids" "./tmp/pids" &&
+              if [ ! -d  "/var/www/ezgo/shared/tmp/sockets" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/tmp/sockets' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./tmp &&
+              rm -rf "./tmp/sockets" &&
+              ln -s "/var/www/ezgo/shared/tmp/sockets" "./tmp/sockets" &&
+              if [ ! -d  "/var/www/ezgo/shared/public/assets" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/public/assets' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./public &&
+              rm -rf "./public/assets" &&
+              ln -s "/var/www/ezgo/shared/public/assets" "./public/assets" &&
+              if [ ! -d  "/var/www/ezgo/shared/public/packs" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/public/packs' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./public &&
+              rm -rf "./public/packs" &&
+              ln -s "/var/www/ezgo/shared/public/packs" "./public/packs" &&
+              if [ ! -d  "/var/www/ezgo/shared/public/fonts" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/public/fonts' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p ./public &&
+              rm -rf "./public/fonts" &&
+              ln -s "/var/www/ezgo/shared/public/fonts" "./public/fonts" &&
+              if [ ! -d  "/var/www/ezgo/shared/storage" ]; then
+                echo "! ERROR: not set up."
+                echo "The directory '/var/www/ezgo/shared/storage' does not exist on the server"
+                echo "You may need to run 'mina setup' first"
+                exit 18
+              fi &&
+              mkdir -p . &&
+              rm -rf "./storage" &&
+              ln -s "/var/www/ezgo/shared/storage" "./storage" &&
+              ln -sf "/var/www/ezgo/shared/config/database.yml" "./config/database.yml" &&
+              ln -sf "/var/www/ezgo/shared/config/credentials/production.key" "./config/credentials/production.key" &&
+              ln -sf "/var/www/ezgo/shared/config/google-api-key.json" "./config/google-api-key.json" &&
+              echo "-----> Installing gem dependencies using Bundler" &&
+              bundle install --without development test --path "vendor/bundle" --deployment &&
+              if diff -qrN "/var/www/ezgo/current/db/migrate" "./db/migrate" 2>/dev/null
+              then
+                echo "-----> DB migrations unchanged; skipping DB migration"
+              else
+                echo "-----> Migrating database"
+                    RAILS_ENV="production" bundle exec rake db:migrate
+              fi &&
+              if diff -qrN "/var/www/ezgo/current/vendor/assets/" "./vendor/assets/" 2>/dev/null && diff -qrN "/var/www/ezgo/current/app/assets/" "./app/assets/" 2>/dev/null
+              then
+                echo "-----> Skipping asset precompilation"
+              else
+                echo "-----> Precompiling asset files"
+                    RAILS_ENV="production" bundle exec rake assets:precompile
+              fi &&
+              RAILS_ENV=production bundle exec rake sitemap:refresh:no_ping CONFIG_FILE='config/sitemap_tw.rb' &&
+              RAILS_ENV=production bundle exec rake sitemap:refresh:no_ping CONFIG_FILE='config/sitemap_en.rb' &&
+              echo "-----> Cleaning up old releases (keeping 5)" &&
+              (cd /var/www/ezgo/releases && count=$(ls -A1 | sort -rn | wc -l) && remove=$((count > 5 ? count - 5 : 0)) && ls -A1 | sort -rn | tail -n $remove | xargs rm -rf {} && cd -)
+            ) &&
+            echo "-----> Deploy finished"
+            ) &&
+
+            #
+            # Build
+            (
+            echo "-----> Building"
+            echo "-----> Moving build to $release_path"
+            mv "$build_path" "$release_path" &&
+            cd "$release_path" &&
+            (
+            true
+            ) &&
+            echo "-----> Build finished"
+
+            ) &&
+
+            #
+            # Launching
+            # Rename to the real release path, then symlink 'current'
+            (
+            echo "-----> Launching"
+            echo "-----> Updating the /var/www/ezgo/current symlink" &&
+            ln -nfs "$release_path" "/var/www/ezgo/current"
+            ) &&
+
+            # ============================
+            # === Start up server => (in deployer)
+            (
+            cd "/var/www/ezgo/current"
+              (cd /var/www/ezgo/current && mkdir -p tmp/ && touch tmp/restart.txt && cd -)
+            ) &&
+
+            # ============================
+            # === Complete & unlock
+            (
+            rm -f "deploy.lock"
+            echo "-----> Done. Deployed version $version"
+            ) ||
+
+            # ============================
+            # === Failed deployment
+            (
+            echo "! ERROR: Deploy failed."
+            echo "-----> Cleaning up build"
+            [ -e "$build_path" ] && (
+              rm -rf "$build_path"
+            )
+            [ -e "$release_path" ] && (
+              echo "Deleting release"
+              rm -rf "$release_path"
+            )
+            (
+              echo "Unlinking current"
+              [ -n "$previous_path" ] && ln -nfs "$previous_path" "/var/www/ezgo/current"
+            )
+            echo "Unlocking"
+            # Unlock
+            rm -f "deploy.lock"
+            echo "OK"
+            exit 19
+            )

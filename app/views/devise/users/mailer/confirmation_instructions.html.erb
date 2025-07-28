@@ -1,0 +1,21 @@
+<div style="text-align: center;">
+  <div style="width: 100%; max-width: 500px; margin: 0 auto; background: #EAEEF3; border: 1px solid #EAEEF3;">
+    <div style="box-sizing: border-box; text-align: left;">
+      <div style="padding: 16px 0 12px; text-align: center;">
+        <%= image_tag 'logo.png', width: 174 %>
+      </div>
+      <div style="box-sizing: border-box; padding: 1.5em 2.5em; font-size: 15px; background: #fff; color: #424242;">
+
+        <p><%= t('.greeting', recipient: @resource.email) %></p>
+
+        <p><%= t('.instruction') %></p>
+
+        <div style="margin: 40px auto; font-size: 16px; text-align: center;">
+         <%= link_to t('.action'), user_confirmation_url(confirmation_token: @token), style: "color: #fff;padding: 0.8em 1.3em 0.75em; background:#182C80; text-decoration: none;" %>
+        </div>
+
+      </div>
+    </div>
+    <div style="background: #EAEEF3; padding: 20px 0; color: #182C80; font-size: 14px;">Copyright © DA VILLAGE</div>
+  </div>
+</div>

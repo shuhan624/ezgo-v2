@@ -1,0 +1,7 @@
+<script type="module">
+  document.addEventListener("DOMContentLoaded", function(){
+    <% flash.each do |key, msg| %>
+      <%= raw notify_script(key, msg) %>
+    <% end %>
+  });
+</script>

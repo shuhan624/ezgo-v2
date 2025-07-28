@@ -1,0 +1,42 @@
+<%% provide :page_title, render_action_i18n(:list, <%= class_name %>) %>
+<%% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%%= "#{action_name}" %>">
+    <%%= link_to(fa_icon(:plus, text: t('btn.new')), <%= "new_#{singular_route_name}_path" %>, class: 'btn btn-primary float-end') if policy(<%= class_name %>).new? %>
+  </div>
+<%% end %>
+
+<table class="table index-list">
+  <thead>
+    <tr><% attributes.each_with_index do |attribute, index| %><% if index == 0 %>
+      <th class="column-primary"><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></th><% else %><th><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></th><% end %>
+      <% end %><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+      <%%= content_tag :tr, id: dom_id(<%= singular_table_name %>), class: dom_class(<%= singular_table_name %>) do %>
+        <% attributes.each_with_index do |attribute, index| %><% if index == 0 %><td data-column="<%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %>" class="column-primary title">
+          <%%= <%= singular_table_name %>.<%= attribute.name %> %>
+          <button class="btn" type="button" data-mobile="<%%= dom_id(<%= singular_table_name %>) %>" class="mobile-collapse">
+            <span><i class="fa-solid fa-caret-down"></i></span>
+          </button>
+        </td><% else %><td data-column="<%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %>"><%%= <%= singular_table_name %>.<%= attribute.name %> %></td><% end %>
+        <% end %><td class="index-table-action text-end">
+          <%%= link_to t('btn.show'), <%= singular_route_name %>_path(<%= singular_table_name %>), class: 'btn btn-primary me-2' if policy(<%= singular_table_name %>).show? %>
+          <div class="dropdown d-inline-block">
+            <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%%= dom_id(<%= singular_table_name %>) %>" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%%= dom_id(<%= singular_table_name %>) %>">
+              <%%= link_to t('btn.edit'), edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: 'dropdown-item' if policy(<%= singular_table_name %>).edit? %>
+            </ul>
+          </div>
+        </td>
+      <%% end %>
+    <%% end %>
+  </tbody>
+</table>
+<div class="table-footer text-black-50">
+  <%%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  <%%== pagy_info(@pagy) %>
+</div>

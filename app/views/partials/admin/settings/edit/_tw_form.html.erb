@@ -1,0 +1,84 @@
+<%= simple_form_for([:admin, @setting], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @setting.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h5><%= pluralize(@setting.errors.count, '個錯誤') %>導致<%= @setting.model_name.human %>無法儲存：</h5>
+      <ul>
+        <% @setting.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @setting.name == 'meta_keywords' || @setting.name == 'meta_desc' %>
+    <%= f.input :content_zh_tw, as: :text, input_html: { rows: 6 } %>
+
+  <% elsif @setting.category.in? %w(site) %>
+    <div class="row">
+      <div class="col-lg-4 col-md-12">
+        <%= image_tag "admin/settings/#{@setting.slug.dasherize}.jpg", class: 'object-fit-contain w-100 mb-2' %>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <%= f.input :content_zh_tw, placeholder: t(@setting.name, scope: 'simple_form.placeholder.setting'), hint: t(@setting.name, scope: 'simple_form.hints.setting') %>
+      </div>
+    </div>
+  <% elsif @setting.category.in? %w(contact seo) %>
+    <%= f.input :content_zh_tw,
+        placeholder: t(@setting.name, scope: 'simple_form.placeholder.setting'),
+        hint: t(@setting.name, scope: 'simple_form.hints.setting') %>
+  <% end %>
+
+  <% if @setting.social? %>
+    <div class="row">
+      <%= f.input :content_zh_tw, wrapper_html: { class: 'col-md-6' } %>
+      <%= f.input :status_zh_tw, as: :radio_buttons, collection: [[t('status.published'), 'published'], [t('status.hidden'), 'hidden']], wrapper: :vertical_collection_inline, wrapper_html: { class: 'col-md-6' } %>
+    </div>
+  <% end %>
+
+  <% if @setting.custom? %>
+    <%= f.input :status_zh_tw, as: :radio_buttons, collection: [[t('status.published'), 'published'], [t('status.hidden'), 'hidden']], wrapper: :vertical_collection_inline %>
+    <%= f.input :content_zh_tw, as: :text, input_html: { class: 'tinymce', id: 'setting-custom-content' } %>
+  <% end %>
+
+  <% if @setting.logo? && 'admin_logo' != @setting.name %>
+    <% hint = t(@setting.name, scope: 'simple_form.hints.setting') %>
+    <div class="row">
+      <%= f.input :image,
+        label: '中文圖示',
+        direct_upload: true,
+        input_html: {
+          class: 'dropify',
+          data: {
+            'default-file': (url_for(@setting.image) if @setting.image.attached?),
+            'max-file-size': '5M',
+            'allowed-file-extensions': 'png jpg jpeg gif bmp svg',
+          }
+        },
+        hint: hint, wrapper_html: { class: 'col-md-6' }
+      %>
+    </div>
+  <% elsif @setting.social? || 'admin_logo' == @setting.name || (@setting.logo? && @setting.www?) %>
+    <% hint = ('admin_logo' == @setting.name) ? t('simple_form.hints.setting.admin_logo') : t('simple_form.hints.setting.icon') %>
+    <%= f.input :image,
+      label: t('simple_form.labels.setting.icon'),
+      direct_upload: true,
+      input_html: {
+        class: 'dropify',
+        data: {
+          'default-file': (url_for(@setting.image) if @setting.image.attached?),
+          'max-file-size': '5M',
+          'allowed-file-extensions': 'png jpg jpeg gif bmp svg',
+        }
+      },
+      hint: hint, wrapper_html: { class: 'col-md-6' }
+    %>
+  <% end %>
+
+  <div class="float-btns form-actions">
+    <%= f.submit "更新", class: 'btn btn-primary' %>
+  </div>
+<% end %>

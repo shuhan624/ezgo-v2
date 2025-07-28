@@ -1,0 +1,58 @@
+// media size
+$media-max-size: 2000px;
+$media-max-web: 1600px;
+$media-min-web: $media-max-web + 1;
+$media-max-web-content: 1024px;
+$media-min-web-content: $media-max-web-content + 1;
+$media-max-pad: 991px;
+$media-min-pad: $media-max-pad + 1;
+$media-max-phone: 767px;
+$media-min-phone: $media-max-phone + 1;
+$media-max-phone-min: 480px;
+$media-min-phone-min: $media-max-phone-min + 1;
+
+$themes: (
+  "default": ( // 預設-藍色
+    #0099FF, // 主色
+    #E7F0F6, // 次要色
+    #EEF0F4, // 背景色
+  ),
+  "green": ( // 橘色
+    #00B78F,
+    #E7F2F0,
+    #F2F8F7,
+  ),
+  "orange": ( // 橘色
+    #FE8543,
+    #F6EFEB,
+    #F7F2F0,
+  ),
+  "pink": ( // 粉色
+    #FD5388,
+    #F6ECEF,
+    #FCF8F8,
+  ),
+  "purple": ( // 紫色
+    #A87CDF,
+    #F1EEF5,
+    #F7F5F8,
+  ),
+  "navi": ( // 海軍藍
+    #1F447B,
+    #E6EAF1,
+    #EEF0F4,
+  ),
+);
+$color-line: #D2D6DF;
+$color-success: #D2D6DF;
+
+// font color
+$color-title: #2F2F2F;
+$color-content: #5B5B5B;
+$color-note: #858585;
+$font-size: 16px;
+
+// header
+$header-height: 72px;
+$header-height-pad: 56px;
+$index-header: 999;

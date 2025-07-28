@@ -1,0 +1,33 @@
+<!-- 英文版的套量紀錄請拿掉 -->
+<div class="user-sidebar">
+  <div class="user-side-group">
+    <div class="title-sm">會員資訊</div>
+    <ul class="user-menu-items">
+      <% @user_items = [
+          { id: 'user_index', name: 'member_index', path: user_profile_path },
+          { id: 'user_profile', name: 'profile', path: edit_profile_path },
+          { id: 'edit_password', name: 'edit_password', path: edit_my_password_path},
+        ] %>
+      <% @user_items.each do |user_item| %>
+        <li class="user-menu-item <%= "active" if current_page?user_item[:path] %>" data-user-menu="<%= user_item[:id] %>">
+          <%= link_to t("partials.header.#{user_item[:name]}"), user_item[:path], class: "user-menu-item-link" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="user-side-group">
+    <div class="title-sm">會員交易</div>
+    <ul class="user-menu-items">
+      <% @user_items = [
+          { id: 'shopping_cart', name: 'shopping_cart', path: cart_path },
+          { id: 'order_histories', name: 'order_histories', path: user_orders_path },
+        ] %>
+      <% @user_items.each do |user_item| %>
+        <li class="user-menu-item <%= "active" if current_page?user_item[:path] %>" data-user-menu="<%= user_item[:id] %>">
+          <%= link_to t("partials.header.#{user_item[:name]}"), user_item[:path], class: "user-menu-item-link" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

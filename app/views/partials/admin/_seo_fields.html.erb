@@ -1,0 +1,79 @@
+<div class="seo nested-fields">
+  <%= f.input :canonical %>
+  <div class="seo-preview-card pt-5">
+    <h5><%= Seo.human_attribute_name(:seo_title_zh_tw) %></h5>
+    <div class="row">
+      <div class="col-lg-4 col-md-12">
+        <div class="seo-preview ch">
+          <div class="preview-site-main">
+            <div class="preview-favicon"></div>
+            <div class="preview-sitename">說明與範例</div>
+          </div>
+          <div class="preview-meta-title" data-id="title_ch">Meta 標題 - 提供搜尋引擎能更好的理解網站內容資訊</div>
+          <div class="preview-meta-disc">
+            <span class="date">2020 年 8 月 19 日 —</span>
+            <span data-id="desc_ch">
+            Meta 描述簡短文字的方式描述內容，它會被顯示在搜尋結果的標題下方，可以提升使用者對網站的了解和被搜尋引擎推薦的機會
+            </span>
+          </div>
+          <div class="preview-meta-keyword" data-id="keywords_ch">Meta 關鍵字</div>
+        </div>
+        <%= f.input :og_image, direct_upload: true,
+          input_html: {
+            class: 'dropify',
+            data: {
+              'default-file': (url_for(f.object.og_image) if f.object.og_image.attached?),
+              'max-file-size': '1M',
+              'allowed-file-extensions': 'png jpg jpeg',
+            }
+          }
+        %>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <%= f.input :meta_title_zh_tw, input_html: { data: { meta: 'title_ch' } } %>
+        <%= f.input :meta_keywords_zh_tw, input_html: { data: { meta: 'keywords_ch' } } %>
+        <%= f.input :meta_desc_zh_tw, as: :text, input_html: { rows: 3, data: { meta: 'desc_ch' } } %>
+        <%= f.input :og_title_zh_tw %>
+        <%= f.input :og_desc_zh_tw, as: :text, input_html: { rows: 3 } %>
+      </div>
+    </div>
+  </div>
+  <div class="seo-preview-card pt-5">
+    <h5><%= Seo.human_attribute_name(:seo_title_en) %></h5>
+    <div class="row">
+      <div class="col-lg-4 col-md-12">
+        <div class="seo-preview en">
+          <div class="preview-site-main">
+            <div class="preview-favicon"></div>
+            <div class="preview-sitename">說明與範例</div>
+          </div>
+          <div class="preview-meta-title" data-id="title_en">Meta 標題 - 提供搜尋引擎能更好的理解網站內容資訊</div>
+          <div class="preview-meta-disc">
+            <span class="date">2020 年 8 月 19 日 —</span>
+            <span data-id="desc_en">
+            Meta 描述簡短文字的方式描述內容，它會被顯示在搜尋結果的標題下方，可以提升使用者對網站的了解和被搜尋引擎推薦的機會
+            </span>
+          </div>
+          <div class="preview-meta-keyword" data-id="keywords_en">Meta 關鍵字</div>
+        </div>
+        <%= f.input :og_image_en, direct_upload: true,
+          input_html: {
+            class: 'dropify',
+            data: {
+              'default-file': (url_for(f.object.og_image_en) if f.object.og_image_en.attached?),
+              'max-file-size': '1M',
+              'allowed-file-extensions': 'png jpg jpeg',
+            }
+          }
+        %>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <%= f.input :meta_title_en, input_html: { data: { meta: 'title_en' } } %>
+        <%= f.input :meta_keywords_en, input_html: { data: { meta: 'keywords_en' } } %>
+        <%= f.input :meta_desc_en, as: :text, input_html: { rows: 3, data: { meta: 'desc_en' } } %>
+        <%= f.input :og_title_en %>
+        <%= f.input :og_desc_en, as: :text, input_html: { rows: 3 } %>
+      </div>
+    </div>
+  </div>
+</div>

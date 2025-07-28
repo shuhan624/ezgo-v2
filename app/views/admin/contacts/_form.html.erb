@@ -1,0 +1,45 @@
+<%= simple_form_for([:admin, @contact], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @contact.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= @contact.errors.count %> 個問題導致無法儲存：</h4>
+      <ul>
+      <% @contact.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :status, as: :select, collection: Contact::STATUS.keys.map { |status| [status, t(status, scope: 'simple_form.options.contact.status')] }, label_method: :second, value_method: :first %>
+  <%= f.input :admin_note %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="product details">
+        <% [
+             [Contact.human_attribute_name(:name), @contact.name],
+             [Contact.human_attribute_name(:email), @contact.email],
+             [Contact.human_attribute_name(:phone), @contact.phone],
+             [Contact.human_attribute_name(:content), @contact.content],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_contact_path(@contact),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@contact).show? %>
+    </div>
+  </div>
+<% end %>

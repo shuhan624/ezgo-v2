@@ -1,0 +1,34 @@
+// 覆蓋 tom select 樣式
+.ts-wrapper.tom-select-custom {
+  .ts-control {
+    border: 0;
+    box-shadow: none;
+  }
+  .ts-control [data-value] {
+    background: #efefef;
+    border: 0 solid #dee2e6;
+    color: #343a40;
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    padding: 1px 5px;
+  }
+  &.plugin-remove_button:not(.rtl) .item .remove {
+    border-left: 1px solid #ccc;
+    color: #858585;
+  }
+  .ts-dropdown-content {
+    padding: 5px 0;
+    max-height: 200px;
+    overflow: hidden auto;
+    scroll-behavior: smooth;
+  }
+  .ts-dropdown [data-selectable].option {
+    padding: .5rem .75rem;
+    color: #343a40;
+    font-size: 1rem;
+  }
+  .ts-dropdown .active {
+    background-color: #e9ecef;
+    color: #16181b;
+  }
+}

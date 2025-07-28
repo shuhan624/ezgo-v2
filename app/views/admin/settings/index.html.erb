@@ -1,0 +1,21 @@
+<% provide :page_title, render_action_i18n(:list, Setting) %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#site" class="tab active">網站資訊</a>
+      <a href="#seo" class="tab">SEO & 行銷管理</a>
+      <a href="#contact" class="tab">聯絡資訊</a>
+      <a href="#social" class="tab">社群連結</a>
+      <a href="#other" class="tab">其他設定</a>
+    </div>
+  </div>
+  <div class="tabs-content">
+    <!-- 中英文 table -->
+    <%= render 'partials/admin/settings/index/table' %>
+
+    <!-- 中文 table -->
+    <%#= render 'partials/admin/settings/index/tw_table' %>
+  </div>
+</div>
+

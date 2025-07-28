@@ -1,0 +1,34 @@
+<h5><%= Seo.human_attribute_name(:seo_title_zh_tw) %></h5>
+<div class="product details mb-4">
+  <% [
+        [Seo.human_attribute_name(:html_tag_h1_zh_tw), item.h1_tag],
+        [Seo.human_attribute_name(:meta_title), item.seo.meta_title_zh_tw],
+        [Seo.human_attribute_name(:meta_keywords), item.seo.meta_keywords_zh_tw],
+        [Seo.human_attribute_name(:meta_desc), item.seo.meta_desc_zh_tw],
+        [Seo.human_attribute_name(:og_title), item.seo.og_title_zh_tw],
+        [Seo.human_attribute_name(:og_desc), item.seo.og_desc_zh_tw],
+        [Seo.human_attribute_name(:og_image), (image_tag(item.seo.og_image.variant(resize_to_limit: [420, nil]).processed) if item.seo.og_image.attached?)],
+      ].each do |title, content| %>
+    <div class="row item">
+      <div class="col-md-4"><h5><%= title %></h5></div>
+      <div class="col-md-8"><%= content %></div>
+    </div>
+  <% end %>
+</div>
+<h5><%= Seo.human_attribute_name(:seo_title_en) %></h5>
+<div class="product details">
+  <% [
+        [Seo.human_attribute_name(:html_tag_h1_en), item.h1_tag_en],
+        [Seo.human_attribute_name(:meta_title), item.seo.meta_title_en],
+        [Seo.human_attribute_name(:meta_keywords), item.seo.meta_keywords_en],
+        [Seo.human_attribute_name(:meta_desc), item.seo.meta_desc_en],
+        [Seo.human_attribute_name(:og_title), item.seo.og_title_en],
+        [Seo.human_attribute_name(:og_desc), item.seo.og_desc_en],
+        [Seo.human_attribute_name(:og_image_en), (image_tag(item.seo.og_image_en.variant(resize_to_limit: [420, nil]).processed) if item.seo.og_image_en.attached?)],
+      ].each do |title, content| %>
+    <div class="row item">
+      <div class="col-md-4"><h5><%= title %></h5></div>
+      <div class="col-md-8"><%= content %></div>
+    </div>
+  <% end %>
+</div>

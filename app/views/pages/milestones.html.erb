@@ -1,0 +1,24 @@
+<div class="wrap">
+  <div class="container">
+    <%# breadcrumb 可選擇是否顯示，但勿刪 breadcrumb_schema 須使用 %>
+    <% render "partials/breadcrumb", crumbs: [
+        { text: @index_title }
+      ] %>
+
+    <%= content_tag(:h1, @index_title, class: 'title-lg') %>
+    <%= content_tag(:h2, @index_title_en, class: 'title-sm') %>
+    <% @milestones.each do |item| %>
+      <div class="milestone-item">
+        <% if item.image.attached? %>
+          <%= content_tag :picture do %>
+            <%= content_tag(:source, nil, srcset: rails_storage_proxy_url(item.image.variant(resize_to_fill: [600, 600], convert: :webp, format: :webp, saver: {strip: true, quality: 80 }).processed, only_path: true), type: "image/webp") %>
+            <%= image_tag item.image, class: '', alt: (item.alt.present? ? item.alt : item.title_i18n), loading: 'lazy' %>
+          <% end %>
+        <% end %>
+        <div class="milestone-date"><%= item.date %></div>
+        <div class="milestone-title"><%= item.title_i18n %></div>
+        <div class="milestone-content"><%= item.content_i18n %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

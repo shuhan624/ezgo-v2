@@ -1,0 +1,54 @@
+<div class="login vh-100">
+  <div class="login-bg">
+    <div class="login-bg-inner">
+      <span class="theme-deco t2"></span>
+    </div>
+    <div class="login-tri t1"></div><div class="login-tri t2"></div>
+  </div>
+  <div class="login-main container">
+    <!-- 登入表單區 -->
+    <div class="login-title-group">
+      <div class="login-title">SHARP YOUR <span>WEBSITE</span></div>
+      <%= image_tag "admin/login-title-deco.png", class: 'login-title-deco' %>
+    </div>
+    <div class="login-form">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name),
+          html: { class: 'w-100 px-4' }) do |f| %>
+
+        <div class="text-center mb-4">
+          <%= image_tag @admin_logo_url, class: 'img-fluid mb-3', id: 'logo', style: 'max-height: 60px;' %>
+          <h4 class="fw-bold"><%= t('.admin_sign_in') %></h4>
+        </div>
+
+        <%= render 'devise/shared/notice' %>
+
+        <div class="mb-3">
+          <div class="input-group">
+            <%= f.text_field :email,
+                autofocus: true,
+                autocomplete: 'email',
+                placeholder: t('.email'),
+                class: 'form-control' %>
+            <span class="input-group-text">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="input-group">
+            <%= f.password_field :password,
+                autocomplete: 'current-password',
+                placeholder: t('.password'),
+                class: 'form-control' %>
+            <span class="input-group-text">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <%= f.submit t('.admin_sign_in'), class: 'btn btn-primary w-100 mb-3' %>
+      <% end %>
+    </div>
+  </div>
+  <%= render 'devise/shared/copyright' %>
+</div>

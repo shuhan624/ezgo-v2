@@ -1,0 +1,21 @@
+<div style="text-align: center;">
+  <div style="width: 100%; max-width: 500px; margin: 0 auto; background: #EAEEF3; border: 1px solid #EAEEF3;">
+    <div style="box-sizing: border-box; text-align: left;">
+      <div style="padding: 16px 0 12px; text-align: center;">
+        <%= image_tag 'logo.png', width: 174 %>
+      </div>
+      <div style="box-sizing: border-box; padding: 1.5em 2.5em; font-size: 15px; background: #fff; color: #424242;">
+
+        <p><%= t('.greeting', recipient: @resource.email) %></p>
+
+        <% if @resource.try(:unconfirmed_email?) %>
+          <p><%= t('.message_unconfirmed', email: @resource.unconfirmed_email) %></p>
+        <% else %>
+          <p><%= t('.message', email: @resource.email) %></p>
+        <% end %>
+
+      </div>
+    </div>
+    <div style="background: #EAEEF3; padding: 20px 0; color: #182C80; font-size: 14px;">Copyright © DA VILLAGE</div>
+  </div>
+</div>

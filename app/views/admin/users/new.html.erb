@@ -1,0 +1,13 @@
+<% provide :page_title, render_action_i18n(:new, User) %>
+<% content_for :page_back do %>
+  <% if policy(User).index? %>
+    <%= link_to admin_users_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<div class="card">
+  <div class="card-body">
+    <%= render 'form' %>
+  </div>
+</div>

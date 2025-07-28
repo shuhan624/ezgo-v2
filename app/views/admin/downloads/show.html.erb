@@ -1,0 +1,75 @@
+<% provide :page_title, render_action_i18n(:show, Download) %>
+<% content_for :page_back do %>
+  <% if policy(Download).index? %>
+    <%= link_to admin_downloads_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_download_path(@download),
+        class: 'btn btn-primary ms-2' if policy(@download).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_download_path(@download),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@download).destroy? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#settings" class="tab active">基本資訊</a>
+      <a href="#zh-hant" class="tab">中文</a>
+      <a href="#en" class="tab">英文</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="settings">
+      <div class="product details">
+        <% [
+             [Download.human_attribute_name(:updated_at), I18n.l(@download.updated_at, format: :table)],
+             [Download.human_attribute_name(:created_at), I18n.l(@download.created_at, format: :table)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="zh-hant">
+      <div class="product details">
+        <% [
+             [Download.human_attribute_name(:title), @download.title],
+             [Download.human_attribute_name(:status), @download.status],
+             [Download.human_attribute_name(:file), (image_tag(@download.file.preview(resize_to_fill: [240, 340]).processed) if @download.file.previewable?)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [Download.human_attribute_name(:title_en), @download.title_en],
+             [Download.human_attribute_name(:en_status), @download.en_status],
+             [Download.human_attribute_name(:file_en), (image_tag(@download.file.preview(resize_to_fill: [240, 340]).processed) if @download.file.previewable?)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

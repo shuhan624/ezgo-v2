@@ -1,0 +1,6 @@
+$("#message-modal").modal("hide")
+<% if @response.kind_of? Net::HTTPSuccess %>
+  notify.success('發送成功')
+<% else %>
+  notify.error('發送失敗, 錯誤訊息：<%= j("#{@response}, #{@response.body}") %>')
+<% end %>

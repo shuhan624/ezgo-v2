@@ -1,0 +1,33 @@
+<div class="wrap" data-page="contact">
+  <div class="container">
+    <h1><%= @page.title_i18n %></h1>
+    <div><%= @page.title_en %></div>
+    <%= render "partials/breadcrumb", crumbs: [ { text: @page.title_i18n } ] %>
+  </div>
+  <div class="container">
+    <%= content_tag(:div, "#{t('setting.address')}：#{@address}") if @address.present? %>
+    <div><%= link_to "#{t('setting.tel')}：#{@tel}", "tel:#{@tel}" if @tel.present? %></div>
+    <%= mail_to @email, "Email: #{@email}" if @email.present? %>
+
+    <!-- social-icons -->
+    <div class="social-icons">
+      <% Setting.social.each do |social| %>
+        <% if social.status == 'published' %>
+          <%= link_to social.content, target: '_blank', class: 'contact-social-link' do %>
+            <div class="social-icon">
+              <% if social.image.attached? %>
+                <%= image_tag social.image, class: 'social-img' %>
+              <% else %>
+                <%= image_tag "social-icon/square/#{social.name.downcase}.svg", class: 'social-img', alt: "#{social.name.downcase}" %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- form -->
+    <%= render "form" %>
+  </div>
+</div>
+

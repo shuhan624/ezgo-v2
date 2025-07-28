@@ -1,0 +1,207 @@
+zh-TW:
+  simple_form:
+    "yes": '是'
+    "no": '否'
+    "true": '✅'
+    "false": ''
+    required:
+      text: '必填'
+      mark: '*'
+    tw_status: &status
+      status:
+        published: 公開
+        hidden: 隱藏
+    en_status: &en_status
+      en_status:
+        published: 公開
+        hidden: 隱藏
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: '請確認以下問題：'
+    options:
+      audit:
+        action:
+          create: 新增
+          update: 更新
+          destroy: 刪除
+      admin:
+        role:
+          superb: 前網管理員
+          master: 總管理員
+          mis: MIS
+          editor: 編輯
+          marketing: 行銷
+          cs: 客服
+          read_only: 唯讀
+        account_active:
+          'true': 啟用
+          'false': 禁用
+      user:
+        role:
+          vip: VIP
+          regular: 一般會員
+        account_active:
+          'true': 啟用
+          'false': 禁用
+      setting:
+        <<: *status
+        <<: *en_status
+      custom_page:
+        custom_type:
+          design: 靜態頁面設計
+          info: 頁面管理內容
+          archive: 彙整頁
+        <<: *status
+        <<: *en_status
+      document:
+        file_type:
+          file: 檔案
+          link: 連結
+        language:
+          tw: 中文
+          en: 英文
+      contact:
+        status:
+          new_case: 新訊息
+          processing: 處理中
+          finished: 結案
+      home_slide:
+        <<: *status
+        slide_type:
+          image: '圖片'
+          video: '影片'
+          gif: 'GIF 動圖'
+      article:
+        post_type:
+          post: 文章內容
+          link: 外部連結
+        featured:
+          'true': 是
+          'false': 否
+        top:
+          'true': 是
+          'false': 否
+      article_category:
+        <<: *status
+        <<: *en_status
+      product:
+        <<: *status
+        <<: *en_status
+      faq:
+        <<: *status
+        <<: *en_status
+      faq_category:
+        <<: *status
+        <<: *en_status
+      partner:
+        <<: *status
+        <<: *en_status
+      milestone:
+        <<: *status
+        <<: *en_status
+      download:
+        <<: *status
+        <<: *en_status
+      download_category:
+        <<: *status
+        <<: *en_status
+      menu:
+        <<: *status
+        <<: *en_status
+    labels:
+      setting:
+        site_title: 網站名稱
+        copyright: 版權宣告公司名稱
+        meta_title: Meta 標題
+        meta_keywords: Meta 關鍵字
+        meta_desc: Meta 描述
+        gtm: 'Google Tag Manager（GTM）'
+        ga: 'Google Analytics（GA）'
+        fb_pixel: 'Facebook Pixel 像素（Meta Pixel）'
+        admin_logo: 管理後台 Logo
+        logo: 前端頁面 Logo
+        favicon: 網站圖示
+        favicon_m: 手機圖示
+        address: 地址
+        tel: 電話號碼
+        fax: 傳真號碼
+        email: 聯絡信箱
+        receivers: 收件者
+        link: 連結位置
+        icon: 圖示
+    placeholder:
+      setting:
+        site_title: '例如：前網數位資訊'
+        copyright: '例如：前網數位資訊有限公司'
+        meta_title: '例如：前網數位資訊 - 網站建置、網站開發、系統開發、運動賽事系統'
+        meta_keywords: '關鍵字 A, 關鍵字 B, 關鍵字 C, 關鍵字 D'
+        meta_desc: '例如：網站建置、網站開發、系統開發、客製化網站 - 前網數位期望提供給客戶好的前端網站體驗、以及最合適與符合現代的網站建置服務。'
+        og_title: '例如：前網數位資訊 - 網站建置、網站開發、系統開發、運動賽事系統'
+        og_desc: '例如：網站建置、網站開發、系統開發、客製化網站 - 前網數位期望提供給客戶好的前端網站體驗、以及最合適與符合現代的網站建置服務。'
+        gtm: 'GTM-1234567'
+        ga: 'G-1234567890'
+        fb_pixel: ''
+        address: '例如：新北市永和區中和路499號2樓'
+        tel: '例如：+886-2-2233-1608'
+        fax: '例如：+886-2922-5828'
+        business_hours: '例如：週一～週五 10:00~18:00'
+        tax_id_number: '例如：12345678'
+        email: 'serviceinfo@cianwang.com'
+        receivers: 'receiver@example.com'
+        messenger: '例如：123456789012345'
+    hints:
+      defaults:
+        slug: '網址請使用「小寫英文字母」、「數字」、「-」符號組成，並留意勿有空白格。例如：this-is-a-test-article'
+        default_category: 預設類別顯示於網址
+        alt_zh_tw: 用來描述圖片內容，當圖片失效時，可作為閱讀的輔助；幫助視力障礙者，透過電腦輔助工具，理解圖片內容。
+        alt_en: 用來描述圖片內容，當圖片失效時，可作為閱讀的輔助；幫助視力障礙者，透過電腦輔助工具，理解圖片內容。
+        canonical: '請輸入既有網址的路徑，若不確定請留空。'
+        meta_keywords_zh_tw: '關鍵字與關鍵字間，請使用「, 半型逗號與一個空白格」區隔。例如：關鍵字A, 關鍵字B, 關鍵字C。請勿換行編輯。'
+        og_title_zh_tw: '分享網頁時，顯示的標題'
+        og_title_en: '分享網頁時，顯示的標題'
+        og_desc_zh_tw: '分享網頁時，顯示的描述'
+        og_desc_en: '分享網頁時，顯示的描述'
+        og_image: '分享網頁時，顯示的縮圖。建議尺寸大小：1200 x 630 px'
+      admin:
+        email: '請輸入電子郵件信箱 Email 帳號'
+      user:
+        account_active: 如為「否」則為黑名單，不可以登入
+      home_slide:
+        banner: '建議尺寸大小：2000 x 722 px'
+        en_banner: '建議尺寸大小：2000 x 722 px'
+        banner_m: '建議尺寸大小：640 x 540 px'
+        en_banner_m: '建議尺寸大小：640 x 540 px'
+      product:
+        cover_image: '建議尺寸大小：300 x 320 px'
+        figures: '建議尺寸大小：540 x 360 px'
+      setting:
+        site_title: '例如：前網數位資訊'
+        copyright: '顯示於頁尾區塊，「Copyright © 年份」與「 . All rights reserved.」間的文字'
+        admin_logo: '建議尺寸大小：200 x 30 px'
+        logo: '建議尺寸大小：200 x 30 px'
+        favicon: '建議尺寸大小：64 x 64 px'
+        favicon_m: '建議尺寸大小：512 x 512 px'
+        meta_title: '網頁的主要資訊說明，幫助搜尋引擎判斷關鍵字和網頁內容的相關性，影響 Google 搜尋排名。'
+        meta_keywords: '網頁的額外資訊，提供搜尋引擎參考'
+        meta_desc: '網站或是頁面的簡易摘要，通常出現在搜尋結果的標題與網址下方。'
+        og_title: '網頁的主要資訊說明，幫助搜尋引擎判斷關鍵字和網頁內容的相關性，影響 Google 搜尋排名。'
+        og_desc: '網頁的主要資訊說明，幫助搜尋引擎判斷關鍵字和網頁內容的相關性，影響 Google 搜尋排名。'
+        og_image: '分享網頁時，顯示的縮圖。建議尺寸大小：1200 x 630 px'
+        gtm: '代碼管理工具，整合網站程式碼以及第三方應用工具，方便進行網站數據的追蹤與管理。'
+        ga: '網站分析工具，幫助監測和搜集使用者在網站上的行為資料，以作為數據分析使用。'
+        fb_pixel: 'Facebook 的一串程式代碼，用以追蹤用戶在網站上採取的行動，藉以衡量網站廣告投放之成效。'
+        address: '例如：新北市永和區中和路499號2樓'
+        tel: '例如：+886-2-2233-1608'
+        fax: '例如：+886-2922-5828'
+        business_hours: '例如：週一～週五 10:00~18:00'
+        tax_id_number: '例如：12345678'
+        email: 'serviceinfo@cianwang.com'
+        receivers: '若有多組收信帳號，請在各組帳號間以半型逗號區隔，例如：「receiver1@example.com, receiver2@example.com」。'
+        icon: '建議尺寸大小：512 x 512 px'
+        messenger: '請輸入 page_id，為一組 15 碼的數字'
+      redirect_rule:
+        source_path: '請輸入原始路徑，並以 "/" 開頭，例如：/old-url'
+        target_path: '請輸入目標路徑，並以 "/" 開頭，例如：/new-url'
+        position: '請輸入0以上的數字，數字越小，排序越前'

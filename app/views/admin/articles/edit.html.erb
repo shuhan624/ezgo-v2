@@ -1,0 +1,9 @@
+<% provide :page_title, render_action_i18n(:edit, Article) + '｜' + @article.title if @article.title.present? %>
+<% content_for :page_back do %>
+  <% if policy(Article).index? %>
+    <%= link_to admin_articles_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<%= render 'form' %>

@@ -1,0 +1,55 @@
+<div class="card dash-card card-1">
+  <div class="card-body">
+    <div id="daily-users" class="c3_chart"></div>
+  </div>
+  <div class="header">
+    <h2><strong>網站流量</strong>/每日到訪人數</h2>
+  </div>
+</div>
+
+<script type="module">
+  var users_chart = c3.generate({
+    bindto: '#daily-users',
+    data: {
+      x: 'x',
+      xFormat: '%m-%d',
+      columns: [ // each columns data
+        <%= raw @x %>,
+        <%= raw @daily_users %>,
+        <%= raw(@previous_period) if @previous_period.present? %>
+      ],
+      // labels: true,
+      // type: 'line', // default type of chart
+      colors: {
+        'dailyUsers': '#539AB6',
+        <%= raw("'previousPeriod': '#F4C329'") if @previous_period.present? %>
+      },
+      names: { // name of each serie
+        'dailyUsers': '每日到訪人數',
+        <%= raw("'previousPeriod': '上一週期'") if @previous_period.present? %>
+      }
+    },
+    axis: {
+      x: {
+        type: 'timeseries',
+        tick: {
+          format: '%m-%d'
+        }
+      },
+      y: {
+        min: 0,
+        padding: { top: 0, bottom: 0 }
+      }
+    },
+    legend: {
+      show: false, //hide legend
+    },
+    padding: {
+      bottom: 0,
+      top: 0
+    },
+    transition: {
+      duration: 3000
+    }
+  });
+</script>

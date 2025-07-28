@@ -1,0 +1,13 @@
+zh-TW:
+  pagy:
+    item_name: 筆
+    nav:
+      prev: "&lsaquo;"
+      next: "&rsaquo;"
+      gap: "&hellip;"
+    combo_nav_js: 第 %{page_input} / %{pages} 頁
+    info:
+      no_items: 無資料顯示
+      single_page: 顯示 <b>%{count}</b> %{item_name}
+      multiple_pages: 共 <b>%{count}</b> %{item_name}，顯示 <b>%{from} - %{to}</b> %{item_name}
+    items_selector_js: 每頁顯示 %{items_input} %{item_name}

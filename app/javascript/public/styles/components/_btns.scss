@@ -1,0 +1,189 @@
+.btn {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.8em 1.3em 0.75em;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  transition: 0.3s;
+  &:focus {
+    outline: none;
+  }
+  [lang=en] & {
+    padding: 0.8em 1em 0.75em;
+  }
+}
+.btn-primary {
+  @extend .btn;
+  color: #fff;
+  background-color: $color-primary;
+  &:hover {
+    background-color: $color-third;
+  }
+  &.second-color {
+    background-color: $color-second;
+    &:hover {
+      background-color: lighten($color-second, 10%);
+    }
+  }
+  &.font-big {
+    font-size: 20px;
+  }
+  &.type-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.7em 1.3em;
+  }
+  &.btn-min {
+    padding: 0.5em 1.2em 0.55em;
+    border: 1px solid $color-primary;
+  }
+  &:disabled {
+     background-color: lighten($color-second, 30%);
+     cursor: not-allowed;
+  }
+  &.line-login {
+    background-color: #00B900;
+    margin-top: 16px;
+    width: 100%;
+    &:hover {
+      background-color: lighten(#00B900, 3%);
+    }
+  }
+}
+.btn-second {
+  @extend .btn;
+  color: #fff;
+  background-color: $color-second;
+  &:hover {
+    background-color: $color-primary;
+  }
+}
+.btn-outerline {
+  @extend .btn;
+  color: $color-content;
+  border: 1px solid #939393;
+  &:hover {
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+  &.btn-min {
+    padding: 0.5em 1.2em 0.55em;
+  }
+  &.color-primary {
+    border-color: $color-primary;
+    color: $color-primary;
+    &:hover {
+      background-color: $color-second-bg;
+    }
+  }
+}
+.btn-outerline-icon {
+  display: inline-flex;
+  font-size: 1rem;
+  box-sizing: border-box;
+  color: #fff;
+  border: 1px solid rgba(#fff, 10%);
+  background-color: #33353f;
+  transition: 0.3s;
+  &:hover {
+    background-color: $color-primary;
+  }
+  .text {
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    min-width: 130px;
+  }
+}
+
+.btns-group {
+  display: flex;
+  [class^="btn-"] +[class^="btn-"] {
+    margin-left: 0.5em;
+  }
+}
+
+.btn-close {
+  display: inline-block;
+  padding: 0.8em 0.9em;
+  box-sizing: border-box;
+}
+
+.btn-inner {
+  display: inline-block;
+  align-items: center;
+  padding: 0.2em 0.45em;
+  box-sizing: border-box;
+  color: #333;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  background-color: #E4E4E4;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    background-color: #cecfd8;
+  }
+  &:focus {
+    outline: none;
+  }
+  &.btn-inner-icon {
+    display: inline-flex;
+    padding: 0.3em 0.8em 0.3em 0.5em;
+    font-weight: normal;
+  }
+}
+
+.btn-back {
+  position: relative;
+  display: inline-flex;
+  font-size: 1rem;
+  color: #fff;
+  box-sizing: border-box;
+  background-color: $color-second;
+  transition: 0.3s;
+  z-index: 10;
+  &:hover {
+    background-color: $color-primary;
+    &:after {
+      background-color: $color-primary;
+    }
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.6em;
+    height: 100%;
+    background-color: $color-second;
+    transform-origin: left top;
+    transform: skewX(-15deg) translateX(100%);
+    transition: 0.3s;
+    z-index: -1;
+  }
+  .text {
+    display: inline-block;
+    font-size: 16px;
+    padding: 5px 10px;
+    z-index: 5;
+  }
+}
+
+.btn-add {
+  @extend .btn;
+  color: $color-third;
+  border: 1px solid $color-third;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 0.6em;
+  &:hover {
+    color: $color-second;
+    border-color: $color-second;
+  }
+}

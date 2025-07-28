@@ -1,0 +1,135 @@
+<% provide :page_title, render_action_i18n(:list, CustomPage) %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to(fa_icon(:plus, text: t('btn.new')), new_admin_custom_page_path, class: 'btn btn-primary float-end') if policy(CustomPage).new? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#seo" class="tab active"><%= t('.seo') %></a>
+      <a href="#content" class="tab"><%= t('.content') %></a>
+      <a href="#custom" class="tab"><%= t('.custom') %></a>
+    </div>
+  </div>
+  <div class="tabs-content">
+    <%# SEO 設定 %>
+    <div class="tab-content active" id="seo">
+      <table class="table index-list">
+        <thead>
+          <tr>
+            <th class="column-primary"><%= CustomPage.human_attribute_name(:title) %></th>
+            <th><%= CustomPage.human_attribute_name(:title_en) %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @seo_pages.each do |custom_page| %>
+            <%= content_tag :tr, id: dom_id(custom_page), class: dom_class(custom_page) do %>
+              <td data-colname="<%= CustomPage.human_attribute_name(:title) %>" class="column-primary">
+                <%= custom_page.title %>
+                <button class="btn" type="button" data-mobile="<%= dom_id(custom_page) %>" class="mobile-collapse">
+                  <span><i class="fa-solid fa-caret-down"></i></span>
+                </button>
+              </td>
+              <td><%= custom_page.title_en %></td>
+              <td class="index-table-action text-end">
+                <%= link_to t('btn.show'), admin_custom_page_path(custom_page),
+                  class: 'btn btn-primary me-2' if policy(custom_page).show? %>
+                <div class="dropdown d-inline-block">
+                  <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(custom_page) %>" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                  </a>
+                  <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(custom_page) %>">
+                    <%= link_to t('btn.edit'), edit_admin_custom_page_path(custom_page), class: 'dropdown-item' if policy(custom_page).edit? %>
+                  </ul>
+                </div>
+              </td>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%# 修改內容 %>
+    <div class="tab-content" id="content">
+      <table class="table index-list">
+        <thead>
+          <tr>
+            <th class="column-primary"><%= CustomPage.human_attribute_name(:title) %></th>
+            <th><%= CustomPage.human_attribute_name(:title_en) %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @content_pages.each do |custom_page| %>
+            <%= content_tag :tr, id: dom_id(custom_page), class: dom_class(custom_page) do %>
+              <td data-colname="<%= CustomPage.human_attribute_name(:title) %>" class="column-primary">
+                <%= custom_page.title %>
+                <button class="btn" type="button" data-mobile="<%= dom_id(custom_page) %>" class="mobile-collapse">
+                  <span><i class="fa-solid fa-caret-down"></i></span>
+                </button>
+              </td>
+              <td><%= custom_page.title_en %></td>
+              <td class="index-table-action text-end">
+                <%= link_to t('btn.show'), admin_custom_page_path(custom_page),
+                  class: 'btn btn-primary me-2' if policy(custom_page).show? %>
+                <div class="dropdown d-inline-block">
+                  <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(custom_page) %>" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                  </a>
+                  <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(custom_page) %>">
+                    <%= link_to t('btn.edit'), edit_admin_custom_page_path(custom_page), class: 'dropdown-item' if policy(custom_page).edit? %>
+                  </ul>
+                </div>
+              </td>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%# 自訂頁面 %>
+    <div class="tab-content" id="custom">
+      <table class="table index-list">
+        <thead>
+          <tr>
+            <th class="column-primary"><%= CustomPage.human_attribute_name(:title) %></th>
+            <th><%= CustomPage.human_attribute_name(:title_en) %></th>
+            <th><%= CustomPage.human_attribute_name(:status) %></th>
+            <th><%= CustomPage.human_attribute_name(:en_status) %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @non_default_pages.each do |custom_page| %>
+            <%= content_tag :tr, id: dom_id(custom_page), class: dom_class(custom_page) do %>
+              <td data-colname="<%= CustomPage.human_attribute_name(:title) %>" class="column-primary">
+                <%= custom_page.title %>
+                <button class="btn" type="button" data-mobile="<%= dom_id(custom_page) %>" class="mobile-collapse">
+                  <span><i class="fa-solid fa-caret-down"></i></span>
+                </button>
+              </td>
+              <td><%= custom_page.title_en %></td>
+              <td><%= custom_page.status %></td>
+              <td><%= custom_page.en_status %></td>
+              <td class="index-table-action text-end">
+                <%= link_to t('btn.show'), admin_custom_page_path(custom_page),
+                  class: 'btn btn-primary me-2' if policy(custom_page).show? %>
+                <div class="dropdown d-inline-block">
+                  <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(custom_page) %>" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                  </a>
+                  <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(custom_page) %>">
+                    <%= link_to t('btn.edit'), edit_admin_custom_page_path(custom_page), class: 'dropdown-item' if policy(custom_page).edit? %>
+                  </ul>
+                </div>
+              </td>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

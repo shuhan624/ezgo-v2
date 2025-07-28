@@ -1,0 +1,50 @@
+<% provide :page_title, render_action_i18n(:show, Contact) %>
+<% content_for :page_back do %>
+  <% if policy(Contact).index? %>
+    <%= link_to admin_contacts_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_contact_path(@contact),
+        class: 'btn btn-primary ms-2' if policy(@contact).edit? %>
+  </div>
+<% end %>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="details">
+      <% [
+           [Contact.human_attribute_name(:name), @contact.name],
+           [Contact.human_attribute_name(:email), mail_to(@contact.email)],
+           [Contact.human_attribute_name(:phone), @contact.phone],
+           [Contact.human_attribute_name(:content), @contact.content],
+           [Contact.human_attribute_name(:created_at), I18n.l(@contact.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="details">
+      <% [
+           [Contact.human_attribute_name(:status), @contact.status],
+           [Contact.human_attribute_name(:note), @contact.note],
+           [Contact.human_attribute_name(:updated_at), I18n.l(@contact.updated_at, format: :table)],
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

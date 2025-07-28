@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="<%= (I18n.locale == :'zh-TW') ? 'zh-Hant-TW' : 'en' %>">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#182C80">
+    
+    <%= display_meta_tags default_meta_tags %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= cloudflare_turnstile_script_tag if controller_name == 'contact' %>
+    <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'public.scss' %>
+    <%= vite_javascript_tag 'public' %>
+    <%= render 'partials/seo/website_schema' unless devise_controller? %>
+    <%= render 'partials/seo/article_schema' if @post.present? && 'show' == action_name %>
+    <%= render 'partials/seo/faq_schema' if @faqs.present? %>
+    <% if Rails.env.production? %>
+      <%= render 'partials/gtm', gtm: @gtm if @gtm.present? %>
+      <%= render 'partials/ga', ga: @ga if @ga.present? %>
+      <%= render 'partials/fb_pixel', fb_pixel: @fb_pixel if @fb_pixel.present? %>
+    <% end %>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+
+  </head>
+
+  <body class="body" data-routes-name="<%= "#{controller_name}-#{action_name}" %>">
+    <% if Rails.env.production? %>
+      <%= render 'partials/gtm_noscript', gtm: @gtm if @gtm.present? %>
+      <%= render 'partials/fb_pixel_noscript', fb_pixel: @fb_pixel if @fb_pixel.present? %>
+    <% end %>
+    <%= render 'partials/env_ribbon' unless Rails.env.production? %>
+    <%= render 'partials/header' %>
+    <div class="frame-outer">
+      <%= yield %>
+    </div>
+    <%= render 'partials/footer' %>
+    <%= render 'partials/cookie_consent' %>
+    <%= render 'partials/meta_facebook_messenger', messenger: @messenger if @messenger.present? %>
+  </body>
+</html>

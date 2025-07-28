@@ -1,0 +1,29 @@
+class <%= class_name %>Policy < ApplicationPolicy
+  def index?
+    user.can?(:index, :<%= singular_table_name %>) || chief?
+  end
+
+  def show?
+    user.can?(:show, :<%= singular_table_name %>) || chief?
+  end
+
+  def new?
+    user.can?(:new, :<%= singular_table_name %>) || chief?
+  end
+
+  def create?
+    user.can?(:create, :<%= singular_table_name %>) || chief?
+  end
+
+  def update?
+    user.can?(:update, :<%= singular_table_name %>) || chief?
+  end
+
+  def edit?
+    user.can?(:edit, :<%= singular_table_name %>) || chief?
+  end
+
+  def destroy?
+    user.can?(:destroy, :<%= singular_table_name %>) || chief?
+  end
+end

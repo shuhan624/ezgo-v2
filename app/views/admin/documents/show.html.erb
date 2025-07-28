@@ -1,0 +1,35 @@
+<% provide :page_title, render_action_i18n(:show, Document) %>
+<% content_for :page_back do %>
+  <%= link_to admin_documents_path, class: 'btn btn-light' do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'), edit_admin_document_path(@document), class: 'btn btn-primary float-end ms-2' if policy(@document).edit? %>
+    <%= link_to fa_icon(:"trash-can"), admin_document_path(@document), class: 'btn btn-danger-light float-end ms-2 single-icon', method: :delete, data: { confirm: t('confirm_message') } if policy(@document).destroy? %>
+  </div>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <dl class="row g-3">
+          <% [
+               [Document.human_attribute_name(:title), @document.title],
+               [Document.human_attribute_name(:slug), @document.file_url],
+               [Document.human_attribute_name(:file_type), @document.show_file_type],
+               [Document.human_attribute_name(:language), @document.show_language],
+               [Document.human_attribute_name(:file), @document.show_file_preview],
+               [Document.human_attribute_name(:updated_at), I18n.l(@document.updated_at, format: :table)],
+               [Document.human_attribute_name(:created_at), I18n.l(@document.created_at, format: :table)],
+             ].each do |title, content| %>
+            <dt class="col-md-4"><%= title %></dt>
+            <dd class="col-md-8 mb-0"><%= content %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

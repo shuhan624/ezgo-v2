@@ -1,0 +1,46 @@
+.base-pagination {
+  text-align: center;
+  margin: 2rem auto;
+}
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 0;
+  .page-item {
+    @extend .font-en;
+    position: relative;
+    font-size: 18px;
+    text-align: center;
+    padding: 0;
+    color: $color-second;
+    transition: 0.3s;
+    margin: 0 3px;
+    overflow: hidden;
+    &:hover {
+      color: $color-primary;
+      background-color: rgba($color-primary, 0.1);
+    }
+    &.active {
+      color: #fff;
+      background-color: $color-second;
+    }
+    a.page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      min-width: 30px;
+      line-height: 30px;
+    }
+    &.disabled {
+      opacity: 0;
+      cursor: unset;
+      &:active:before, &:hover:before {
+        opacity: 0;
+      }
+    }
+  }
+}

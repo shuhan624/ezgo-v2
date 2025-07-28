@@ -1,0 +1,137 @@
+.table-responsive {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 2em;
+  position: relative;
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color-primary, 0.8);
+    border-radius: 0px;
+    &:hover {
+      background: $color-primary;
+    }
+  }
+  &:not(.download) {
+    table {
+      @media (max-width: $media-max-phone) {
+        min-width: 650px;
+      }
+    }
+    thead th {
+      &:first-child {
+        @media (max-width: $media-max-phone) {
+          position: sticky;
+          left: 0;
+          background: #fff;
+          z-index: 2;
+        }
+      }
+    }
+    tbody td {
+      &:first-child {
+        @media (max-width: $media-max-phone) {
+          position: sticky;
+          left: 0;
+          background: #fff;
+          z-index: 2;
+        }
+      }
+    }
+    .ck-bg-gray & {
+      thead th, tbody td {
+        @media (max-width: $media-max-phone) {
+          background: $color-primary-bg;
+        }
+      }
+    }
+  }
+  table {
+    width: 100%;
+    color: $color-content;
+    &.table-font-min {
+      font-size: 15px;
+    }
+    @media (max-width: $media-max-phone) {
+      font-size: 15px;
+    }
+    ul, ol {
+      margin-bottom: 0;
+    }
+  }
+  th, td {
+    padding: 0.8em 0.5em;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: normal;
+    line-height: 1.6;
+    @media (min-width: $media-min-web-content) {
+      padding: 1em 0.7em;
+    }
+    &.text-left {
+      text-align: left;
+    }
+    &.text-right {
+      text-align: right;
+    }
+
+  }
+  thead {
+    width: 100%;
+    tr {
+      th {
+        color: $color-title;
+        font-weight: 500;
+        position: relative;
+        &:after {
+          content: '';
+          width: 100%;
+          height: 4px;
+          display: inline-block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: $color-primary;
+        }
+        &:first-child:after {
+          width: calc(100% - 10px);
+          background: $color-second;
+        }
+        &.sm {
+          width: 15%;
+        }
+        &.md {
+          width: 28%;
+        }
+        &.lg {
+          width: 48%;
+        }
+      }
+    }
+  }
+  tbody {
+    th {
+      color: $color-primary;
+    }
+    td {
+      border-bottom: 1px solid $color-line;
+      color: $color-content;
+      font-weight: normal;
+      &:first-child {
+        @media (max-width: $media-max-phone) {
+          color: #1A1311;
+          font-weight: 500;
+        }
+      }
+      &.table-td-normal {
+        color: $color-content;
+        font-weight: normal;
+      }
+    }
+  }
+}

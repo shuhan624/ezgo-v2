@@ -1,0 +1,55 @@
+<div class="frame primary-bg user-form"  data-page="sign_up">
+  <div class="users-form-container">
+    <div class="user-form-box">
+      <div class="user-form-content">
+        <h1><%= t(".sign_up") %></h1>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+          <div class="form-inputs">
+            <%= f.input :email,
+                        required: true,
+                        autofocus: true ,
+                        input_html: { autocomplete: "email" }%>
+            <div class="form-input-group">
+              <%= f.input :password,
+                          required: true,
+                          placeholder: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
+                          input_html: { autocomplete: "new-password" } %>
+              <%= f.input :password_confirmation,
+                          required: true,
+                          input_html: { autocomplete: "new-password" } %>
+            </div>
+            <div class="form-input-group">
+              <%= f.input :phone,
+                          required: true,
+                          input_html: { autocomplete: "phone" } %>
+              <%= f.input :country,
+                          priority: ['TW'],
+                          format: :tw_name %>
+            </div>
+            <div id="user-area" class="form-input-group">
+              <%= f.input :city, as: :select, collection: [], input_html: { data: { value: @user.city } } %>
+              <%= f.input :dist, as: :select, collection: [], input_html: { data: { value: @user.dist } } %>
+              <%= f.input_field :zip_code, as: :hidden %>
+            </div>
+            <div class="form-group">
+              <%= f.input :address %>
+            </div>
+          </div>
+          <div class="form-actions"><%= f.button :submit, t(".sign_up"), class:'form-submit' %></div>
+        <% end %>
+        <div class="other-logins"><%= button_to t(".sign_in_line"), user_line_omniauth_authorize_path, method: :post, class: 'btn-primary line-login' %></div>
+
+        <div class="form-other-links">
+          <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+            <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name), class: 'form-other-link' %>
+          <% end %>
+          <%= link_to '已有帳號，登入', new_session_path(resource_name), class: 'form-other-link' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="user-notice-block">
+    <%= render 'devise/shared/notice' %>
+  </div>
+</div>

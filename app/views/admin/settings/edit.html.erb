@@ -1,0 +1,18 @@
+<% provide :page_title, render_action_i18n(:edit, Setting) + '｜' + "#{t(@setting.name, scope: 'setting')}" %>
+<% content_for :page_back do %>
+  <% if policy(Setting).index? %>
+    <%= link_to admin_settings_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<div class="card">
+  <div class="card-body">
+    <!-- 中英文 表單-->
+    <%= render 'partials/admin/settings/edit/form' %>
+
+    <!-- 中文 表單-->
+    <%#= render 'admin/settings/partials/edit/tw_form' %>
+  </div>
+</div>
+

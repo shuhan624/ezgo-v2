@@ -1,0 +1,17 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="message-modal-label">
+        發送訊息給：<%= @user.name || @user.line_name %>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <%= form_with url: push_message_admin_user_path, local: false do |f| %>
+        <%= f.text_area :message, rows: 5, class: 'form-control text' %>
+        <div class="help-info">訊息文字數量上限 5000 字</div>
+        <br>
+        <%= f.submit '發送訊息', class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,390 @@
+// index
+// posts 模板1 一列一則文章，含 16:9 圖片
+// posts 模板2 一列一則文章，不含圖片
+// posts 模板3 一列三則文章，含 16:9 圖片
+// post-inner
+// post 上下則
+html {
+  font-size: 16px; 
+  font-weight: 400;
+  line-height: 1.6;
+  color: #535353;
+  
+}
+.index-wrap p {
+  font-size: 1rem; 
+}
+.decor-top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60vw;
+  max-width: 800px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    opacity: 0.1;
+  }
+}
+// index
+.index-banner {
+  width: 100%;
+  .swiper {
+    position: relative;
+  }
+  .swiper-wrapper {
+    width: 100%;
+  }
+  .swiper-slide-img {
+    position: relative;
+    width: 100%;
+    padding-top: 84.5%;
+    @media (min-width: 601px) {
+      padding-top: 36.492%;
+    }
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+// posts 模板1 一列一則文章，含 16:9 圖片
+.post-items.posts_1_col_with_img .post-item {
+  display: flex;
+  padding: 40px 0;
+  @media (max-width: $media-max-pad) {
+    flex-direction: column;
+    padding: 24px 0;
+  }
+  &:not(:last-child){
+    border-bottom: 1px solid $color-line;
+  }
+  .imgbox {
+    max-width: 360px;
+    min-width: 360px;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    margin-right: 20px;
+    @media (max-width: $media-max-web-content) {
+      max-width: 280px;
+      min-width: 280px;
+    }
+    @media (max-width: $media-max-pad) {
+      margin: 0 auto;
+    }
+  }
+  .post-group {
+    margin-top: 8px;
+    @media (max-width: $media-max-pad) {
+      margin-top: 12px;
+      margin-left: 4px;
+    }
+  }
+  .post-title {
+    @media (max-width: $media-max-pad) {
+      font-size: 18px;
+      padding: 0.4em 0;
+    }
+  }
+  .post-category {
+    color: $color-primary;
+    margin-bottom: 0.5em;
+  }
+  .post-date {
+    color: $color-note;
+  }
+  &:hover {
+    .imgbox img {
+      transform: scale(1.08);
+    }
+  }
+  .post-abstract {
+    color: $color-content;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.6;
+    p {
+      padding: 0;
+    }
+  }
+}
+// posts 模板2 一列一則文章，不含圖片
+.post-items.posts_1_col .post-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0.7em 0em;
+  font-size: 16px;
+  border-bottom: 1px solid $color-line;
+  @media(max-width: $media-max-pad) {
+    flex-direction: column;
+    align-items: flex-start
+  }
+  .post-title {
+    width: 100%;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space-collapse: collapse;
+    text-wrap: wrap;
+    overflow: hidden;
+    color: $color-primary;
+    transition: 0.2s;
+    max-width: 620px;
+    @media(max-width: $media-max-pad) {
+      -webkit-line-clamp: 2;
+      max-width: unset;
+    }
+  }
+  &:hover {
+    .post-category {
+      color: $color-primary;
+      background: #fff;
+      border: 2px solid $color-primary;
+    }
+    .post-title {
+      color: $color-second;
+    }
+  }
+  .post-group {
+    display: flex;
+    align-items: center;
+    @media(max-width: $media-max-pad) {
+      margin-bottom: 8px;
+    }
+  }
+  .post-category {
+    color: #fff;
+    background: $color-primary;
+    border: 2px solid $color-primary;
+    white-space: nowrap;
+    padding: 0.23em 1.5em;
+    margin-right: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.4;
+    border-radius: 2px;
+    font-weight: 300;
+    transition: 0.3s ease-in-out;
+    box-sizing: border-box;
+    span {
+      border-left: 1px solid #fff;
+      margin-left: 6px;
+      padding-left: 6px;
+    }
+
+  }
+  .post-date {
+    color: $color-note;
+    font-weight: normal;
+    font-size: 16px;
+    margin-right: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    width: 100px;
+  }
+}
+// posts 模板3 一列三則文章，含 16:9 圖片
+.post-items.posts_3_col_with_img {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 80px;
+  .post-item {
+    width: 33.33%;
+    padding: 1.2em 1em;
+    box-sizing: border-box;
+    @media (max-width: $media-max-web-content) {
+      width: 50%;
+    }
+    @media (max-width: $media-max-pad) {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+    &:hover {
+      .post-title {
+        color: $color-second;
+      }
+      .imgbox img {
+        transform: scale(1.08);
+      }
+    }
+    .post-group {
+      padding: 12px 0;
+    }
+    .post-title {
+      padding: 0.2em 0 0.5em;
+    }
+    .post-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @media(max-width: $media-max-pad) {
+        margin-bottom: 8px;
+      }
+    }
+    .post-category {
+      color: $color-primary;
+      margin-right: 12px;
+      transition: 0.3s ease-in-out;
+      box-sizing: border-box;
+    }
+    .post-date {
+      color: $color-note;
+      font-weight: normal;
+      font-size: 16px;
+      margin-right: 12px;
+      font-weight: normal;
+      white-space: nowrap;
+      width: 100px;
+    }
+    .post-abstract {
+      color: $color-content;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      line-height: 1.6;
+      p {
+        padding: 0;
+      }
+    }
+  }
+}
+// post-inner
+[data-page="post-inner"] {
+  .title-lg {
+    text-align: center;
+  }
+  .post-container {
+    max-width: 800px;
+    margin: 0 auto 2em;
+    .imgbox {
+      aspect-ratio: 16 / 9;
+      border-radius: 4px;
+      margin-bottom: 2em;
+    }
+    .post-date {
+      color: $color-note;
+    }
+  }
+  .post-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1em;
+    box-sizing: border-box;
+    margin-bottom: 2em;
+    border-bottom: 1px solid $color-line;
+    @media(max-width: $media-max-pad) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .post-category {
+      color: $color-primary;
+      @media(max-width: $media-max-pad) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+// post 上下則
+.post-nav-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid $color-line;
+  box-sizing: border-box;
+  .post-nav-link {
+    text-decoration: none;
+    flex: 1;
+    width: 45%;
+    overflow: hidden;
+  }
+  .post-nav-post-title {
+    color: $color-primary;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 8px;
+    max-width: 92%;
+  }
+  .post-nav-icon {
+    color: $color-content;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .post-prev {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .post-nav-icon {
+      &:before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background: url('images/icon/arrow.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        transform: rotate(180deg);
+        margin-right: 4px;
+      }
+    }
+  }
+  .post-next {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    .post-nav-icon {
+      &:after {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background: url('images/icon/arrow.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        margin-left: 4px;
+      }
+    }
+  }
+}
+
+// homepage 合作夥伴
+.partner-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+.partner-item {
+  width: 20%;
+  box-sizing: border-box;
+  border: 0;
+  padding: 1em;
+  max-height: 200px;
+  display: block;
+  @media (max-width: $media-max-pad) {
+    width: 33.33%;
+  }
+}

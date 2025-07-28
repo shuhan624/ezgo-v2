@@ -1,0 +1,123 @@
+<% provide :page_title, render_action_i18n(:show, Article) + '｜' + @article.title if @article.title.present? %>
+<% content_for :page_back do %>
+  <% if policy(Article).index? %>
+    <%= link_to admin_articles_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <div>
+      <%= link_to t('btn.edit'),
+          edit_admin_article_path(@article),
+          class: 'btn btn-primary ms-2' if policy(@article).edit? %>
+      <%= link_to t('btn.copy'),
+          copy_admin_article_path(@article),
+          method: :post,
+          class: 'btn btn-light', id: 'copy-btn' if policy(@article).copy? %>
+    </div>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_article_path(@article),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@article).destroy? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#settings" class="tab active">基本資訊</a>
+      <a href="#zh-hant" class="tab">中文</a>
+      <a href="#en" class="tab">英文</a>
+      <a href="#seo" class="tab">SEO</a>
+    </div>
+  </div>
+
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="settings">
+      <div class="product details">
+        <% [
+             [Article.human_attribute_name(:post_type), @article.show_post_type],
+             [Article.human_attribute_name(:featured), t(@article.featured, scope: 'simple_form.options.article.featured')],
+             [Article.human_attribute_name(:top), t(@article.top, scope: 'simple_form.options.article.top')],
+             [Article.human_attribute_name(:default_category), @article.default_category_name],
+             [Article.human_attribute_name(:article_categories), @article.show_categories],
+             [Article.human_attribute_name(:updated_at), I18n.l(@article.updated_at, format: :table)],
+             [Article.human_attribute_name(:created_at), I18n.l(@article.created_at, format: :table)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="tab-content card-body" id="zh-hant">
+      <% if @article.post? && policy(@article).preview? %>
+        <div class="block-function mb-3">
+          <%= link_to(fa_icon(:'desktop', text: t('btn.preview')),
+            preview_article_url(host: @host, article_category: @article.default_category),
+            target: '_blank',
+            class: 'btn btn-primary btn-icon-space') %>
+          <%= link_to(fa_icon(:'mobile-screen-button', text: t('btn.preview_mobile')),
+            preview_article_url(host: @host, article_category: @article.default_category),
+            onclick: "window.open(this.href, '預覽文章', 'height=667, width=375');return false;",
+            target: '_blank', class: 'btn btn-light btn-icon-space') %>
+        </div>
+      <% end %>
+      <div class="product details">
+        <% [
+             [Article.human_attribute_name(:title), @article.title],
+             [Article.human_attribute_name(:slug), @article.link_to_slug],
+             [Article.human_attribute_name(:published_at), @article.published_at],
+             [Article.human_attribute_name(:expired_at), @article.expired_at],
+             [Article.human_attribute_name(:status), @article.publish_status],
+             [Article.human_attribute_name(:alt_zh_tw), @article.alt_zh_tw],
+             [Article.human_attribute_name(:image), (image_tag(@article.image, width: 100))]
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <% if policy(@article).preview? %>
+        <div class="block-function mb-3">
+          <%= link_to(fa_icon(:'desktop', text: t('btn.preview')),
+            preview_article_url(host: @host, locale: 'en', article_category: @article.default_category),
+            target: '_blank',
+            class: 'btn btn-primary btn-icon-space') %>
+          <%= link_to(fa_icon(:'mobile-screen-button', text: t('btn.preview_mobile')),
+            preview_article_url(host: @host, locale: 'en', article_category: @article.default_category),
+            onclick: "window.open(this.href, '預覽文章', 'height=667, width=375');return false;",
+            target: '_blank', class: 'btn btn-light btn-icon-space') %>
+        </div>
+      <% end %>
+      <div class="product details">
+        <% [
+             [Article.human_attribute_name(:title_en), @article.title_en],
+             [Article.human_attribute_name(:slug), @article.link_to_slug_en],
+             [Article.human_attribute_name(:published_at_en), @article.published_at_en],
+             [Article.human_attribute_name(:expired_at_en), @article.expired_at_en],
+             [Article.human_attribute_name(:en_status), @article.en_publish_status],
+             [Article.human_attribute_name(:alt_en), @article.alt_en],
+             [Article.human_attribute_name(:image_en), (image_tag(@article.image_en, width: 100))]
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="seo">
+      <%= render 'partials/admin/seo_details', item: @article %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+<%= simple_form_for([:admin, @article], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @article.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h5><%= pluralize(@article.errors.count, '個錯誤') %>導致<%= @article.model_name.human %>無法儲存：</h5>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="tabs-group">
+    <div class="card mb-4">
+      <div class="tabs-btn">
+        <a href="#settings" class="tab active">共用設定</a>
+        <a href="#zh-hant" class="tab">中文</a>
+        <a href="#en" class="tab">英文</a>
+        <a href="#seo" class="tab">SEO</a>
+      </div>
+    </div>
+
+    <div class="tabs-content card">
+      <div class="tab-content card-body active" id="settings">
+        <div class="row">
+          <%= f.input :slug, wrapper_html: { class: 'col-md-6' } %>
+          <%= f.input :post_type, as: :radio_buttons, collection: Article::POST_TYPE.keys, wrapper_html: { class: 'col-md-6' }, wrapper: :vertical_collection_inline %>
+          <%= f.association :default_category, as: :radio_buttons, wrapper: :vertical_collection_inline, wrapper_html: { class: 'col-md-6' } %>
+          <%= f.association :article_categories, as: :check_boxes, wrapper_html: { class: 'col-md-6' }, wrapper: :vertical_collection_inline %>
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.label :featured, class: 'd-block' %>
+              <%= f.select :featured,
+               ((1..10).map { |i| [i, i] }.unshift(["不設定為「精選」項目", nil])),
+               { include_blank: true },
+               { class: 'form-select' } %>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :top, class: 'd-block' %>
+              <%= f.select :top,
+                 ((1..5).map { |i| [i, i] }.unshift(["不設定為「置頂」項目", nil])),
+                 { include_blank: true },
+                 { class: 'form-select' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content card-body" id="zh-hant">
+        <div class="row">
+          <%= f.input :title %>
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="row">
+                <%= f.input :published_at, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+                <%= f.input :expired_at, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+              </div>
+              <%= f.input :alt_zh_tw %>
+            </div>
+            <div class="col-xl-6">
+              <%= f.input :image, direct_upload: true,
+                input_html: {
+                  class: 'dropify',
+                  data: {
+                    'default-file': (url_for(@article.image) if @article.image.attached?),
+                    'max-file-size': '1M',
+                    'allowed-file-extensions': 'png jpg jpeg',
+                  }
+                }
+              %>
+            </div>
+          </div>
+          <%= f.input :tag_list, as: :select, collection: @article.tag_list, required: false, input_html: { multiple: true, class: 'tom-select-custom', 'data-select': 'tag_list' }, prompt: '請輸入並按 Enter 建立標籤' if policy(@article).show_tags? %>
+          <%= f.input :abstract_zh_tw, as: :text, input_html: { rows: 5 } %>
+          <%= f.input :source_link_zh_tw %>
+          <%= f.input :content, as: :text, input_html: { class: 'tinymce', id: 'article-content', value: @article.content&.html_safe } %>
+        </div>
+      </div>
+
+      <div class="tab-content card-body" id="en">
+          <div class="row">
+            <%= f.input :title_en %>
+            <div class="row">
+              <div class="col-xl-6">
+                <div class="row">
+                  <%= f.input :published_at_en, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+                  <%= f.input :expired_at_en, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+                </div>
+                <%= f.input :alt_en %>
+              </div>
+              <div class="col-xl-6">
+                <%= f.input :image_en, direct_upload: true,
+                  input_html: {
+                    class: 'dropify',
+                    data: {
+                      'default-file': (url_for(@article.image_en) if @article.image_en.attached?),
+                      'max-file-size': '1M',
+                      'allowed-file-extensions': 'png jpg jpeg',
+                    }
+                  }
+                %>
+              </div>
+            </div>
+            <%= f.input :en_tag_list, as: :select, collection: @article.en_tag_list, required: false, input_html: { multiple: true, class: 'tom-select-custom', 'data-select': 'en_tag_list' }, prompt: '請輸入並按 Enter 建立標籤' if policy(@article).show_tags? %>
+            <%= f.input :abstract_en, as: :text, input_html: { rows: 5 } %>
+            <%= f.input :source_link_en %>
+            <%= f.input :content_en, as: :text, input_html: { class: 'tinymce',id: 'article-content-en' , value: @article.content_en&.html_safe } %>
+          </div>
+      </div>
+
+      <div class="tab-content card-body" id="seo">
+        <%= f.simple_fields_for :seo do |seo| %>
+          <%= render 'partials/admin/seo_fields', :f => seo %>
+        <% end %>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'), admin_article_path(@article), class: 'btn btn-light' if controller.action_name == 'edit' && policy(@article).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_article_path(@article),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@article).destroy? %>
+  </div>
+<% end %>

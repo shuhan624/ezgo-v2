@@ -1,0 +1,20 @@
+class ArticleCategoryDecorator < ApplicationDecorator
+  delegate_all
+
+############################## 後台 Admin ##############################
+  def link_to_slug
+    @host = Rails.application.config.action_mailer.default_url_options[:host]
+    link = h.cate_articles_url(host: @host, article_category: object.slug)
+    text = h.content_tag(:i, nil, class: "zmdi zmdi-open-in-new") + h.content_tag(:span, link)
+
+    object.status == 'published' ? h.link_to(text, link, target: '_blank') : link
+  end
+
+  def link_to_slug_en
+    @host = Rails.application.config.action_mailer.default_url_options[:host]
+    link = h.cate_articles_url(host: @host, locale: 'en', article_category: object.slug)
+    text = h.content_tag(:i, nil, class: "zmdi zmdi-open-in-new") + h.content_tag(:span, link)
+
+    object.en_status == 'published' ? h.link_to(text, link, target: '_blank') : link
+  end
+end

@@ -1,0 +1,276 @@
+zh-TW:
+  hello: '哩賀'
+  meta_tags:
+    site_title: '易齊國際移民有限公司'
+    meta_title: '易齊國際移民 EZGO 全方位移民專家'
+    meta_keywords: '易齊, 國際移民, 職業移民, 退休移民'
+    meta_description: '易齊國際移民有限公司提供專業合法移民服務，專辦各國投資移民、職業移民、退休移民及台灣移民等業務。陪您實現移民夢想，免費諮詢，為您與家人規劃最佳移民方案，共創美好未來。'
+    og_title: '易齊國際移民 EZGO 全方位移民專家'
+    og_desc: '易齊國際移民有限公司提供專業合法移民服務，專辦各國投資移民、職業移民、退休移民及台灣移民等業務。陪您實現移民夢想，免費諮詢，為您與家人規劃最佳移民方案，共創美好未來。'
+  permissions:
+    index: 列表
+    new: 新增
+    create: 建立
+    show: 檢視
+    edit: 編輯
+    update: 更新
+    destroy: 刪除
+    sort: 排序
+    copy: 複製
+    preview: 預覽
+    show_tags: 顯示標籤
+    message: LINE 訊息
+    push_message: LINE 群發訊息
+  partials:
+    admin:
+      header:
+        title: EZGO
+      breadcrumb:
+        title: &title
+          root: 後台首頁
+          home: 首頁
+          admins: 管理帳號
+      leftsidebar:
+        settings: 全站設定
+        menus: 選單管理
+        custom_pages: 頁面管理
+        documents: 檔案管理
+        home_slides: 首頁輪播
+        redirect_rules: 轉址設定
+        news:
+          title: 最新消息
+          articles: 文章列表
+          article_categories: 文章分類
+        faqs:
+          title: 常見問題
+          faqs:  常見問題
+          categories: 常見問題分類
+        partners: 合作夥伴
+        milestones: 里程碑
+        downloads:
+          title: 檔案下載
+          downloads:  檔案下載
+          categories: 檔案下載分類
+        contacts: 聯絡表單
+        users: 會員管理
+        admins: 後台帳號管理
+        roles: 角色權限管理
+        sign_out: 登出 %{name}
+    header: &header_attrs
+      members_only: 會員專區
+      login: 會員登入
+      logout: 登出
+      member_index: 會員首頁
+      profile: 基本資料
+      edit_password: 修改密碼
+    footer:
+      <<: *header_attrs
+      about: 關於我們
+      privacy: 隱私政策
+      terms: 使用者條款
+    cookie_consent:
+      title: '本網站使用 Cookies'
+      content_html: 點擊同意即表示您同意我們使用 Cookies。詳情請參閱<a href="/privacy">隱私政策</a>。
+      accept: 同意
+  pages:
+    breadcrumb:
+      home: 首頁
+    index:
+      news:
+        title: 最新消息
+  prev_next: &prev_next
+    previous: 上一則
+    next: 下一則
+  articles:
+    index:
+      title: 最新消息
+      title_en: News
+    show:
+      <<: *prev_next
+      title: 最新消息
+      title_en: News
+  faqs:
+    index:
+      title: 常見問題
+      title_en: FAQs
+    show:
+      title: 常見問題
+      title_en: FAQs
+  sort_hint: "請以滑鼠左鍵按住欲排序之「%{model}」，以拖拉方式將「%{model}」拖至想要的順序位置後，放開滑鼠左鍵即可完成排序。"
+  search_form:
+    keywords: 請輸入關鍵字
+    category: 請選擇類別
+    language: 請選擇語系
+    status: 請選擇狀態
+    en_status: 請選擇英文狀態
+    post_type: 請選擇文章類型
+    file_type: 請選擇檔案類型
+    featured: 請選擇是否為精選項目
+    top: 請選擇是否為置頂項目
+    role: 請選擇管理員角色
+    user_role: 請選擇會員等級
+    slide_type: 請選擇輪播類型
+  status:
+    _: 狀態
+    published: 公開
+    hidden: 隱藏
+  top:
+    _: 置頂
+    'true': 是
+    'false': 否
+  bundle: 成套
+  home: 首頁
+  setting:
+    site_title: 網站名稱
+    copyright: 版權宣告公司名稱
+    meta_title: '首頁 Meta 標題'
+    meta_keywords: '全站預設 Meta 關鍵字'
+    meta_desc: '全站預設 Meta 描述'
+    og_title: 'Open Graph Protocol 標題（og:title）'
+    og_desc: 'Open Graph Protocol 描述（og:description）'
+    og_image: 'Open Graph Protocol 縮圖（og:image）'
+    gtm: 'Google Tag Manager（GTM）'
+    ga: 'Google Analytics（GA4）'
+    fb_pixel: 'Facebook Pixel 像素（Meta Pixel）'
+    admin_logo: 管理後台 Logo
+    logo: 前端頁面 Logo
+    favicon: 網站圖示
+    favicon_m: 手機圖示
+    company: 公司名稱
+    address: 地址
+    tel: 電話號碼
+    fax: 傳真號碼
+    email: 聯絡信箱
+    receivers: 收件者
+    tax_id_number: 統一編號
+    business_hours: 營業時間
+    messenger: '客服中心 Messenger'
+    facebook: Facebook
+    instagram: Instagram
+    line: LINE
+    linkedin: LinkedIn
+    youtube: YouTube
+    skype: Skype
+    twitter: Twitter
+    popup_homepage: 首頁彈跳廣告
+    index_hint:
+      meta_title: '網頁的主要資訊說明，幫助搜尋引擎判斷關鍵字和網頁內容的相關性，影響 Google 搜尋排名。'
+      meta_keywords: '網頁的額外資訊，提供搜尋引擎參考'
+      meta_desc: '網站或是頁面的簡易摘要，通常出現在搜尋結果的標題與網址下方。'
+      og_title: '分享網頁時，顯示的標題'
+      og_desc: '分享網頁時，顯示的描述內容'
+      og_image: '分享網頁時，顯示的縮圖'
+      gtm: '代碼管理工具，整合網站程式碼以及第三方應用工具，方便進行網站數據的追蹤與管理。'
+      ga: '網站分析工具，幫助監測和搜集使用者在網站上的行為資料，以作為數據分析使用。'
+      fb_pixel: 'Facebook 的一串程式代碼，用以追蹤用戶在網站上採取的行動，藉以衡量網站廣告投放之成效。'
+      popup_homepage: '首頁彈跳廣告'
+  index:
+    show: 詳細
+    edit: 編輯
+    delete: 刪除
+  action:
+    _: 操作
+    new: 新增%{model}
+    show: 檢視%{model}
+    edit: 編輯%{model}
+    list: '%{model}列表'
+    destroy: 刪除
+    back: 返回
+    save: 儲存
+    submit: 提交表單
+    search: 搜尋
+    searching: 搜尋中...
+    reset: 重設
+    download: 下載
+  btn:
+    new: 新增
+    show: 詳細
+    edit: 編輯
+    delete: 刪除
+    back: 返回
+    copy: 複製
+    preview: 預覽
+    preview_mobile: 預覽手機版
+  helpers:
+    select:
+      prompt: 請選取
+    submit:
+      create: 建立%{model}
+      update: 更新%{model}
+      submit: 送出%{model}
+  time:
+    formats:
+      default: "%Y-%m-%d"
+      print: "%Y/%m/%d"
+      simple: "%Y-%m-%d %H:%M"
+      table: "%Y-%m-%d %H:%M:%S"
+      show: "%m月%d日 %p %I:%M"
+  date:
+    order:
+    - :year
+    - :month
+    - :day
+    formats:
+      print: "%Y/%m/%d"
+      show: "%Y年%m月%d日"
+      default: "%Y-%m-%d"
+      long: "%Y年%m月%d日"
+      short: "%m月%d日"
+    month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+  successful:
+    create: 成功新增 %{model}
+    update: 成功更新 %{model}
+    destroy: 成功删除 %{model}
+    assign_admin: 成功指派客服人員
+    upload_quotation: 成功上傳報價單
+    upload_sample: 成功上傳示意圖
+    shipping: 成功更新物流狀態
+  confirm_message: 確定進行此操作？
+  devise:
+    failure:
+      admin: &admin
+        account_inactive: 您的帳號已被鎖定，暫時無法登入，抱歉！
+      user:
+        <<: *admin
+  admin:
+    redirect_rules:
+      index:
+        hint: '為避免轉址路徑與網站現有路徑衝突，路徑開頭為以下關鍵字時無法自動匯入：products, news, preview, faqs, contact, about, team, background, milestones, our-awards, future-vision, downloads, privacy, terms, thanks, user'
+        import:
+          title: '匯入轉址路徑檔案'
+          notice: 請下載範例檔案，並修改為需要的內容之後上傳。
+          choose: 請選擇轉址檔案上傳
+          success: 成功匯入轉址路徑資料
+          error: '匯入資料失敗，請確認檔案格式是否為 .xlsx'
+    custom_pages:
+      index:
+        seo: SEO 設定
+        content: 修改內容
+        custom: 擴充頁面

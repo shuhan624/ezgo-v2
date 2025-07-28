@@ -1,0 +1,41 @@
+<% @breadcrumb_schema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: @meta_title,
+          item: root_url,
+        }
+      ]
+    }
+%>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to t('pages.breadcrumb.home'), root_path %></li>
+    <% crumbs.each_with_index do |crumb, index| %>
+      <% if crumb[:path].present? %>
+        <%= content_tag :li, link_to(crumb[:text], crumb[:path]), class: 'breadcrumb-item' %>
+      <% else %>
+        <%= content_tag :li, crumb[:text], class: 'breadcrumb-item active', aria: { current: 'page' } %>
+      <% end %>
+      <% @breadcrumb_schema[:itemListElement] << [
+           {
+             '@type': 'ListItem',
+             position: (index + 2),
+             item: (crumb[:path] || url_for(only_path: false, overwrite_params: nil)),
+             name: crumb[:text]
+           }
+         ]
+      %>
+    <% end %>
+  </ol>
+</nav>
+
+<%= content_for :breadcrumb_schema do %>
+  <script type="application/ld+json">
+    <%= @breadcrumb_schema.to_json.html_safe %>
+  </script>
+<% end %>

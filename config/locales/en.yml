@@ -1,0 +1,70 @@
+en:
+  hello: "Hello world"
+  meta_tags:
+    site_title: 'CianWang'
+    meta_title: 'CianWang | Website Development, Customized Website, System Development, Sports Event System'
+    meta_keywords: 'Website Development, Customized Website, System Development'
+    meta_description: 'Website construction, website development, system development, customized website, website connection services, and development of internal management system.'
+    og_title: 'CianWang - Website Development, Customized Website, System Development, Sports Event System'
+    og_desc: 'CianWang hopes to provide customers with a good front-end website experience and the most appropriate and modern website construction services, "Be serious and go all out" is our core value'
+  partials:
+    header: &header_attrs
+      index: Home
+      about: About
+      milestone: Milestone
+      news: News
+      products: Products
+      contact: Contact
+      members_only: Members
+      faqs: FAQs
+      login: Login
+      logout: Logout
+      member_index: Member
+      profile: Profile
+      edit_password: Edit Password
+    footer:
+      <<: *header_attrs
+      about: About
+      privacy: Privacy
+      terms: Terms of use
+    cookie_consent:
+      title: We use Cookies
+      content_html: By clicking "Agree," you consent to our use of cookies. For more details, please refer to our <a href="/privacy">Privacy Policy</a>.
+      accept: Accept
+  time:
+    formats:
+      default: "%Y-%m-%d"
+      print: "%Y/%m/%d"
+      simple: "%Y-%m-%d %H:%M"
+      table: "%Y-%m-%d %H:%M:%S"
+  date:
+    order:
+    - :year
+    - :month
+    - :day
+    formats:
+      default: "%Y-%m-%d"
+      print: "%Y/%m/%d"
+  pages:
+    breadcrumb:
+      home: Home
+    index:
+      blog:
+        title: News
+  articles:
+    index:
+      title: News
+    show:
+      title: News
+      previous: Previous
+      next: Next
+  faqs:
+    index:
+      title: FAQs
+    show:
+      title: FAQs
+  setting:
+    address: Address
+    tel: Tel
+  action:
+    submit: Submit

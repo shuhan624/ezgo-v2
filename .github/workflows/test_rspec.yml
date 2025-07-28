@@ -1,0 +1,92 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "執行測試"
+on:
+  pull_request:
+    branches: [ "master", "develop" ]
+jobs:
+  test:
+    runs-on: self-hosted
+    services:
+      postgres:
+        image: postgres:16.4-alpine
+        ports:
+          - 54321:5432
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    env:
+      RAILS_ENV: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TEST_ENV_NUMBER: 3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Update package list
+        run: sudo apt-get update
+      - name: Install system dependencies
+        run: sudo apt-get install -y libvips-dev
+      - name: Install fonts
+        run: sudo apt-get install -y fonts-noto-cjk
+      - name: Install ImageMagick
+        run: sudo apt-get install -y imagemagick
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.5
+          rubygems: 3.5.22
+          bundler-cache: true
+      # Add or replace database setup steps here
+      # - name: Set up database schema
+      #   run: bin/rails db:schema:load
+      # Install node js
+      - name: Prepare Parallel Databases
+        run: |
+          cp .github/templates/database.ci.yml config/database.yml
+          export PARALLEL_TEST_PROCESSORS=${{ env.TEST_ENV_NUMBER }}
+          bundle exec rake parallel:create
+          bundle exec rake parallel:load_schema
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      # Run 'npm install'
+      - name: npm install
+        run: npm i
+      # Deploying Webpacker
+      - name: Compile assets
+        run: bin/rails assets:precompile
+      # for chrome 134 issue https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
+      - name: Remove image-bundled Chrome
+        run: sudo apt-get purge google-chrome-stable
+      - name: Setup stable Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 128
+          install-chromedriver: true
+          install-dependencies: true
+      # Add or replace test runners here
+      - name: Run tests
+        run: PARALLEL_TEST_PROCESSORS=${{ env.TEST_ENV_NUMBER }} bundle exec rake "parallel:spec[spec/models|spec/policies|spec/system|spec/requests|spec/middleware]"
+      # Store the screenshot images made by the failed test cases
+      - name: Store screenshot images
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-images
+          path: tmp/capybara/
+          retention-days: 3
+      # Store the test.log
+      - name: Store test.log
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log
+          path: log/test.log
+          retention-days: 3

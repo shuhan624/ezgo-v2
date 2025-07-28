@@ -1,0 +1,30 @@
+<div class="frame primary-bg user-form"  data-page="user_password">
+  <div class="users-form-container">
+    <div class="user-form-box">
+      <div class="user-form-content">
+        <h1><%= t(".forgot_your_password") %></h1>
+        <%= simple_form_for(resource, as: resource_name, url: user_password_path, html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <div class="input-mail">
+              <%= f.input :email,
+                          required: true,
+                          autofocus: true,
+                          wrapper_html: { class: 'input-icon' },
+                          input_html: { autocomplete: "email", placeholder: t(".email") },
+                          class:'form-control' %>
+            </div>
+          </div>
+          <div class="form-actions"><%= f.button :submit, t(".send_me_reset_password_instructions"), class:'form-submit' %></div>
+        <% end %>
+        <div class="form-other-links">
+          <%= render 'devise/shared/links' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="user-notice-block">
+    <%= render 'devise/shared/notice' %>
+  </div>
+</div>

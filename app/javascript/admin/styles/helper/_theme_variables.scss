@@ -1,0 +1,9 @@
+@each $theme-name, $theme-values in $themes {
+  $color-primary: nth($theme-values, 1);
+  $color-second: nth($theme-values, 2);
+  $main-bg: nth($theme-values, 3);
+
+  .theme-#{$theme-name} {
+    @include theme-styles($color-primary, $color-second, $main-bg);
+  }
+}

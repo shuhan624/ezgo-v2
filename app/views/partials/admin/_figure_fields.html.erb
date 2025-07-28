@@ -1,0 +1,19 @@
+<div class="figure-item nested-fields">
+  <div class="figure-item-flex">
+    <%= f.input :image, direct_upload: true,
+      input_html: {
+        class: 'dropify',
+        data: {
+          'default-file': (url_for(f.object.image) if f.object.image.attached?),
+          'max-file-size': '5M',
+          'allowed-file-extensions': 'png jpg jpeg gif bmp',
+        }
+      }
+    %>
+    <div class="file-name-group">
+      <%= f.input :alt_en %>
+      <%= f.input :alt_zh_tw %>
+    </div>
+  </div>
+  <%= link_to_remove_association "X", f, class: "btn btn-danger waves-effect float-right" %>
+</div>

@@ -1,0 +1,45 @@
+// Reference: https://marcantondahmen.github.io/sortable-tree/
+// Github: https://github.com/marcantondahmen/sortable-tree
+
+.tree {
+}
+
+.tree__node {
+  border: 3px dashed #ccc;
+  padding: 3px;
+  margin: 3px;
+  border-radius: 8px;
+  cursor: move;
+}
+
+.tree__node--hover {
+  background-color: #f0f0f0;
+}
+
+.tree__node--dragging {
+  background-color: #f0f0f0;
+}
+
+.tree__node--drop-before {
+}
+
+.tree__node--drop-inside {
+}
+
+.tree__node--drop-after {
+}
+
+.tree__label {
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.tree__subnodes {
+}
+
+.tree__collapse {
+}

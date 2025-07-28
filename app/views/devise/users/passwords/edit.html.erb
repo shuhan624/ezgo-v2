@@ -1,0 +1,41 @@
+<div class="frame primary-bg user-form" data-page="edit_passward">
+  <div class="users-form-container">
+    <div class="user-form-imgbox">
+      <%= content_tag :picture do %>
+        <%= content_tag(:source, nil, srcset: image_url("users/user-form-img.webp"), type: "image/webp") %>
+        <%= image_tag "users/user-form-img.png", class: 'img-ab-fit user-form-img', alt: 'dv_login', loading: 'lazy' %>
+      <% end %>
+    </div>
+    <div class="user-form-box">
+      <div class="user-form-content">
+        <h1><%= t(".change_your_password") %></h1>
+        <%= simple_form_for(resource, as: resource_name, url: user_password_path, html: { method: :put }) do |f| %>
+          <%= f.error_notification %>
+
+          <%= f.input :reset_password_token, as: :hidden %>
+          <%= f.full_error :reset_password_token %>
+
+          <div class="form-inputs">
+            <%= f.input :password,
+                        label: t(".new_password"),
+                        required: true,
+                        autofocus: true,
+                        hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
+                        input_html: { autocomplete: "new-password" } %>
+            <%= f.input :password_confirmation,
+                        label: t(".confirm_new_password"),
+                        required: true,
+                        input_html: { autocomplete: "new-password" } %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, t(".change_my_password"), class:'form-submit' %>
+          </div>
+        <% end %>
+        <div class="form-other-links">
+          <%= render 'devise/shared/links' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

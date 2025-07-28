@@ -1,0 +1,47 @@
+<% provide :page_title, render_action_i18n(:show, User) %>
+<% content_for :page_back do %>
+  <% if policy(User).index? %>
+    <%= link_to admin_users_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_user_path(@user),
+        class: 'btn btn-primary ms-2' if policy(@user).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_user_path(@user),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@user).destroy? %>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [User.human_attribute_name(:email), @user.send(:email)],
+           [User.human_attribute_name(:account_active), t(@user.account_active, scope: 'simple_form.options.user.account_active')],
+           [User.human_attribute_name(:name), @user.send(:name)],
+           [User.human_attribute_name(:phone), @user.send(:phone)],
+           [User.human_attribute_name(:role), t(@user.role, scope: 'simple_form.options.user.role')],
+           [User.human_attribute_name(:country), @user.send(:country_name)],
+           [User.human_attribute_name(:city), @user.send(:city)],
+           [User.human_attribute_name(:zip_code), @user.send(:zip_code)],
+           [User.human_attribute_name(:dist), @user.send(:dist)],
+           [User.human_attribute_name(:address), @user.send(:address)],
+           [User.human_attribute_name(:note), @user.send(:note)],
+           [User.human_attribute_name(:updated_at), I18n.l(@user.updated_at, format: :table)],
+           [User.human_attribute_name(:created_at), I18n.l(@user.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

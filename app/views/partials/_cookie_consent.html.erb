@@ -1,0 +1,20 @@
+<div id="agreeCookie" class="agree-cookie">
+  <div class="agree-cookie-inner">
+    <div class="agree-cookie-content">
+      <h2 class="title-sm"><%= t('.title') %></h2>
+      <p class="agree-cookie-text"><%= t('.content_html') %></p>
+    </div>
+    <button class="btn-primary second-color agree-cookie-btn"><%= t('.accept') %></button>
+  </div>
+</div>
+
+<script type="module">
+  if (Cookies.get('consent') === undefined) {
+    $('#agreeCookie').find('.agree-cookie-btn').on('click', function() {
+      $('#agreeCookie').addClass('approved');
+      Cookies.set('consent', 'true');
+    });
+  } else {
+    $('#agreeCookie').remove();
+  }
+</script>

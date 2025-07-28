@@ -1,0 +1,13 @@
+// 顏色只能使用 Hex，前面不要用#字號
+@mixin icon(
+  $icon: 'link',
+  $color: 'ffffff',
+) {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @if $icon == 'dropdown' {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.13 6.81"><path d="M.37.34l5.09,5.73L10.76.34" fill="none" stroke="%23#{$color}"/></svg>');
+  }
+}

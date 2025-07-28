@@ -1,0 +1,42 @@
+<div class="contact-us-block">
+  <%= simple_form_for(@contact, url: contact_us_path, html: { id: 'contactForm', role: "form" }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+    <% if @contact.errors.any? %>
+      <div role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4><%= @contact.errors.count %> 個問題導致無法儲存：</h4>
+        <ul>
+        <% @contact.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div>
+      <div class="form-input-group">
+        <%= f.input :name %>
+      </div>
+      <div class="form-input-group">
+        <%= f.input :email %>
+        <%= f.input :phone %>
+      </div>
+      <%= f.input :content %>
+      <%= f.input :controller_name, :as => :hidden, :input_html => { :value => controller_name } %>
+      <%= f.input :action_name, :as => :hidden, :input_html => { :value => action_name } %>
+    </div>
+    <%= cloudflare_turnstile %>
+    <%= f.button :submit, t('action.submit'), class: 'btn-second' %>
+  <% end %>
+</div>
+
+<script type="module">
+  // 成功送出表單後的提示訊息
+  // Swal.fire({
+  //   title: '成功送出詢價表單',
+  //   text: '我們將請專人在24個工作小時內為您服務。',
+  //   icon: 'success',
+  //   timer: 3000,
+  //   showConfirmButton: false,
+  // });
+</script>

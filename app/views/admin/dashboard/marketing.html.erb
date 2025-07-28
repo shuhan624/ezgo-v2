@@ -1,0 +1,28 @@
+<div class="marketing-dashboard">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="body date-choose">
+        <%= form_with id: 'date-form', class: 'form-inline', method: :get do |f| %>
+          <%= f.label :date_range, '日期範圍選擇：', class: '' %>
+          <%= f.text_field :date_range, id: 'date-range', class: 'form-control string', value: @date_range_str %>
+          <div class="form-check checkbox">
+            <%= f.check_box :compare, { checked: (params[:compare] == 'true'), class: 'form-check-input check_boxes' }, 'true', 'false' %>
+            <%= f.label :compare, '比較上一個週期', class: 'form-check-label collection_check_boxes' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row dashboard-card">
+      <div class="col-lg-12 col-xl-4">
+        <%= render 'admin/dashboard/marketing/users' %>
+      </div>
+      <div class="col-lg-12 col-xl-4">
+        <%= render 'admin/dashboard/marketing/sources' %>
+      </div>
+      <div class="col-lg-12 col-xl-4">
+        <%= render 'admin/dashboard/marketing/pageviews' %>
+      </div>
+    </div>
+  </div>
+</div>

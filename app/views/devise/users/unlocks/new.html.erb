@@ -1,0 +1,28 @@
+<div class="frame primary-bg user-form"  data-page="user_password">
+  <div class="users-form-container">
+    <div class="user-form-box">
+      <div class="user-form-content">
+        <h1><%= t(".resend_unlock_instructions") %></h1>
+        <%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+          <%= f.full_error :unlock_token %>
+
+          <div class="form-inputs">
+            <div class="input-mail">
+              <%= f.input :email,
+                          required: true,
+                          autofocus: true,
+                          wrapper_html: { class: 'input-icon' },
+                          input_html: { autocomplete: "email", placeholder: t(".email") },
+                          class:'form-control' %>
+            </div>
+          </div>
+        <div class="form-actions"><%= f.button :submit, t(".resend_unlock_instructions"), class:'form-submit' %></div>
+        <% end %>
+        <div class="form-other-links">
+          <%= render 'devise/shared/links' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

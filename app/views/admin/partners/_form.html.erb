@@ -1,0 +1,83 @@
+<%= simple_form_for([:admin, @partner], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @partner.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@partner.errors.count, "error") %> prohibited this partner from being saved:</h4>
+      <ul>
+      <% @partner.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="tabs-group">
+    <div class="card mb-4">
+      <div class="tabs-btn">
+        <a href="#zh-hant" class="tab active">中文</a>
+        <a href="#en" class="tab">英文</a>
+      </div>
+    </div>
+    <div class="tabs-content card">
+      <div class="tab-content card-body active" id="zh-hant">
+        <%= f.input :name %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: Partner::STATUS.keys %>
+            <%= f.input :link_zh_tw %>
+            <%= f.input :alt_zh_tw %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :image, direct_upload: true,
+              input_html: {
+                class: 'dropify',
+                data: {
+                  'default-file': (url_for(@partner.image) if @partner.image.attached?),
+                  'max-file-size': '5M',
+                  'allowed-file-extensions': 'png jpg jpeg gif bmp svg',
+                }
+              }
+            %>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content card-body" id="en">
+        <%= f.input :name_en %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :en_status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: Partner::STATUS.keys %>
+              <%= f.input :link_en %>
+              <%= f.input :alt_en %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :image_en, direct_upload: true,
+                input_html: {
+                class: 'dropify',
+                data: {
+                    'default-file': (url_for(@partner.image_en) if @partner.image_en.attached?),
+                    'max-file-size': '5M',
+                    'allowed-file-extensions': 'png jpg jpeg gif bmp svg',
+                }
+              }
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_partner_path(@partner),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@partner).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_partner_path(@partner),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@partner).destroy? %>
+  </div>
+<% end %>

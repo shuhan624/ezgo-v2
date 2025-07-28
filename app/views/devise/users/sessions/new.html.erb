@@ -1,0 +1,48 @@
+<div class="frame primary-bg user-form" data-page="login">
+  <div class="users-form-container">
+    <div class="user-form-box">
+      <div class="user-form-content">
+        <h1><%= t(".sign_in") %></h1>
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-inputs">
+            <div class="input-mail">
+              <%= f.input :email,
+                          required: false,
+                          autofocus: true,
+                          wrapper_html: { class: 'input-icon' },
+                          input_html: { autocomplete: "email", placeholder: t(".email") },
+                          class:'form-control' %>
+            </div>
+            <div class="input-passward">
+              <%= f.input :password,
+                          required: false,
+                          wrapper_html: { class: 'input-icon' },
+                          input_html: { autocomplete: "current-password", placeholder: t(".password") },
+                          class:'form-control' %>
+            </div>
+            <div class="form-group form-note-link">
+              <%= link_to '忘記密碼？', new_password_path(resource_name) %>
+            </div>
+          </div>
+          <div class="form-actions"><%= f.button :submit, t(".sign_in"), class: 'form-submit' %></div>
+        <% end %>
+        <div class="other-logins"><%= button_to t(".sign_in_line"), user_line_omniauth_authorize_path, method: :post, class: 'btn-primary line-login' %></div>
+        <div class="form-other-links">
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= content_tag :div, class: 'form-other-link' do %>
+              <div>還沒註冊？</div>
+              <%= link_to t(".sign_up"), new_registration_path(resource_name) %><br />
+            <% end %>
+          <% end %>
+        </div>
+        <!-- 未登入會員並點選購物車時出現以下內容 -->
+        <!-- <div class="skip-login">
+          <%#= link_to t(".skip"), cart_path %>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="user-notice-block">
+    <%= render 'devise/shared/notice' %>
+  </div>
+</div>

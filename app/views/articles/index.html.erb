@@ -1,0 +1,29 @@
+<div class="wrap" data-page="posts">
+  <div class="container">
+    <%= content_tag(:h1, (@category ? @category.name_i18n : @index_title), class: 'title-lg') %>
+    <%= content_tag(:h2, (@category ? @category.name_en : @index_title_en), class: 'title-sm') if I18n.locale != :en %>
+
+    <%# breadcrumb 可選擇是否顯示，但勿刪 breadcrumb_schema 須使用 %>
+    <% if @category.present? %>
+      <% render "partials/breadcrumb", crumbs: [
+        { text: @index_title, path: articles_url },
+        { text: @category.name_i18n, path: cate_articles_url(article_category: @category.slug) }
+      ] %>
+    <% else %>
+      <% render "partials/breadcrumb", crumbs: [
+        { text: @index_title, path: articles_url }
+      ] %>
+    <% end %>
+
+    <!-- templates -->
+    <%#= render "partials/templates/posts/posts_1_col" %>
+    <%= render "partials/templates/posts/posts_1_col_with_img" %>
+    <%#= render "partials/templates/posts/posts_3_col_with_img" %>
+
+    <%# pagination %>
+    <div class="base-pagination">
+      <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+    </div>
+  </div>
+</div>
+

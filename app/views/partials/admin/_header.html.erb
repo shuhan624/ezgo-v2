@@ -1,0 +1,41 @@
+<nav class="admin-header navbar navbar-expand-lg fixed-top" id="adminHeader">
+  <%= link_to image_tag(@admin_logo_url), root_path, class: 'header-logo' %>
+  <% if content_for?(:page_title) %>
+    <% breadcrumbs = []
+       breadcrumbs << { text: content_for(:page_title) }
+    %>
+    <%= render "partials/breadcrumb", crumbs: breadcrumbs %>
+  <% end %>
+  <div class="other-links d-flex align-items-center">
+    <div class="dropdown">
+      <a href="#" class="header-user text-decoration-none dropdown-toggle" id="headerDropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+        <%= image_tag "admin/role_master.png", class: 'rounded-circle d-inline-flex justify-content-center align-items-center' %>
+        <% if current_admin.role&.name.present? %>
+          <div class="authority-name"><%= current_admin.name %></div>
+        <% end %>
+      </a>
+      <ul class="dropdown-menu text-small shadow" aria-labelledby="headerDropdownUser">
+        <li>
+          <div class="authority">
+            <%= image_tag "admin/role_master.png", class: 'role-img' %>
+            <div class="authority-group">
+              <% if current_admin.name.present? %>
+                <div class="authority-name"><%= current_admin.name %></div>
+              <% else %>
+                <div class="authority-name"><%= current_admin.email %></div>
+              <% end %>
+              <% if current_admin.role&.name.present? %>
+                <div class="authority-role"><%= current_admin.role&.name %></div>
+              <% end %>
+            </div>
+          </div>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <%= link_to '登出', destroy_admin_session_path, class: 'admin-logout dropdown-item' %>
+      </ul>
+    </div>
+    <div class="header-mobile-menu" id="headerMobileMenu">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </div>
+</nav>

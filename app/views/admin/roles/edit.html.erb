@@ -1,0 +1,9 @@
+<% provide :page_title, render_action_i18n(:edit, Role) %>
+<% content_for :page_back do %>
+  <% if policy(Role).index? %>
+    <%= link_to admin_roles_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<%= render 'form' %>

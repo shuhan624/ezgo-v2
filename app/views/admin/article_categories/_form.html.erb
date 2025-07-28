@@ -1,0 +1,59 @@
+<%= simple_form_for([:admin, @article_category], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @article_category.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h5><%= pluralize(@article_category.errors.count, '個錯誤') %>導致<%= @article_category.model_name.human %>無法儲存：</h5>
+      <ul>
+      <% @article_category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="tabs-group">
+    <div class="card mb-4">
+      <div class="tabs-btn">
+        <a href="#settings" class="tab active">分類設定</a>
+        <a href="#seo" class="tab">SEO</a>
+      </div>
+    </div>
+    <div class="tabs-content card">
+      <div class="tab-content card-body active" id="settings">
+        <%= f.input :slug %>
+        <div class="row">
+          <%= f.input :name, wrapper_html: { class: 'col-md-6' } %>
+          <%= f.input :name_en, wrapper_html: { class: 'col-md-6' } %>
+        </div>
+        <div class="row">
+          <%= f.input :status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: ArticleCategory::STATUS.keys, wrapper_html: { class: 'col-md-6' } %>
+          <%= f.input :en_status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: ArticleCategory::STATUS.keys, wrapper_html: { class: 'col-md-6' } %>
+        </div>
+      </div>
+      <div class="tab-content card-body" id="seo">
+        <div class="form-inputs">
+          <%= f.simple_fields_for :seo do |seo| %>
+            <%= render 'partials/admin/seo_fields', :f => seo %>
+          <% end %>
+          <div style="clear: both;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_article_category_path(@article_category),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@article_category).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_article_category_path(@article_category),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@article_category).destroy? %>
+  </div>
+<% end %>

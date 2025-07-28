@@ -1,0 +1,237 @@
+// header
+// dropdown
+// 側邊欄
+// 按鈕
+// 表格
+// form
+// card
+
+@mixin theme-styles($color-primary, $color-second, $main-bg) {
+  background-color: $main-bg;
+  ::selection {
+    background: rgba($color-primary, 50%);
+  }
+  .color-primary {
+    color: $color-primary !important;
+  }
+
+  // 登入頁
+  .login {
+    background-color: $main-bg;
+  }
+  .login-title-group {
+    color: $color-primary;
+    span {
+      text-shadow: -1px 0 $color-primary, 0 1px $color-primary, 1px 0 $color-primary, 0 -1px $color-primary;
+    }
+  }
+  .login-form .form-control:focus ~ .input-group-text {
+    color: $color-primary;
+  }
+
+  // 登入後背景
+  .theme-deco {
+    &.t1 {
+      background: adjust-hue($color-primary, -10);
+    }
+    &.t2 {
+      background: adjust-hue($color-primary, 30);
+    }
+  }
+
+  // header
+  .header-user {
+    color: $color-primary;
+    span {
+      border-color: rgba($color-primary, 50%);
+    }
+  }
+  .header-mobile-menu {
+    background: $color-primary;
+  }
+  .authority {
+    .authority-role {
+      background: $color-second;
+      color: $color-primary;
+    }
+  }
+
+  // dropdown
+  .dropdown-item {
+    &:hover {
+      background-color: rgba($color-primary, 30%);
+    }
+    &:active {
+      background-color: $color-primary;
+    }
+  }
+  .dropdown-more {
+    border-color: transparent;
+    &:hover {
+      border-color: transparent;
+      i {
+        color: $color-title;
+      }
+    }
+    &:avtive {
+      color: $color-title;
+      border-color: transparent;
+      i {
+        color: $color-title;
+      }
+    }
+    i {
+      color: $color-primary;
+      font-size: 1.1rem;
+    }
+  }
+
+  // 側邊欄
+  .nav-item.active {
+    .nav-link, .nav-link.menu-toggle {
+      background-color: $color-primary;
+      color: #fff;
+      [class^="fa-"] {
+        color: $white;
+      }
+    }
+  }
+  .ml-menu {
+    li {
+      &.active, &:hover {
+        color: $color-primary;
+      }
+    }
+    a {
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+  .nav-link {
+    color: $color-content;
+    [class^="fa-"] {
+      color: $color-primary;
+    }
+    &:hover {
+      background-color: rgba($color-primary, 30%);
+    }
+  }
+  .sidebar-collapse {
+    span {
+      background: $color-primary;
+    }
+  }
+  .sidebar-note.current-project:hover {
+    color: $color-primary;
+  }
+
+  // 按鈕
+  .btn-primary {
+    background-color: $color-primary;
+    color: $white;
+    border-color: $color-primary;
+    &:hover {
+      background-color: darken($color-primary, 10%);
+      border-color: darken($color-primary, 10%);
+    }
+  }
+  .btn-secondary {
+    background-color: $color-second;
+    color: $color-primary;
+    border-color: $color-second;
+    &:hover {
+      color: $white;
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+  .btn-light {
+    color: $color-primary;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    &:hover {
+      background-color: $color-second;
+      border-color: $color-second;
+    }
+  }
+  .btn-link {
+    color: $color-primary;
+  }
+  .tabs-btn .tab {
+    &:hover {
+      color: $color-primary;
+    }
+    &.active {
+      color: $color-primary;
+      border-bottom: 2px solid $color-primary;
+    }
+  }
+
+  // 表格
+  table {
+    tbody {
+      tr {
+        &:hover td, &:hover .check-column-th {
+          background-color: $color-second;
+        }
+      }
+    }
+  }
+  table.index-list {
+    --bs-table-bg: transparent;
+    thead {
+      th {
+        color: $color-content;
+      }
+    }
+    tbody {
+      tr {
+        background: $white;
+      }
+      td {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+    }
+    .is-expanded [data-mobile] {
+      color: $color-primary;
+    }
+  }
+
+  // form
+  .form-control {
+    &:focus {
+      border-color: rgba($color-primary, 40%);
+      box-shadow: 0 0 0 0.25rem rgba($color-primary, 25%);
+    }
+  }
+
+  // card
+  .card {
+    .card-header {
+      background-color: $color-second;
+    }
+  }
+  $dash-colors: (
+    "primary": $color-primary,
+    "second": adjust-hue($color-primary, -10),
+    "gray": lighten($color-content, 22%),
+    "danger": $danger,
+    "info": $info,
+    "success": $success,
+    "warning": $warning,
+  );
+  .dashboard-card {
+    @each $name, $color in $dash-colors {
+      &.#{$name} {
+        .card-icon {
+          background: $color;
+        }
+        .card-number {
+          color: $color;
+        }
+      }
+    }
+  }
+}

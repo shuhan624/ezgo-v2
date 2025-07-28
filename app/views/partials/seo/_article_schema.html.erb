@@ -1,0 +1,21 @@
+<% @article_schema = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url_for(only_path: false,  action: 'show')
+    },
+    headline: @post.title_i18n,
+    description: @post.meta_desc,
+    image: @post.share_image,
+    author: {
+      '@type': 'Organization',
+      name: @site_title,
+      url: url_for(only_path: false,  action: 'show')
+    }
+  }
+%>
+
+<script type="application/ld+json">
+  <%= @article_schema.to_json.html_safe %>
+</script>

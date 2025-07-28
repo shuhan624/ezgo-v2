@@ -1,0 +1,86 @@
+<% provide :page_title, render_action_i18n(:show, Faq) + '｜' + @faq.title if @faq.title.present? %>
+<% content_for :page_back do %>
+  <% if policy(Faq).index? %>
+    <%= link_to admin_faqs_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_faq_path(@faq),
+        class: 'btn btn-primary ms-2' if policy(@faq).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_faq_path(@faq),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@faq).destroy? %>
+  </div>
+<% end %>
+
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [Faq.human_attribute_name(:faq_category), @faq.faq_category.name],
+           [Faq.human_attribute_name(:updated_at), I18n.l(@faq.updated_at, format: :table)],
+           [Faq.human_attribute_name(:created_at), I18n.l(@faq.created_at, format: :table)],
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-group">
+  <div class="card mt-4 mb-4">
+    <div class="tabs-btn">
+      <a href="#zh-hant" class="tab active">中文</a>
+      <a href="#en" class="tab">英文</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="zh-hant">
+      <div class="product details">
+        <% [
+             [Faq.human_attribute_name(:title), @faq.title],
+             [Faq.human_attribute_name(:status), @faq.status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <h5><%= Faq.human_attribute_name(:content) %></h5>
+      <div class="custom-editor" style="max-width: 800px">
+        <%= @faq.content&.html_safe %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [Faq.human_attribute_name(:title_en), @faq.title_en],
+             [Faq.human_attribute_name(:en_status), @faq.en_status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <h5><%= Faq.human_attribute_name(:content_en) %></h5>
+      <div class="custom-editor" style="max-width: 800px">
+        <%= @faq.content_en&.html_safe %>
+      </div>
+    </div>
+  </div>
+</div>

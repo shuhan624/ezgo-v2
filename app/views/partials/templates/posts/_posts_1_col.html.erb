@@ -1,0 +1,14 @@
+<!-- article 模板2 一列一則文章，不含圖片 -->
+<div class="post-items posts_1_col">
+  <% @posts.each do |post| %>
+    <%= link_to post.link(@category), class: 'post-item', target: (post.post_type == 'link' ? '_blank' : '_self') do %>
+      <div class="post-group">
+        <div class="post-category"><%= post.category_i18n(@category) %></div>
+        <div class="post-date hide-web"><%= post.published_date_i18n %></div>
+        <div class="post-title hide-pad"><%= post.title_i18n %></div>
+      </div>
+      <div class="post-title hide-web"><%= post.title_i18n %></div>
+      <div class="post-date hide-pad"><%= post.published_date_i18n %></div>
+    <% end %>
+  <% end %>
+</div>

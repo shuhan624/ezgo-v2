@@ -1,0 +1,35 @@
+<div class="index-search-form">
+  <%= search_form_for @q, url: admin_articles_path, class: 'form-inline search-form' do |f| %>
+    <div class="row g-3">
+      <div class="col-md-3 mb-1">
+        <%= f.collection_select :article_categories_id_eq, ArticleCategory.all.order(:position), :id, :name,
+            { selected: params.dig(:q, :article_categories_id_eq), include_blank: t('search_form.category') },
+            class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.select :post_type_eq,
+            options_for_select(Article::POST_TYPE.map { |k,v| [t(k, scope: 'simple_form.options.article.post_type'), k] },
+            @q.post_type_eq), {include_blank: t('search_form.post_type')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.select :featured_not_null,
+            options_for_select([[t('simple_form.options.article.featured.true'), true],
+            [t('simple_form.options.article.featured.false'), false]], @q.featured_not_null),
+            {include_blank: t('search_form.featured')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.select :top_not_null,
+            options_for_select([[t('simple_form.options.article.top.true'), true],
+            [t('simple_form.options.article.top.false'), false]], @q.top_not_null),
+            {include_blank: t('search_form.top')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-6 mb-1">
+        <%= f.search_field :title_or_title_en_or_slug_cont, placeholder: t('search_form.keywords'), class: 'form-control' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.submit t('action.search'), class: 'btn btn-primary', data: { disable_with: t('action.searching') } %>
+        <%= link_to t('action.reset'), request.path, class: 'btn btn-light' %>
+      </div>
+    </div>
+  <% end %>
+</div>

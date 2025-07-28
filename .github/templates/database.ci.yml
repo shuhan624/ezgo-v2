@@ -1,0 +1,9 @@
+test:
+  adapter: postgresql
+  host: localhost
+  port: 54321
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+  database: rails_test<%= ENV.fetch('TEST_ENV_NUMBER') { '3' } %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>

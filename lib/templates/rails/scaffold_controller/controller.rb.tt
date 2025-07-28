@@ -1,0 +1,77 @@
+# frozen_string_literal: true
+
+<% if namespaced? -%>
+require_dependency "<%= namespaced_path %>/application_controller"
+
+<% end -%>
+<% module_namespacing do -%>
+class <%= controller_class_name %>Controller < <%= controller_class_path[0]&.titleize || 'Admin' %>Controller
+  before_action :set_<%= singular_table_name %>, only: %i[show edit update destroy]
+
+  # GET <%= route_url %>
+  def index
+    authorize <%= class_name %>
+    <%= plural_table_name %> = <%= class_name %>.order(updated_at: :desc)
+    @pagy, @<%= plural_table_name %> = pagy(<%= plural_table_name %>)
+    @<%= plural_table_name %> = @<%= plural_table_name %>.decorate
+  end
+
+  # GET <%= route_url %>/:id
+  def show
+    @<%= singular_table_name %> = @<%= singular_table_name %>.decorate
+  end
+
+  # GET <%= route_url %>/new
+  def new
+    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    authorize @<%= singular_table_name %>
+  end
+
+  # GET <%= route_url %>/:id/edit
+  def edit; end
+
+  # POST <%= route_url %>
+  def create
+    @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
+    authorize @<%= singular_table_name %>
+
+    if @<%= orm_instance.save %>
+      redirect_to <%= show_helper %>, notice: successful_message
+    else
+      render :new
+    end
+  end
+
+  # PATCH/PUT <%= route_url %>/:id
+  def update
+    if @<%= orm_instance.update("#{singular_table_name}_params") %>
+      redirect_to <%= show_helper %>, notice: successful_message
+    else
+      render :edit
+    end
+  end
+
+  # DELETE <%= route_url %>/:id
+  def destroy
+    @<%= orm_instance.destroy %>
+    redirect_to <%= index_helper %>_url, notice: successful_message
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_<%= singular_table_name %>
+    @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+    authorize @<%= singular_table_name %>
+  end
+
+  # Only allow a list of trusted parameters through.
+  def <%= "#{singular_table_name}_params" %>
+    <%- if attributes_names.empty? -%>
+    params.fetch(:<%= singular_table_name %>, {})
+    <%- else -%>
+    params.require(:<%= singular_table_name %>).permit(<%= permitted_params %>)
+    <%- end -%>
+  end
+end
+<% end -%>

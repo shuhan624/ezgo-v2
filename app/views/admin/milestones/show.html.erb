@@ -1,0 +1,84 @@
+<% provide :page_title, render_action_i18n(:show, Milestone) + '｜' + @milestone.title if @milestone.title.present? %>
+<% content_for :page_back do %>
+  <% if policy(Milestone).index? %>
+    <%= link_to admin_milestones_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_milestone_path(@milestone),
+        class: 'btn btn-primary ms-2' if policy(@milestone).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_milestone_path(@milestone),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@milestone).destroy? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#settings" class="tab active">基本資訊</a>
+      <a href="#zh-hant" class="tab">中文</a>
+      <a href="#en" class="tab">英文</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="settings">
+      <div class="product details">
+        <% [
+             [Milestone.human_attribute_name(:date), @milestone.date],
+             [Milestone.human_attribute_name(:image), (image_tag(@milestone.image, width: 100))],
+             [Milestone.human_attribute_name(:updated_at), I18n.l(@milestone.updated_at, format: :table)],
+             [Milestone.human_attribute_name(:created_at), I18n.l(@milestone.created_at, format: :table)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="tab-content card-body" id="zh-hant">
+      <div class="product details">
+        <% [
+             [Milestone.human_attribute_name(:title), @milestone.title],
+             [Milestone.human_attribute_name(:status), @milestone.status],
+             [Milestone.human_attribute_name(:alt_zh_tw), @milestone.alt_zh_tw],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+      <h5><%= Milestone.human_attribute_name(:content) %></h5>
+      <div class="custom-editor" style="max-width: 800px">
+        <%= @milestone.content&.html_safe %>
+      </div>
+    </div>
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [Milestone.human_attribute_name(:title_en), @milestone.title_en],
+             [Milestone.human_attribute_name(:en_status), @milestone.en_status],
+             [Milestone.human_attribute_name(:alt_en), @milestone.alt_en],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <h5><%= Milestone.human_attribute_name(:content_en) %></h5>
+      <div class="custom-editor" style="max-width: 800px">
+        <%= @milestone.content_en&.html_safe %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<% provide :page_title, render_action_i18n(:new, RedirectRule) %>
+<% content_for :page_back do %>
+  <% if policy(RedirectRule).index? %>
+    <%= link_to admin_redirect_rules_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<div class="card">
+  <div class="card-body">
+    <%= render 'form' %>
+  </div>
+</div>
+

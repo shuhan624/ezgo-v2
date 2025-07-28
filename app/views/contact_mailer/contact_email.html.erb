@@ -1,0 +1,18 @@
+<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
+  <div class="item">
+    <span class="title"><%= Contact.human_attribute_name(:name) %>：</span>
+    <span class="content"><%= @contact.name %></span>
+  </div>
+  <div class="item">
+    <span class="title"><%= Contact.human_attribute_name(:email) %>：</span>
+    <span class="content"><%= @contact.email %></span>
+  </div>
+  <div class="item">
+    <span class="title"><%= Contact.human_attribute_name(:phone) %>：</span>
+    <span class="content"><%= @contact.phone %></span>
+  </div>
+  <div>
+    <span class="title"><%= Contact.human_attribute_name(:content) %>：</span>
+    <p><%= simple_format @contact.content %></p>
+  </div>
+</body>

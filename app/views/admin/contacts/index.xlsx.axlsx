@@ -1,0 +1,20 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: '聯絡表單') do |sheet|
+  sheet.add_row [
+    Contact.human_attribute_name(:name),
+    Contact.human_attribute_name(:email),
+    Contact.human_attribute_name(:content),
+    Contact.human_attribute_name(:created_at),
+    Contact.human_attribute_name(:status)
+  ]
+
+  @contacts.each do |contact|
+    sheet.add_row [
+      contact.name,
+      contact.email,
+      contact.content,
+      contact.created_at,
+      contact.status
+    ]
+  end
+end

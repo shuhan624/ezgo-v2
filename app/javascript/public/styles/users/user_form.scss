@@ -1,0 +1,121 @@
+// 會員登入、忘記密碼等表單共用樣式
+.user-form {
+  min-height: unset;
+
+  .users-form-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 70vh;
+  }
+
+  .user-form-imgbox {
+    background: linear-gradient(180deg, #171717 17.71%, #3F3F3F 52.08%, #1F1F1F 87.5%);
+    position: relative;
+    width: 100%;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    max-width: 40%;
+    @media(max-width: $media-max-web-content) {
+      display: none;
+    }
+    .user-form-img {
+      max-width: 30vw;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .user-form-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3em 1.6em;
+    .user-form-content {
+      width: 400px;
+      @media(max-width: $media-max-phone) {
+        width: 90%;
+      }
+    }
+
+    .form-inputs {
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      color: $color-primary;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 44px;
+      @media(max-width: $media-max-phone) {
+        font-size: 24px;
+      }
+    }
+    .form-note-link {
+      color: $color-third;
+      text-align: right;
+    }
+  }
+  // 登入 custom input
+  .input-mail, .input-passward {
+    position: relative;
+    .form-control {
+      text-indent: 26px;
+    }
+    .form-group.input-icon label {
+      display: none;
+    }
+  }
+
+  .form-submit {
+    padding: 0.8em 0.6em;
+  }
+
+  .form-other-links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .form-other-link *{
+      display: inline-block;
+    }
+    a {
+      color: $color-third;
+      margin-bottom: 6px;
+    }
+  }
+
+  .skip-login {
+    border-top: 1px solid $color-line;
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    a {
+      color: $color-third;
+    }
+  }
+}
+
+[data-page="sign_up"] {
+  .user-form-box .user-form-content {
+    width: 700px;
+    @media(max-width: $media-max-pad) {
+      width: 90%;
+    }
+  }
+
+  .form-input-group {
+    flex-wrap: nowrap;
+    @media(max-width: $media-max-pad) {
+      flex-direction: column;
+    }
+  }
+
+  .form-group {
+    box-sizing: border-box;
+    width: 100%;
+  }
+}

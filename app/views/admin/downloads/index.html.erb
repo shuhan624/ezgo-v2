@@ -1,0 +1,68 @@
+<% provide :page_title, render_action_i18n(:list, Download) %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to(fa_icon(:plus, text: t('btn.new')), new_admin_download_path, class: 'btn btn-primary float-end') if policy(Download).new? %>
+  </div>
+<% end %>
+
+<div class="index-search-form">
+  <%= search_form_for @q, url: admin_downloads_path do |f| %>
+    <div class="row g-3">
+      <div class="col-md-3 mb-1">
+        <%= f.collection_select :download_category_id_eq, DownloadCategory.all.order(:position), :id, :name, { selected: params.dig(:q, :download_category_id_eq), include_blank: t('search_form.category') }, class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.search_field :title_cont, placeholder: t('search_form.keywords'), class: 'form-control' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.submit t('action.search'), class: 'btn btn-primary', data: { disable_with: t('action.searching') } %>
+        <%= link_to t('action.reset'), request.path, class: 'btn btn-light' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<table class="table index-list">
+  <thead>
+    <tr>
+      <th class="check-column"></th>
+      <th class="column-primary"><%= Download.human_attribute_name(:title) %></th>
+      <th><%= Download.human_attribute_name(:download_category) %></th>
+      <th><%= Download.human_attribute_name(:status) %></th>
+      <th><%= Download.human_attribute_name(:en_status) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody <%= 'class=sortable-items data-sort-path=/downloads/sort' if policy(Download).sort? %>>
+    <% @downloads.each do |download| %>
+      <%= content_tag :tr, id: dom_id(download), class: "sort-#{dom_class(download)}", data: { item: dom_id(download) } do %>
+        <%= handle_icon %>
+        <td data-colname="<%= Download.human_attribute_name(:title) %>" class="column-primary">
+          <%= download.show_title %>
+          <button class="btn" type="button" data-mobile="<%= dom_id(download) %>" class="mobile-collapse">
+            <span><i class="fa-solid fa-caret-down"></i></span>
+          </button>
+        </td>
+        <td data-colname="<%= Download.human_attribute_name(:download_category) %>"><%= download.category %></td>
+        <td data-colname="<%= Download.human_attribute_name(:status) %>"><%= download.status %></td>
+        <td data-colname="<%= Download.human_attribute_name(:en_status) %>"><%= download.en_status %></td>
+        <td class="index-table-action text-end">
+          <%= link_to t('btn.show'), admin_download_path(download),
+            class: 'btn btn-primary me-2' if policy(Download).show? %>
+          <div class="dropdown d-inline-block">
+            <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(download) %>" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(download) %>">
+              <%= link_to t('btn.edit'), edit_admin_download_path(download), class: 'dropdown-item' if policy(Download).edit? %>
+            </ul>
+          </div>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="table-footer text-black-50">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  <%== pagy_info(@pagy) %>
+</div>

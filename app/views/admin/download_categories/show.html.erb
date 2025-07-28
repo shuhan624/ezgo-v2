@@ -1,0 +1,99 @@
+<% provide :page_title, render_action_i18n(:show, DownloadCategory) %>
+<% content_for :page_back do %>
+  <% if policy(DownloadCategory).index? %>
+    <%= link_to admin_download_categories_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_download_category_path(@download_category),
+        class: 'btn btn-primary ms-2' if policy(@download_category).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_download_category_path(@download_category),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@download_category).destroy? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#settings" class="tab active">基本資訊</a>
+      <a href="#zh-hant" class="tab">中文</a>
+      <a href="#en" class="tab">英文</a>
+      <a href="#seo" class="tab">SEO</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="settings">
+      <div class="product details">
+        <% [
+             [DownloadCategory.human_attribute_name(:slug), @download_category.slug],
+             [DownloadCategory.human_attribute_name(:updated_at), I18n.l(@download_category.updated_at, format: :table)],
+             [DownloadCategory.human_attribute_name(:created_at), I18n.l(@download_category.created_at, format: :table)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="zh-hant">
+      <div class="product details">
+        <% [
+             [DownloadCategory.human_attribute_name(:name), @download_category.name],
+             [DownloadCategory.human_attribute_name(:status), @download_category.status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [DownloadCategory.human_attribute_name(:name_en), @download_category.name_en],
+             [DownloadCategory.human_attribute_name(:en_status), @download_category.en_status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="seo">
+      <h5><%= Seo.human_attribute_name(:seo_title) %></h5>
+      <div class="product details">
+        <% [
+             [Seo.human_attribute_name(:meta_title), @download_category.seo.meta_title],
+             [Seo.human_attribute_name(:meta_title_en), @download_category.seo.meta_title_en],
+             [Seo.human_attribute_name(:meta_keywords), @download_category.seo.meta_keywords],
+             [Seo.human_attribute_name(:meta_keywords_en), @download_category.seo.meta_keywords_en],
+             [Seo.human_attribute_name(:meta_desc), @download_category.seo.meta_desc],
+             [Seo.human_attribute_name(:meta_desc_en), @download_category.seo.meta_desc_en],
+             [Seo.human_attribute_name(:og_title), @download_category.seo.og_title],
+             [Seo.human_attribute_name(:og_title_en), @download_category.seo.og_title_en],
+             [Seo.human_attribute_name(:og_desc), @download_category.seo.og_desc],
+             [Seo.human_attribute_name(:og_desc_en), @download_category.seo.og_desc_en],
+             [Seo.human_attribute_name(:og_image), (image_tag(@download_category.seo.og_image.variant(resize_to_limit: [420, nil]).processed) if @download_category.seo.og_image.attached?)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-4"><h5><%= title %></h5></div>
+            <div class="col-md-8"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

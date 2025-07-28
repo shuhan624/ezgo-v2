@@ -1,0 +1,35 @@
+<%= simple_form_for([:admin, @redirect_rule], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @redirect_rule.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@redirect_rule.errors.count, "error") %> prohibited this redirect_rule from being saved:</h4>
+      <ul>
+      <% @redirect_rule.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <%= f.input :source_path, wrapper_html: { class: 'col-md-4' } %>
+    <%= f.input :target_path, wrapper_html: { class: 'col-md-4' } %>
+    <%= f.input :position, as: :integer, input_html: { min: '1' }, wrapper_html: { class: 'col-md-4' } %>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_redirect_rule_path(@redirect_rule),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@redirect_rule).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_redirect_rule_path(@redirect_rule),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@redirect_rule).destroy? %>
+  </div>
+<% end %>

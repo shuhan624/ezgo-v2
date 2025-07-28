@@ -1,0 +1,8 @@
+<% provide :page_title, render_action_i18n(:edit, Admin) + '｜' + @admin.name if @admin.name.present? %>
+<% content_for :page_back do %>
+  <%= link_to admin_admins_path, class: 'btn btn-light' do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
+<% end %>
+
+<%= render 'form' %>

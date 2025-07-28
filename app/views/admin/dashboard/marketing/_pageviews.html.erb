@@ -1,0 +1,37 @@
+<div class="card dash-card card-3">
+  <div class="card-body">
+    <div id="ga-pageviews" class="c3_chart"></div>
+  </div>
+  <div class="header">
+    <h2><strong>網站流量</strong>/頁面瀏覽比較</h2>
+  </div>
+</div>
+
+<script type="module">
+  var pageviews_chart = c3.generate({
+    bindto: '#ga-pageviews',
+    data: {
+      type: 'bar',
+      json: <%= raw @pv_data.to_json %>,
+      groups: [
+        <%= raw @pageviews %>
+      ],
+      keys: {
+        x: 'page',
+        value: <%= raw @pageviews %>
+      },
+    },
+    color: {
+      pattern: ['#638D84', '#aec7e8', '#539AB6', '#F4C329', '#ECE8CF', '#463C33', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+    },
+    axis: {
+      x: {
+        type: 'category'
+      },
+      rotated: true
+    },
+    transition: {
+      duration: 3000
+    }
+  });
+</script>

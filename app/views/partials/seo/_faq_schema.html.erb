@@ -1,0 +1,22 @@
+<%
+  faq_data = @faqs.map do |faq|
+    {
+      '@type': 'Question',
+      name: faq.title_i18n,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        text: faq.content&.html_safe
+      }
+    }
+  end
+
+  @faq_schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq_data
+  }
+%>
+
+<script type="application/ld+json">
+  <%= @faq_schema.to_json.html_safe %>
+</script>

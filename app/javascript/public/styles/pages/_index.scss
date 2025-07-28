@@ -1,0 +1,695 @@
+
+// Comnon
+
+body {
+  background: linear-gradient(135deg, #E7F1F5, #C4E1E7);
+}
+
+.d-flex-align-items-center {
+  display: flex;
+  align-items: center;
+}
+.feature-sticky {
+  position: sticky;
+  top: 100px;
+  padding: 20px;
+
+}
+
+.dec-ellipse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    img {
+      width: 60vw; 
+      max-width: 100%; 
+      height: auto;
+    }
+     @media (min-width: 1440px) {
+    width: 80vw;
+  }
+}
+
+
+.btn-primary {
+      background-color: #B59168;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 100px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #B59168;
+        opacity: 0.8;
+        transform: translateY(-2px);
+      }
+}
+.section {
+  padding: 80px 0 ;
+}
+// section-2 
+.section-2 {
+   position: relative;
+   z-index: 1;
+   background: #F9FBFB;
+   padding: 100px 0;
+  
+   .dec-star {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 207px;
+  }
+  .row {
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .left {
+    flex: 1;
+    padding-right: 40px; 
+  
+    .section-subtitle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px; 
+      margin-bottom: 0.6rem;
+    }
+
+    .section-subtitle-wrap img {
+      width: 17px; 
+      height: auto;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: #0E5557;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      color: #1F1F1F;
+      margin-bottom: 1rem ;
+    }
+
+    .section-content {
+      font-size: 1rem;
+      color: #535353;
+      margin-bottom: 1.5rem;
+    }
+    .decor-wrapper {
+      text-align: right;
+      margin-top: 16px; 
+    }
+
+    .decor-wrapper img {
+      width: 244px;
+      height: auto;
+    }
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+
+    .feature-card {
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto;
+
+      .feature-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .feature-content {
+        padding: 0.2rem 2rem 2rem 2rem;
+        text-align: left;
+
+        h3 {
+          font-size: 1.25rem;
+          margin-bottom: 0.25rem;
+
+          .feature-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2F808263; 
+            margin-right: 1rem;
+          }
+        }
+        p {
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+}
+
+
+// section-3
+ .section-3 {
+  transition: top 0.3s ease;
+  background-color: #f9fbfb;
+  background-image: url(/vite-dev/images/section-3-bg.png);
+  background-repeat: no-repeat;
+  background-position: center calc(100% + 100px);
+  background-size: contain;
+  position: relative;
+  text-align: center;
+  z-index: 20;
+
+  .section-title {
+    margin-bottom: 40px;
+
+    .title-icon {
+      margin-bottom: 16px;
+      width: 17px;
+      height: auto;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #1f1f1f;
+    }
+  }
+
+  .main-card {
+    position: relative;
+
+    .main-image {
+    width: 80%;
+    }
+    .main-image img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .main-info-card {
+      position: absolute;
+      bottom: 10px;
+      left: 74%;
+      transform: translate(-50%);
+      background: #2F8082;
+      color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      width: 45%;
+      text-align: left;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .btn-more {
+        bottom: -20px;
+        right: 22px;
+        position: absolute;
+        display: inline-block;
+        margin-top: 1rem;
+        background: #fff;
+        color: #C3996B;
+        padding: 10px 24px;
+        border-radius: 100px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+        background-color: #B59168;
+        color: #fff;
+        opacity: 0.8;
+        transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .slider-controls {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    .dots {
+      display: flex;
+      gap: 8px;
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ccc;
+
+        &.active {
+          background: #52A7A6;
+        }
+      }
+    }
+
+    .arrows {
+      display: flex;
+      gap: 20px;
+
+      .arrow {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #b59168;
+
+        &:hover {
+          color: #8d704c;
+        }
+      }
+    }
+  }
+}
+
+// section-4
+.section-4 {
+    padding-top: 120px;
+    background-image: url(/vite-dev/images/section-4-bg.png), linear-gradient(to bottom, #f9fbfb 5%, #2f8082 45%, #2d8b87);
+    background-repeat: no-repeat, no-repeat;
+    background-position: center calc(100% - 40px), center;
+    background-size: contain;
+    text-align: center;
+    position: relative;
+
+  .feature-image{
+    right: 0;
+   
+    position: absolute;
+    top: 40px;
+
+    img{
+       width: 500px;
+    }
+  }
+  .section4-title {
+    margin-bottom: 40px;
+
+    .title-icon {
+      margin-bottom: 16px;
+      width: 17px;
+      height: auto;
+      filter: brightness(0) invert(1);
+
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #fff;
+    }
+  }
+
+  .section4-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .section4-card {
+    position: relative;
+    flex: 1;
+    text-align: left;
+
+    img {
+      width: 100%;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section4-label {
+      font-size: 1.125rem;
+      left: 27px;
+      top: 190px;
+      position: absolute;
+      background: #fff;
+      padding: 10px 24px;
+      border-radius: 40px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+      span{
+        color: #b59168;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      padding: 20px;
+      color: #fff; 
+    }
+  }
+
+  .section4-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    .btn-outline {
+      background: #fff;
+      border-radius: 40px;
+      padding: 10px 24px;
+      font-weight: 500;
+      color: #b59168;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-decoration: none;
+
+      &:hover {
+        background-color: #B59168;
+        color: #fff;
+        opacity: 0.8;
+        transform: translateY(-2px);
+        }
+    }
+
+  }
+}
+
+// section-5
+
+.section-5 {
+  padding-bottom: 330px;
+  background-image: url(/vite-dev/images/section-5-bg.png), linear-gradient(to bottom, #E7F1F5 0%, #C4E1E7 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: bottom, center;
+  background-size: contain;
+  position: relative;
+
+  .news-title {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .title-icon {
+          margin-bottom: 16px;
+    width: 17px;
+    height: auto;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+
+    }
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 auto;
+  }
+
+  .news-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    gap: 16px;
+
+    .news-date {
+      text-align: center;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+      width: 90px;
+      flex-shrink: 0;
+
+      .d-flex {
+        gap: 10px;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+        display: flex;
+        margin-bottom: 4px;
+
+      }
+      .day {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2F8082;
+        display: block;
+      }
+
+      .year,
+      .month {
+        display: block;
+        font-size: 0.85rem;
+        color: #808284;
+      }
+
+      .tag {
+        background: #2F8082;
+        color: #fff;
+        padding: 4px 13px;
+        font-size: 1rem;
+        border-radius: 40px;
+        display: inline-block;
+      }
+    }
+
+    .news-image img {
+      width: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .news-content {
+      flex: 1;
+      margin-right: 180px;
+
+      h3 {
+        font-size: 1.25rem;
+        margin-bottom: 6px;
+        color: #1F1F1F;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .news-more {
+      flex-shrink: 0;
+
+      a {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #C3996B;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .news-button {
+    margin-top: 40px;
+    text-align: center;
+
+  }
+}
+
+
+
+.section-1 {
+  position: relative;
+  min-height: 100vh;
+
+  .section-1-inner {
+    width: 100%;
+    padding-left: 5vw;
+    padding-right: 5vw;
+
+    @media (min-width: 1440px) {
+      padding-left: 10vw;
+      padding-right: 10vw;
+    }
+  }
+
+  .left {
+      position: absolute;
+      top: 15vh;
+      max-width: 480px;
+      color: #333;
+      z-index: 2;
+    
+    h1 {
+      font-size: 4.375rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #0E5557;
+    }
+
+    .d-flex {
+      display: flex;
+      align-items: center;
+    }
+    .main-subtitle {
+      font-size: 2rem;
+      color: #0E5557;
+      margin-left: 10px;
+    }
+    .text-highlight{
+      color: #B59168;
+    }
+    .lead{
+      margin-bottom: 20px;
+    }
+    @media (min-width: 1920px) {
+      h1 {
+        font-size: 5rem; 
+      }
+
+      .main-subtitle {
+        font-size: 2.2rem;
+      }
+
+      .lead {
+        font-size: 1.25rem;
+      }
+    }
+
+  }
+
+  .landmarks img,
+  .earth-bg img,
+  .earth img,
+  .part-cloud img,
+  .bottom-cloud img {
+    position: absolute;
+    height: auto;
+    display: block;
+  }
+
+  .landmarks{
+    position: absolute;
+    bottom: 75%;
+    right: 0px;
+    width: 55vw;
+}
+  .earth-bg{
+    position: absolute;
+    bottom: 75%;
+    right: 0px;
+    width: 55vw;
+    z-index: -1;
+}
+  .landmarks img {
+   right: 100px;
+   width: 100%;
+  }
+  .earth-bg img {
+    right: 100px;
+    width: 100%;
+  }
+  
+  .part-cloud img {
+    bottom: 20%;
+    right: 0;
+    width: 30%;
+    z-index: -11;
+  }
+
+  .bottom-cloud img {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .location-box {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 63%;
+    z-index: 3;
+}
+  .location-box .d-block{
+    display: block;
+  }
+.location-box img {
+  width: 28px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.country-button {
+  background: white;
+  border-radius: 100px;
+  padding: 5px 20px;
+  font-size: 18px;
+  color: #C3996B;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+        background-color: #B59168;
+        opacity: 0.8;
+        transform: translateY(-2px);
+        color: white;
+      }
+}
+
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.earth{
+  position: absolute;
+    bottom: 55%;
+    right: 0px;
+    width: 55vw;
+}
+
+.earth img {
+  animation: rotate 10s linear infinite;
+  transform-origin: center center;
+  right: 100px;
+  width: 100%;
+  transform: translateY(50%);
+}
+
+@media (min-width: 1920px) { 
+   .container {
+    width: 1400px;
+}
+ .section-1 .location-box {
+    left: 65%;
+}
+ }

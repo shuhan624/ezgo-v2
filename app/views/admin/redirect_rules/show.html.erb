@@ -1,0 +1,39 @@
+<% provide :page_title, render_action_i18n(:show, RedirectRule) %>
+<% content_for :page_back do %>
+  <% if policy(RedirectRule).index? %>
+    <%= link_to admin_redirect_rules_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_redirect_rule_path(@redirect_rule),
+        class: 'btn btn-primary ms-2' if policy(@redirect_rule).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_redirect_rule_path(@redirect_rule),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@redirect_rule).destroy? %>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [RedirectRule.human_attribute_name(:source_path), @redirect_rule.source_path],
+           [RedirectRule.human_attribute_name(:target_path), @redirect_rule.target_path],
+           [RedirectRule.human_attribute_name(:position), @redirect_rule.position],
+           [RedirectRule.human_attribute_name(:updated_at), I18n.l(@redirect_rule.updated_at, format: :table)],
+           [RedirectRule.human_attribute_name(:created_at), I18n.l(@redirect_rule.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

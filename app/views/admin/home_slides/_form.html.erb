@@ -1,0 +1,121 @@
+<%= simple_form_for([:admin, @home_slide], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @home_slide.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@home_slide.errors.count, "error") %> prohibited this home_slide from being saved:</h4>
+      <ul>
+      <% @home_slide.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="tabs-group">
+    <div class="card mb-4">
+      <div class="tabs-btn">
+        <a href="#zh-hant" class="tab active">中文</a>
+        <a href="#en" class="tab">英文</a>
+      </div>
+    </div>
+    <div class="tabs-content card">
+      <div class="tab-content card-body active" id="zh-hant">
+        <div class="row">
+          <div class="col">
+            <%= f.input :title %>
+            <%= f.input :sub_title, as: :text, input_html: { rows: 3 } %>
+            <%#= f.input :desc_zh_tw %>
+            <div class="row">
+              <%= f.input :published_at, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+              <%= f.input :expired_at, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+            </div>
+            <div class="row">
+              <%= f.input :link_zh_tw, wrapper_html: { class: 'col-md-6' } %>
+              <%= f.input :alt_zh_tw, wrapper_html: { class: 'col-md-6' } %>
+            </div>
+            <div class="row">
+              <%= f.input :banner, direct_upload: true,
+                wrapper_html: { class: 'col-md-6' },
+                input_html: {
+                  class: 'dropify',
+                  data: {
+                    'default-file': (url_for(@home_slide.banner) if @home_slide.banner.attached?),
+                    'max-file-size': '25M',
+                    'allowed-file-extensions': 'png jpg jpeg gif',
+                  }
+                }
+              %>
+              <%= f.input :banner_m, direct_upload: true,
+                wrapper_html: { class: 'col-md-6' },
+                input_html: {
+                  class: 'dropify',
+                  data: {
+                    'default-file': (url_for(@home_slide.banner_m) if @home_slide.banner_m.attached?),
+                    'max-file-size': '25M',
+                    'allowed-file-extensions': 'png jpg jpeg gif',
+                  }
+                }
+              %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content card-body" id="en">
+        <div class="row">
+          <div class="col">
+            <%= f.input :title_en %>
+            <%= f.input :sub_title_en, as: :text, input_html: { rows: 3 } %>
+            <%#= f.input :desc_en %>
+            <div class="row">
+              <%= f.input :published_at_en, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+              <%= f.input :expired_at_en, as: :string, input_html: { class: 'datetimepicker' }, wrapper_html: { class: 'col-md-6' } %>
+            </div>
+            <div class="row">
+              <%= f.input :link_en, wrapper_html: { class: 'col-md-6' } %>
+              <%= f.input :alt_en, wrapper_html: { class: 'col-md-6' } %>
+            </div>
+            <div class="row">
+              <%= f.input :banner_en, direct_upload: true,
+                wrapper_html: { class: 'col-md-6' },
+                input_html: {
+                  class: 'dropify',
+                  data: {
+                    'default-file': (url_for(@home_slide.banner_en) if @home_slide.banner_en.attached?),
+                    'max-file-size': '25M',
+                    'allowed-file-extensions': 'png jpg jpeg gif bmp mp4',
+                  }
+                }
+              %>
+              <%= f.input :banner_m_en, direct_upload: true,
+                wrapper_html: { class: 'col-md-6' },
+                input_html: {
+                  class: 'dropify',
+                  data: {
+                    'default-file': (url_for(@home_slide.banner_m_en) if @home_slide.banner_m_en.attached?),
+                    'max-file-size': '25M',
+                    'allowed-file-extensions': 'png jpg jpeg gif bmp mp4',
+                  }
+                }
+              %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_home_slide_path(@home_slide),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@home_slide).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_home_slide_path(@home_slide),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@home_slide).destroy? %>
+  </div>
+<% end %>

@@ -1,0 +1,35 @@
+<header class="header">
+  <div class="container-fluid">
+    <div class="header-main">
+      <!-- LOGO -->
+      <%= link_to root_path, class: 'header-logo' do %>
+        <%= image_tag @logo_url, alt: @site_title %>
+      <% end %>
+
+      <!-- Left -->
+      <div class="header-actions">
+        <!-- 搜尋按鈕 -->
+        <button class="search-btn">
+        <%= image_tag 'magnify.png', alt: '放大鏡' %>
+        </button>
+
+        <!-- Menu Button -->
+        <div class="menu-toggle-btn">
+          <div class="menu-icon-group">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+          </div>
+          <span class="menu-text">Menu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- -->
+<div class="menu-overlay">
+  <div class="menu-close">✕ Close</div>
+
+ 
+</div>

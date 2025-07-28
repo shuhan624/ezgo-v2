@@ -1,0 +1,19 @@
+<% @organization_schema = {
+    "@context": "https://schema.org",
+    "@type": "Corporation",
+    name: @site_title,
+    alternateName: @site_title,
+    url: url_for(only_path: false),
+    logo: @logo_url,
+    sameAs: [
+      @facebook,
+      @youtube
+    ]
+  }
+%>
+
+<script type="application/ld+json">
+  <%= @organization_schema.to_json.html_safe %>
+</script>
+
+<%= yield :breadcrumb_schema %>

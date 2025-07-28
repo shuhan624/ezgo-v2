@@ -1,0 +1,52 @@
+<%= simple_form_for([:admin, @download], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @download.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@download.errors.count, "error") %> prohibited this download from being saved:</h4>
+      <ul>
+      <% @download.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <%= f.input :title, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :title_en, wrapper_html: { class: 'col-md-6' } %>
+      </div>
+      <div class="row">
+        <%= f.input :status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: Download::STATUS.keys, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.association :download_category, as: :radio_buttons, wrapper: :vertical_collection_inline, wrapper_html: { class: 'col-md-6' } %>
+      </div>
+      <%= f.input :file, direct_upload: true,
+        input_html: {
+          class: 'dropify',
+          data: {
+            'default-file': (url_for(f.object.file) if f.object.file.attached?),
+            'max-file-size': '5M',
+            'allowed-file-extensions': 'pdf word png jpg jpeg',
+          }
+        }
+      %>
+    </div>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_download_path(@download),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@download).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_download_path(@download),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@download).destroy? %>
+  </div>
+<% end %>

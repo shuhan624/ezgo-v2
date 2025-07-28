@@ -1,0 +1,72 @@
+<%= simple_form_for([:admin, @custom_page], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @custom_page.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@custom_page.errors.count, "error") %> prohibited this custom_page from being saved:</h4>
+      <ul>
+      <% @custom_page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="tabs-group">
+    <div class="card mb-4">
+      <div class="tabs-btn">
+        <a href="#zh-hant" class="tab active">中文</a>
+        <a href="#en" class="tab">英文</a>
+        <a href="#seo" class="tab">SEO</a>
+      </div>
+    </div>
+
+    <div class="tabs-content card">
+      <div class="tab-content card-body active" id="zh-hant">
+        <!-- 如果是後續建立的頁面，則可以設定 slug, status，否則預設頁面只有 cw chief 可以設定這些欄位-->
+        <% if (@custom_page.non_default_page? || current_admin.cw_chief?) %>
+          <%= f.input :slug %>
+          <%= f.input :status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: CustomPage::STATUS.keys %>
+        <% end %>
+
+        <% if current_admin.cw_chief? %>
+          <%= f.input :custom_type, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: CustomPage::TYPE.keys %>
+        <% else %>
+          <%= f.input :custom_type, as: :hidden, input_html: { value: @custom_page.custom_type } %>
+        <% end %>
+        <div class="row">
+          <%= f.input :title, wrapper_html: { class: 'col-md-6' } %>
+        </div>
+        <%= f.input :content, as: :text, input_html: { class: 'tinymce', id: 'custom-page-content', value: @custom_page.content&.html_safe } %>
+      </div>
+      <div class="tab-content card-body" id="en">
+        <% if (@custom_page.non_default_page? || current_admin.cw_chief?) %>
+          <%= f.input :en_status, as: :radio_buttons, collection: CustomPage::STATUS.keys, wrapper: :vertical_collection_inline %>
+        <% end %>
+        <div class="row">
+          <%= f.input :title_en, wrapper_html: { class: 'col-md-6' } %>
+        </div>
+        <%= f.input :content_en, as: :text, input_html: { class: 'tinymce', id: 'custom-page-content-en', value: @custom_page.content_en&.html_safe } %>
+      </div>
+      <div class="tab-content card-body" id="seo">
+        <%= f.simple_fields_for :seo do |seo| %>
+          <%= render 'partials/admin/seo_fields', :f => seo %>
+        <% end %>
+        <div style="clear: both;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'), admin_custom_page_path(@custom_page), class: 'btn btn-light' if controller.action_name == 'edit' && policy(@custom_page).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_custom_page_path(@custom_page),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@custom_page).destroy? && @custom_page.non_default_page? %>
+  </div>
+<% end %>

@@ -1,0 +1,63 @@
+<%= simple_form_for([:admin, @document], html: { class: "form-horizontal document-fields", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @document.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h5><%= pluralize(@document.errors.count, '個錯誤') %>導致<%= @document.model_name.human %>無法儲存：</h5>
+      <ul>
+        <% @document.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= f.input :file_type, as: :radio_buttons, collection: Document::FILE_TYPE.keys.map { |type| [type, t(type, scope: 'simple_form.options.document.file_type')] }, label_method: :second, value_method: :first,
+          wrapper: :vertical_collection_inline %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :language, as: :radio_buttons, collection: Document::LANGUAGE.keys.map { |type| [type, t(type, scope: 'simple_form.options.document.language')] }, label_method: :second, value_method: :first,
+          wrapper: :vertical_collection_inline %>
+        </div>
+        <div class="col-md-12">
+          <%= f.input :title %>
+          <div class="document-link"><%= f.input :link %></div>
+          <div class="document-slug"><%#= f.input :slug %></div>
+          <div class="document-fields">
+            <div class="document-file">
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <%= f.input :file, direct_upload: true,
+                    input_html: {
+                      class: 'dropify',
+                      data: {
+                        'default-file': (url_for(f.object.file) if f.object.file.attached?),
+                        'max-file-size': '15M',
+                        'allowed-file-extensions': 'pdf',
+                      }
+                    }
+                  %>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="float-btns">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'), admin_document_path(@document), class: 'btn btn-light' if controller.action_name == 'edit' && policy(@document).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_document_path(@document), class: 'btn btn-danger-light float-end ms-2 single-icon', method: :delete, data: { confirm: t('confirm_message') } if controller.action_name == 'edit' && policy(@document).destroy? %>
+  </div>
+<% end %>

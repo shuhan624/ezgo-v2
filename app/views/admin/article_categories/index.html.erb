@@ -1,0 +1,73 @@
+<% provide :page_title, render_action_i18n(:list, ArticleCategory) %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to(fa_icon(:plus, text: t('btn.new')), new_admin_article_category_url, class: 'btn btn-primary float-end') if policy(ArticleCategory).new? %>
+  </div>
+<% end %>
+
+<% if policy(ArticleCategory).sort? %>
+  <p class="text-muted"><%= t('sort_hint', model: ArticleCategory.model_name.human) %></p>
+<% end %>
+
+<div class="index-search-form">
+  <%= search_form_for @q, url: admin_article_categories_path, class: 'form-inline search-form' do |f| %>
+    <div class="row g-3">
+      <div class="col-md-3 mb-1">
+        <%= f.select :status_eq, options_for_select(ArticleCategory::STATUS.map { |k, v| [t(k, scope: 'simple_form.options.article_category.status'), k]}, @q.status_eq), {include_blank: t('search_form.status')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.select :en_status_eq, options_for_select(ArticleCategory::STATUS.map { |k, v| [t(k, scope: 'simple_form.options.article_category.en_status'), k]}, @q.en_status_eq), {include_blank: t('search_form.en_status')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.search_field :name_or_name_en_or_slug_cont, placeholder: t('search_form.keywords'), class: 'form-control' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.submit t('action.search'), class: 'btn btn-primary', data: { disable_with: t('action.searching') } %>
+        <%= link_to t('action.reset'), request.path, class: 'btn btn-light' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<table class="table index-list">
+  <thead>
+    <tr>
+      <th class="check-column"></th>
+      <th class="column-primary"><%= ArticleCategory.human_attribute_name(:name) %></th>
+      <th><%= ArticleCategory.human_attribute_name(:status) %></th>
+      <th><%= ArticleCategory.human_attribute_name(:en_status) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody <%= 'class=sortable-items data-sort-path=/article_categories/sort' if policy(ArticleCategory).sort? %>>
+    <% @article_categories.each do |category| %>
+      <%= content_tag :tr, id: dom_id(category), class: "sort-#{dom_class(category)}", data: { item: dom_id(category) } do %>
+        <%= handle_icon %>
+        <td data-colname="<%= ArticleCategory.human_attribute_name(:name) %>" class="column-primary">
+          <%= category.show_name %>
+          <button class="btn" type="button" data-mobile="<%= dom_id(category) %>" class="mobile-collapse">
+            <span><i class="fa-solid fa-caret-down"></i></span>
+          </button>
+        </td>
+        <td data-colname="<%= ArticleCategory.human_attribute_name(:status) %>"><%= category.status %></td>
+        <td data-colname="<%= ArticleCategory.human_attribute_name(:en_status) %>"><%= category.en_status %></td>
+        <td class="index-table-action text-end">
+          <%= link_to t('btn.show'), admin_article_category_path(category),
+            class: 'btn btn-primary me-2' if policy(category).show? %>
+          <div class="dropdown d-inline-block">
+            <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(category) %>" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(category) %>">
+              <%= link_to t('btn.edit'), edit_admin_article_category_path(category), class: 'dropdown-item' if policy(category).edit? %>
+            </ul>
+          </div>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="table-footer text-black-50">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  <%== pagy_info(@pagy) %>
+</div>

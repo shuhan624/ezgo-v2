@@ -1,0 +1,48 @@
+<div class="wrap" data-page="post-inner">
+  <div class="container">
+    <%# breadcrumb 可選擇是否顯示，但勿刪 breadcrumb_schema 須使用 %>
+    <% render "partials/breadcrumb", crumbs: [
+      { text: @index_title, path: articles_url },
+      { text: @category.name_i18n, path: cate_articles_url(article_category: @category.slug) },
+      { text: @post.title_i18n }
+    ] %>
+    <%= content_tag(:h1, @post.title_i18n, class: 'title-lg') %>
+    <%#= content_tag(:h2, @post.title_en, class: 'title-sm') %>
+
+    <div class="post-container">
+      <div class="post-group">
+        <%= link_to cate_articles_url(article_category: @category.slug), class: 'post-category' do %>
+          <%= @category.name_i18n %>
+        <% end %>
+        <div class="post-date"><%= @post.published_date_i18n %></div>
+      </div>
+      <div class="imgbox">
+        <% if @post.image.attached? %>
+          <%= content_tag :picture do %>
+            <%= content_tag(:source, nil, srcset: rails_storage_proxy_url(@post.image.variant(resize_to_fill: [600, 600], convert: :webp, format: :webp, saver: {strip: true, quality: 80 }).processed, only_path: true), type: "image/webp") %>
+            <%= image_tag @post.image, class: 'img-cover', alt: (@post.alt.present? ? @post.alt : @post.title_i18n), loading: 'lazy' %>
+          <% end %>
+        <% else %>
+          <%= image_tag '/images/tmp/default-image.jpg', class: 'img-cover', alt: (@post.alt.present? ? @post.alt : @post.title_i18n) %>
+        <% end %>
+      </div>
+      <div class="custom-editor">
+        <%= @post.content_i18n %>
+      </div>
+      <div class="post-nav-links">
+        <% if @previous_post.present? %>
+          <%= link_to article_path(article_category: @category, id: @previous_post.slug), class: 'post-nav-link post-prev' do %>
+            <div class="post-nav-icon"><%= t('.previous') %></div>
+            <div class="post-nav-post-title"><%= @previous_post.title_i18n %></div>
+          <% end %>
+        <% end %>
+        <% if @next_post.present? %>
+          <%= link_to article_path(article_category: @category, id: @next_post.slug), class: 'post-nav-link post-next' do %>
+            <div class="post-nav-icon"><%= t('.next') %></div>
+            <div class="post-nav-post-title"><%= @next_post.title_i18n %></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

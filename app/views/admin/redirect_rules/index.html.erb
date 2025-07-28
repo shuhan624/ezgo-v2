@@ -1,0 +1,91 @@
+<% provide :page_title, render_action_i18n(:list, RedirectRule) %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= button_tag type: 'button', class: 'btn btn-success float-end ms-2', data: { bs_toggle: 'modal', bs_target: '#importModal' } do %>
+      <%= content_tag :i, nil, class: 'fa-solid fa-arrow-up-from-bracket' %>
+      <%= t('.import.title') %>
+    <% end %>
+    <%= link_to(fa_icon(:plus, text: t('btn.new')), new_admin_redirect_rule_path, class: 'btn btn-primary float-end') if policy(RedirectRule).new? %>
+  </div>
+<% end %>
+
+<p class="text-muted"><%= t('.hint') %></p>
+
+<div class="index-search-form">
+  <%= search_form_for @q, url: admin_redirect_rules_path do |f| %>
+    <div class="row g-3">
+      <div class="col-md-3 mb-1">
+        <%= f.search_field :source_path_or_target_path_cont, placeholder: t('search_form.keywords'), class: 'form-control' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.submit t('action.search'), class: 'btn btn-primary', data: { disable_with: t('action.searching') } %>
+        <%= link_to t('action.reset'), request.path, class: 'btn btn-light' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<table class="table index-list">
+  <thead>
+    <tr>
+      <th class="check-column"></th>
+      <th class="column-primary"><%= RedirectRule.human_attribute_name(:position) %></th>
+      <th><%= RedirectRule.human_attribute_name(:source_path) %></th>
+      <th><%= RedirectRule.human_attribute_name(:target_path) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody <%= 'class=sortable-items data-sort-path=/redirect_rules/sort' if policy(RedirectRule).sort? %>>
+    <% @redirect_rules.each do |redirect_rule| %>
+      <%= content_tag :tr, id: dom_id(redirect_rule), class: "sort-#{dom_class(redirect_rule)}", data: { item: dom_id(redirect_rule) } do %>
+        <%= handle_icon %>
+        <td data-colname="<%= RedirectRule.human_attribute_name(:position) %>" class="column-primary">
+          <%= redirect_rule.position %>
+          <button class="btn" type="button" data-mobile="<%= dom_id(redirect_rule) %>" class="mobile-collapse">
+            <span><i class="fa-solid fa-caret-down"></i></span>
+          </button>
+        </td>
+        <td data-colname="<%= RedirectRule.human_attribute_name(:source_path) %>"><span><%= redirect_rule.source_path %></span></td>
+        <td data-colname="<%= RedirectRule.human_attribute_name(:target_path) %>"><span><%= redirect_rule.target_path %></span></td>
+        <td class="index-table-action text-end">
+          <%= link_to t('btn.show'), admin_redirect_rule_path(redirect_rule),
+            class: 'btn btn-primary me-2' if policy(redirect_rule).show? %>
+          <div class="dropdown d-inline-block">
+            <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(redirect_rule) %>" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(redirect_rule) %>">
+              <%= link_to t('btn.edit'), edit_admin_redirect_rule_path(redirect_rule), class: 'dropdown-item' if policy(redirect_rule).edit? %>
+            </ul>
+          </div>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="table-footer text-black-50">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  <%== pagy_info(@pagy) %>
+</div>
+
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_with url: import_admin_redirect_rules_path, multipart: true do |f| %>
+        <div class="modal-header justify-content-between">
+          <h4 class="title" id="defaultModalLabel"><%= t('.import.title') %></h4>
+          <%= link_to '下載範例檔案', '/files/redirect-example.xlsx', class: 'btn btn-warning', download: '轉址路徑範例' %>
+        </div>
+        <div class="modal-body">
+          <p class="text-danger"><%= t('.import.notice') %></p>
+          <div class="form-group">
+            <%= file_field_tag :file, accept:'.xlsx' ,class: 'upload' %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= submit_tag '送出', class: 'btn btn-primary submit-button' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

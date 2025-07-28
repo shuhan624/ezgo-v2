@@ -1,0 +1,70 @@
+<div class="frame primary-bg" data-page="user_edit_profile">
+  <%= render "user_top" %>
+  <div class="container user-main-container">
+    <%= render "user_sidebar" %>
+    <div class="user-main">
+      <%= simple_form_for(@user, url: user_profile_path, method: :put, html: { class: "form-horizontal user-edit-profile-form", role: "form" }) do |f| %>
+        <%= f.error_notification %>
+
+        <% if @user.errors.any? %>
+          <div class="alert-block">
+            <%= image_tag "icon/alert.svg", class: 'alert-icon', alt: 'alert' %>
+            <div class="alert-content">
+              <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+              <div class="alert alert-danger alert-dismissable" role="alert">
+                <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="form-input-group">
+          <%= f.input :name, input_html: { autocomplete: :off } %>
+          <%= f.input :phone, input_html: { autocomplete: :off } %>
+        </div>
+        <div class="form-input-group">
+          <%= f.input :email, input_html: { autocomplete: :off }, readonly: true %>
+        </div>
+        <div class="form-input-group">
+          <%= f.input :organization %>
+          <%= f.input :department %>
+          <%= f.input :tax_number %>
+        </div>
+        <div id="user-area" class="form-input-group">
+          <%#= f.select :country, ISO3166::Country.translations('zh-TW').slice(*Country.codes).collect {|k,v| [v, k]} %>
+
+          <%= f.input :country, priority: ['TW'], format: :tw_name %>
+          <%= f.input :city, as: :select, collection: [], input_html: { data: { value: @user.city } } %>
+          <%= f.input :dist, as: :select, collection: [], input_html: { data: { value: @user.dist } } %>
+          <%= f.input_field :zip_code, as: :hidden %>
+        </div>
+        <%= f.input :address %>
+        <div class="form-actions user-custom-btn">
+          <%= f.button :submit, t(".save"), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="module">
+  $(document).ready(function () {
+    // 若為台灣則打開縣市地區選擇
+    var selectTW = $('#user_country');
+    var selectTW_items = $('#user_city, #user_dist');
+    function selectCountry() {
+      if(selectTW.val() == "TW") {
+        $(selectTW_items).attr('disabled', false);
+      } else {
+        $(selectTW_items).attr('disabled', true).val($("option:first").val());
+      }
+    }
+    selectCountry();
+    $(selectTW).change(function(e) {
+      selectCountry();
+    });
+  });
+</script>

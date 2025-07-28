@@ -1,0 +1,61 @@
+.swiper-pagination {
+  position: relative;
+  padding: 10px 0 0;
+  .swiper-pagination-bullet {
+    width: 58px;
+    height: 4px;
+    border-radius: 0;
+    background-color: #D9D9D9;
+    opacity: 1;
+    transition: 0.3s;
+    @media (max-width: $media-max-phone) {
+      width: 23px;
+    }
+    &:hover {
+      background-color: #9ca0b3;
+    }
+  }
+  .swiper-pagination-bullet-active {
+    background-color: $color-primary;
+  }
+}
+.swiper {
+  &:hover {
+    .swiper-button {
+      opacity: 1;
+    }
+  }
+}
+.swiper-button {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  font-size: 40px;
+  z-index: 50;
+  opacity: 0;
+  transition: 0.6s;
+  @media (max-width: $media-max-web-content) {
+    font-size: 30px;
+  }
+  &.prev {
+    left: 0;
+  }
+  &.next {
+    right: 0;
+  }
+  .swiper-btn-inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    color: #fff;
+    background-color: rgba($color-second, 0.8);
+    cursor: pointer;
+    &:hover {
+      background-color: $color-third;
+    }
+  }
+  .swiper-button-disabled {
+    opacity: 0;
+  }
+}

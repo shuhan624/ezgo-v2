@@ -1,0 +1,23 @@
+<div class="lang-switch-group">
+  <% common_params = {article_category: params[:article_category], event_category: params[:event_category], story_category: params[:story_category], industry_category: params[:industry_category], faq_category: params[:faq_category]} %>
+  <div class="dropdown">
+    <div class="dropdown-btn" type="button" id="langSwitchBtn">
+      <div class="dropdown-icon hide-web" data-icon="language"></div>
+      <div class="dropdown-option hide-pad hide-mobile">
+        <span><%= (I18n.locale == :en) ? "English" : "中文" %></span>
+      </div>
+    </div>
+    <% if !@no_other_language %>
+      <div class="dropdown-list" aria-labelledby="langSwitchBtn">
+        <ul class="dropdown-list-items">
+          <li class="dropdown-list-item <%= 'active' if I18n.locale == :'zh-TW' %>">
+            <%= link_to '中文', url_for(common_params.merge(locale: nil)) %>
+          </li>
+          <li class="dropdown-list-item <%= 'active' if I18n.locale == :en %>">
+            <%= link_to 'English', url_for(common_params.merge(locale: :en)) %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

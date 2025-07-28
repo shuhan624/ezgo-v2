@@ -1,0 +1,75 @@
+<% provide :page_title, render_action_i18n(:show, Admin) + '｜' + @admin.name if @admin.name.present? %>
+<% content_for :page_back do %>
+  <%= link_to admin_admins_path, class: 'btn btn-light' do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'), edit_admin_admin_path(@admin), class: 'btn btn-primary float-end ms-2' if policy(@admin).edit? %>
+    <%= link_to fa_icon(:"trash-can"), admin_admin_path(@admin), class: 'btn btn-danger-light float-end ms-2 single-icon', method: :delete, data: { confirm: t('confirm_message') } if policy(@admin).destroy? %>
+  </div>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <dl class="row g-3">
+          <% [
+             [Admin.human_attribute_name(:email), @admin.send(:email)],
+             [Admin.human_attribute_name(:name), @admin.send(:name)],
+             [Admin.human_attribute_name(:role_id), @admin.role&.name],
+             [Admin.human_attribute_name(:account_active), @admin.status],
+           ].each do |title, content| %>
+            <dt class="col-md-4"><%= title %></dt>
+            <dd class="col-md-8 mb-0"><%= content %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <dl class="row g-3">
+          <% [
+             [Admin.human_attribute_name(:last_sign_in_at), @admin.last_sign_in_at&.strftime("%F %T")],
+             [Admin.human_attribute_name(:updated_at), @admin.updated_at.strftime("%F %T")],
+             [Admin.human_attribute_name(:created_at), @admin.created_at.strftime("%F %T")]
+           ].each do |title, content| %>
+            <dt class="col-md-4"><%= title %></dt>
+            <dd class="col-md-8 mb-0"><%= content %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if policy(@admin).audit? %>
+  <div class="card mt-3 record">
+    <table class="table index-list">
+      <thead>
+        <tr>
+          <th><%= CustomAudit.human_attribute_name(:created_at) %></th>
+          <th><%= CustomAudit.human_attribute_name(:action) %></th>
+          <th><%= CustomAudit.human_attribute_name(:model) %></th>
+          <th><%= CustomAudit.human_attribute_name(:title) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @records.each do |audit| %>
+          <tr>
+            <td><%= audit.created_at.strftime("%F %T") %></td>
+            <td><%= audit.show_action_name %></td>
+            <td><%= audit.auditable_type_name %></td>
+            <td><%= audit.item_title %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+    <%== pagy_info(@pagy) %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<div class="wrap">
+  <div class="container">
+    <%= content_tag(:h1, @page.title_i18n, class: 'title-lg') %>
+    <%= content_tag(:h2, @page.title_en, class: 'title-sm') %>
+    <div class="custom-editor">
+      <%= @page.content_i18n&.html_safe %>
+    </div>
+  </div>
+</div>

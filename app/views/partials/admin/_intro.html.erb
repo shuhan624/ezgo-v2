@@ -1,0 +1,27 @@
+<script type="module">
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  window.onload = function() {
+    if ('true' == getCookie('intro')) {
+      // skip
+    } else {
+      // intro.js
+      introJs().setOptions({
+        showProgress: true,
+        showBullets: false,
+        "overlayOpacity": 0.7,
+        "nextLabel": "下一步",
+        "prevLabel": "上一步",
+        "doneLabel": "了解！"
+      }).oncomplete(function() {
+        document.cookie = 'intro=true'
+      }).onexit(function() {
+        document.cookie = 'intro=true'
+      }).start()
+    }
+  }
+</script>

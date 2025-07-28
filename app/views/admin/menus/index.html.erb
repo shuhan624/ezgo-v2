@@ -1,0 +1,67 @@
+<% provide :page_title, render_action_i18n(:list, Menu) %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to(fa_icon(:plus, text: t('btn.new')), new_admin_menu_path, class: 'btn btn-primary float-end') if policy(Menu).new? %>
+  </div>
+<% end %>
+<div class="card">
+  <div id="menu-tree">
+  </div>
+</div>
+
+<script type="module">
+  const nodes = [<%= raw @header_tree_nodes.to_json %>];
+  const tree = new SortableTree({
+    nodes: nodes,
+    element: document.querySelector('#menu-tree'),
+    icons: {
+      collapsed: '+',
+      open: '-',
+    },
+    renderLabel: (data) => {
+      if (data.root) {
+        return `<div class="menu-item"><span>${data.title}</span></div>`;
+      }
+      return `<div class="menu-item child-item">
+          <span>${data.title}</span>
+          <span>中文狀態：${data.status}</span>
+          <span>英文狀態：${data.en_status}</span>
+          <a href="${data.edit_path}" class="text-end btn btn-primary">編輯</a>
+        </div>`;
+    },
+    onChange: ({ nodes, movedNode, srcParentNode, targetParentNode }) => {
+      const position = targetParentNode.subnodesData.findIndex(node => node.id === movedNode.data.id) + 1;
+      console.log(`move ${movedNode.data.title} from ${srcParentNode.data.title} to ${targetParentNode.data.title},  position: ${position}`);
+      fetch(`/menus/${movedNode.data.id}/sort`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          menu: {
+            parent_id: targetParentNode.data.id,
+            position: position,
+          }
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('排序更新失敗');
+        }
+        return response.text();
+      })
+      .then(jsCode => {
+        if (jsCode) {
+          eval(jsCode);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
+    onClick: (event, node) => {
+      console.log(node.data);
+    },
+  });
+</script>

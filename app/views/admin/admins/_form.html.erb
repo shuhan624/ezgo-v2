@@ -1,0 +1,60 @@
+<%= simple_form_for([:admin, @admin], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @admin.errors.any? %>
+    <div class="alert alert-danger alert-dismissable fade show" role="alert">
+      <h5><%= pluralize(@admin.errors.count, '個錯誤') %>導致<%= @admin.model_name.human %>無法儲存：</h5>
+      <ul class="mb-0">
+      <% @admin.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <% unless current_admin == @admin %>
+          <%= f.input :account_active, as: :radio_buttons,
+            collection: [[t('simple_form.options.admin.account_active.true'), true],
+            [t('simple_form.options.admin.account_active.false'), false]],
+            wrapper: :vertical_collection_inline,
+            wrapper_html: { class: 'col-md-6' } %>
+        <% end %>
+        <%= f.input :role_id,
+            collection: Role.all,
+            label_method: :name,
+            value_method: :id,
+            include_blank: false,
+            wrapper_html: { class: 'col-md-6' } %>
+  <!--  <div class="col-md-6">
+          <%#= f.label :language %>
+          <div class="row">
+            <div class="form-check checkbox">
+              <%#= f.input :tw, as: :boolean, checked_value: 'true', unchecked_value: 'false' %>
+            </div>
+            <div class="form-check checkbox">
+              <%#= f.input :en, as: :boolean, checked_value: 'true', unchecked_value: 'false' %>
+            </div>
+          </div>
+        </div> -->
+        <%= f.input :email, input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :name, input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+
+        <%= f.input :password, hint: '若不更新可留空', input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+        <%= f.input :password_confirmation, hint: '請再輸入一次相同密碼', input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-btns">
+    <div class="form-actions">
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'), admin_admin_path(@admin), class: 'btn btn-light' if controller.action_name == 'edit' && policy(@admin).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_admin_path(@admin), class: 'btn btn-danger-light float-end ms-2 single-icon', method: :delete, data: { confirm: t('confirm_message') } if controller.action_name == 'edit' && policy(@admin).destroy? %>
+  </div>
+<% end %>

@@ -1,0 +1,81 @@
+<% provide :page_title, render_action_i18n(:show, ArticleCategory) + '｜' + @article_category.name if @article_category.name.present? %>
+<% content_for :page_back do %>
+  <% if policy(ArticleCategory).index? %>
+    <%= link_to admin_article_categories_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_article_category_path(@article_category),
+        class: 'btn btn-primary ms-2' if policy(@article_category).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_article_category_path(@article_category),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@article_category).destroy? %>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [ArticleCategory.human_attribute_name(:updated_at), I18n.l(@article_category.updated_at, format: :table)],
+           [ArticleCategory.human_attribute_name(:created_at), I18n.l(@article_category.created_at, format: :table)],
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-group">
+  <div class="card mt-4 mb-4">
+    <div class="tabs-btn">
+      <a href="#zh-hant" class="tab active">中文</a>
+      <a href="#en" class="tab">英文</a>
+      <a href="#seo" class="tab">SEO</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="zh-hant">
+      <div class="product details">
+        <% [
+             [ArticleCategory.human_attribute_name(:name), @article_category.name],
+             [ArticleCategory.human_attribute_name(:slug), @article_category.link_to_slug],
+             [ArticleCategory.human_attribute_name(:status), @article_category.status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [ArticleCategory.human_attribute_name(:name_en), @article_category.name_en],
+             [ArticleCategory.human_attribute_name(:slug), @article_category.link_to_slug_en],
+             [ArticleCategory.human_attribute_name(:en_status), @article_category.en_status],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="seo">
+      <%= render 'partials/admin/seo_details', item: @article_category %>
+    </div>
+  </div>
+</div>

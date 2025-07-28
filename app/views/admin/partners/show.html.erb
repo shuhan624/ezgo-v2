@@ -1,0 +1,79 @@
+<% provide :page_title, render_action_i18n(:show, Partner) %>
+<% content_for :page_back do %>
+  <% if policy(Partner).index? %>
+    <%= link_to admin_partners_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_partner_path(@partner),
+        class: 'btn btn-primary ms-2' if policy(@partner).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_partner_path(@partner),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@partner).destroy? %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#settings" class="tab active">基本資訊</a>
+      <a href="#zh-hant" class="tab">中文</a>
+      <a href="#en" class="tab">英文</a>
+    </div>
+  </div>
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="settings">
+      <div class="product details">
+        <% [
+             [Partner.human_attribute_name(:updated_at), I18n.l(@partner.updated_at, format: :table)],
+             [Partner.human_attribute_name(:created_at), I18n.l(@partner.created_at, format: :table)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="zh-hant">
+      <div class="product details">
+        <% [
+             [Partner.human_attribute_name(:image), (image_tag(@partner.image, width: 300) if @partner.image.attached?)],
+             [Partner.human_attribute_name(:name), @partner.name],
+             [Partner.human_attribute_name(:status), @partner.status],
+             [Partner.human_attribute_name(:link_zh_tw), @partner.link_zh_tw],
+             [Partner.human_attribute_name(:alt_zh_tw), @partner.alt_zh_tw],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [Partner.human_attribute_name(:image_en), (image_tag(@partner.image_en, width: 300) if @partner.image_en.attached?)],
+             [Partner.human_attribute_name(:name_en), @partner.name_en],
+             [Partner.human_attribute_name(:en_status), @partner.en_status],
+             [Partner.human_attribute_name(:link_en), @partner.link_en],
+             [Partner.human_attribute_name(:alt_en), @partner.alt_en],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

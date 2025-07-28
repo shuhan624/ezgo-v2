@@ -1,0 +1,27 @@
+<% provide :page_title, render_action_i18n(:show, Menu) %>
+<% content_for :page_actions do %>
+  <%= link_to(zmdi_icon(:delete, text: t('btn.delete')), admin_menu_path(@menu), class: 'btn btn-danger float-right', method: :delete, data: { confirm: t('confirm_message') } ) if policy(@menu).destroy? %>
+  <%= link_to(zmdi_icon(:edit, text: t('btn.edit')), edit_admin_menu_path(@menu), class: 'btn btn-info float-right') if policy(@menu).edit? %>
+  <%= link_to(zmdi_icon('arrow-left', text: t('btn.back')), admin_menus_path, class: 'btn btn-default float-right') if policy(Menu).index? %>
+<% end %>
+
+<div class="card">
+  <div class="body">
+    <div class="product details">
+      <% [
+           [Menu.human_attribute_name(:parent_id), @menu.parent_id],
+           [Menu.human_attribute_name(:title), @menu.title],
+           [Menu.human_attribute_name(:link), @menu.link],
+           [Menu.human_attribute_name(:target), @menu.target],
+           [Menu.human_attribute_name(:position), @menu.position],
+           [Menu.human_attribute_name(:updated_at), l(@menu.updated_at, format: :table)],
+           [Menu.human_attribute_name(:created_at), l(@menu.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

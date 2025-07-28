@@ -1,0 +1,33 @@
+<% provide :page_title, render_action_i18n(:edit, User) %>
+<% content_for :page_back do %>
+  <% if policy(User).index? %>
+    <%= link_to admin_users_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<div class="card">
+  <div class="card-body">
+    <%= render 'form' %>
+  </div>
+</div>
+
+
+<script type="module">
+  $(document).ready(function () {
+    // 若為台灣則打開縣市地區選擇
+    var selectTW = $('#user_country');
+    var selectTW_items = $('#user_city, #user_dist');
+    function selectCountry() {
+      if(selectTW.val() == "TW") {
+        $(selectTW_items).attr('disabled', false);
+      } else {
+        $(selectTW_items).attr('disabled', true).val($("option:first").val());
+      }
+    }
+    selectCountry();
+    $(selectTW).change(function(e) {
+      selectCountry();
+    });
+  });
+</script>

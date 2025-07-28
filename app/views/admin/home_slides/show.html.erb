@@ -1,0 +1,89 @@
+<% provide :page_title, render_action_i18n(:show, HomeSlide) %>
+<% content_for :page_back do %>
+  <% if policy(HomeSlide).index? %>
+    <%= link_to admin_home_slides_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_home_slide_path(@home_slide),
+        class: 'btn btn-primary ms-2' if policy(@home_slide).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_home_slide_path(@home_slide),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@home_slide).destroy? %>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [HomeSlide.human_attribute_name(:updated_at), I18n.l(@home_slide.updated_at, format: :table)],
+           [HomeSlide.human_attribute_name(:created_at), I18n.l(@home_slide.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-group">
+  <div class="card mt-4 mb-4">
+    <div class="tabs-btn">
+      <a href="#zh-hant" class="tab active">中文</a>
+      <a href="#en" class="tab">英文</a>
+    </div>
+  </div>
+
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="zh-hant">
+      <div class="product details">
+        <% [
+             [HomeSlide.human_attribute_name(:title), @home_slide.title],
+             [HomeSlide.human_attribute_name(:published_at), @home_slide.published_at],
+             [HomeSlide.human_attribute_name(:expired_at), @home_slide.expired_at],
+             [HomeSlide.human_attribute_name(:status), @home_slide.publish_status],
+             [HomeSlide.human_attribute_name(:desc_zh_tw), @home_slide.desc_zh_tw],
+             [HomeSlide.human_attribute_name(:link_zh_tw), @home_slide.link_zh_tw],
+             [HomeSlide.human_attribute_name(:alt_zh_tw), @home_slide.alt_zh_tw],
+             [HomeSlide.human_attribute_name(:banner), (image_tag(@home_slide.banner, class: 'object-fit-contain mb-2', style: 'max-width: 800px') if @home_slide.banner.attached?)],
+             [HomeSlide.human_attribute_name(:banner_m), (image_tag(@home_slide.banner_m, class: 'object-fit-contain', style: 'max-width: 200px') if @home_slide.banner_m.attached?)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [HomeSlide.human_attribute_name(:title_en), @home_slide.title_en],
+             [HomeSlide.human_attribute_name(:published_at), @home_slide.published_at_en],
+             [HomeSlide.human_attribute_name(:expired_at), @home_slide.expired_at_en],
+             [HomeSlide.human_attribute_name(:en_status), @home_slide.en_publish_status],
+             [HomeSlide.human_attribute_name(:desc_en), @home_slide.desc_en],
+             [HomeSlide.human_attribute_name(:link_en), @home_slide.link_en],
+             [HomeSlide.human_attribute_name(:alt_en), @home_slide.alt_en],
+             [HomeSlide.human_attribute_name(:banner_en), (image_tag(@home_slide.banner_en, class: 'object-fit-contain mb-2', style: 'max-width: 800px') if @home_slide.banner_en.attached?)],
+             [HomeSlide.human_attribute_name(:banner_m_en), (image_tag(@home_slide.banner_m_en, class: 'object-fit-contain', style: 'max-width: 200px') if @home_slide.banner_m_en.attached?)],
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

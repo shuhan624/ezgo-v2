@@ -1,0 +1,14 @@
+<%# breadcrumb 可選擇是否顯示，但勿刪 breadcrumb_schema 須使用 %>
+<% render "partials/breadcrumb", crumbs: [
+    { text: @index_title }
+  ] %>
+<div class="wrap" data-page="about">
+  <div class="container">
+    <%= content_tag(:h1, @index_title, class: 'title-lg') %>
+    <% if @page.present? %>
+        <div class="custom-editor">
+          <%= @page.content_i18n %>
+        </div>
+      <% end%>
+  </div>
+</div>

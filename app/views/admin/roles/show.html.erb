@@ -1,0 +1,38 @@
+<% provide :page_title, render_action_i18n(:show, Role) %>
+<% content_for :page_back do %>
+  <% if policy(Role).index? %>
+    <%= link_to admin_roles_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+         edit_admin_role_path(@role),
+        class: 'btn btn-primary ms-2' if policy(@role).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_role_path(@role),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if policy(@role).destroy? %>
+  </div>
+<% end %>
+
+<div class="card">
+  <div class="card-body">
+    <div class="product details">
+      <% [
+           [Role.human_attribute_name(:name), @role.name],
+           [Role.human_attribute_name(:permissions), @role.permissions],
+           [Role.human_attribute_name(:updated_at), l(@role.updated_at, format: :table)],
+           [Role.human_attribute_name(:created_at), l(@role.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%= title %></h5></div>
+          <div class="col-md-9"><%= content %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

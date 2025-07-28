@@ -1,0 +1,172 @@
+.color-upload-block {
+  position: relative;
+  .btn-delete-sm {
+    position: absolute;
+    left: 2.5rem;
+    top: 0.1rem;
+    z-index: 10;
+  }
+}
+
+.product-color-items {
+  padding: 0;
+
+  .btn-add-color {
+    display: block;
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+    background: $color-success;
+    max-width: 91.66666667%;
+    &:hover, &:active, &:focus{
+      background: darken($color-success, 5%)
+    }
+  }
+}
+
+.product-color-item {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #cccc;
+  padding-left: 0;
+  counter-increment: li-counter;
+  @media(max-width: 1169px) {
+    flex-direction: column;
+    border: 0;
+  }
+
+  &:before {
+    content: counter(li-counter);
+    width: 1.2em;
+    font-size: 17px;
+    font-weight: bold;
+    color: darken($color-note, 10%);
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media(max-width: 1169px) {
+      padding: 0.5em;
+      width: unset;
+      justify-content: flex-start;
+    }
+  }
+
+  .product-color-block {
+    padding: 1em 0.5em;
+    width: 92%;
+
+    .row {
+      margin: unset;
+    }
+  }
+
+  .product-color-slides {
+    .product-slide-title {
+      margin-bottom: 0.5em;
+    }
+
+    .product-slide-item {
+      display: flex;
+      position: relative;
+      padding-bottom: 3em;
+      flex-wrap: wrap;
+    }
+
+    #figures .nested-fields {
+      width: 23%;
+      margin: 12px 4px;
+      box-sizing: border-box;
+      @media(max-width: 1169px) {
+        width: 31%;
+      }
+      @media(max-width: 991px) {
+        width: 47%;
+      }
+      @media(max-width: 787px) {
+        width: 100%;
+      }
+    }
+
+    #figures .figures-link {
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+    }
+
+    #figures .btn-slide-delete {
+      background: $danger;
+      border-radius: 50%;
+      width: 28px;
+      aspect-ratio: 1 / 1;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1em;
+
+      &.remove_fields {
+        top: 6px;
+        right: 6px;
+      }
+    }
+  }
+
+  .product_colors_en_status {
+    margin-top: 16px;
+  }
+
+  .btn-color-delete {
+    height: fit-content;
+    white-space: nowrap;
+    margin-top: 1.5em;
+    @media(max-width: 1169px) {
+      margin: 0;
+      top: 0.5em;
+      right: 1.8em;
+    }
+
+    &.remove_fields {
+      top: 6px;
+      right: 20px;
+    }
+  }
+}
+
+// cocoon 圖片排序
+.figure-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.moveable-item {
+  margin-right: 10px;
+  cursor: move;
+}
+
+// cocoon 圖片
+.figure-block {
+  margin: 2em 0 4em;
+  .figure-item {
+    max-width: 800px;
+    .figure-item-flex {
+      display: flex;
+      align-items: center;
+    }
+    img {
+      max-height: 150px;
+      object-fit: contain;
+    }
+  }
+  .file-name-group {
+      margin-left: 20px;
+  }
+  .figure-add-new-btn {
+    display: block;
+    max-width: 800px;
+    padding: 1.5em 1em;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    text-align: center;
+  }
+}

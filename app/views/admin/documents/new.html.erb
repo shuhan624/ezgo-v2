@@ -1,0 +1,7 @@
+<% provide :page_title, render_action_i18n(:new, Document) %>
+<% content_for :page_back do %>
+  <%= link_to admin_documents_path, class: 'btn btn-light' do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
+<% end %>
+<%= render 'form' %>

@@ -1,0 +1,79 @@
+<% provide :page_title, render_action_i18n(:show, CustomPage) %>
+<% content_for :page_back do %>
+  <% if policy(CustomPage).index? %>
+    <%= link_to admin_custom_pages_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to t('btn.edit'),
+        edit_admin_custom_page_path(@custom_page),
+        class: 'btn btn-primary float-end ms-2' if policy(@custom_page).edit? %>
+    <%= link_to(fa_icon(:"trash-can"),
+        admin_custom_page_path(@custom_page),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } ) if (policy(@custom_page).destroy? && @custom_page.non_default_page?) %>
+  </div>
+<% end %>
+
+<div class="tabs-group">
+  <div class="card mb-4">
+    <div class="tabs-btn">
+      <a href="#zh-hant" class="tab active">中文</a>
+      <a href="#en" class="tab">英文</a>
+      <a href="#seo" class="tab">SEO</a>
+    </div>
+  </div>
+
+  <div class="tabs-content card">
+    <div class="tab-content card-body active" id="zh-hant">
+      <div class="product details">
+        <% [
+             [CustomPage.human_attribute_name(:slug), @custom_page.slug],
+             [CustomPage.human_attribute_name(:title), @custom_page.title],
+             (@custom_page.non_default_page? ? [CustomPage.human_attribute_name(:status), @custom_page.status] : nil)
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @custom_page.info? %>
+        <h5><%= CustomPage.human_attribute_name(:content) %></h5>
+        <div class="custom-editor" style="max-width: 800px">
+          <%= @custom_page.content&.html_safe %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="tab-content card-body" id="en">
+      <div class="product details">
+        <% [
+             [CustomPage.human_attribute_name(:title_en), @custom_page.title_en],
+             (@custom_page.non_default_page? ? [CustomPage.human_attribute_name(:en_status), @custom_page.en_status] : nil)
+           ].each do |title, content| %>
+          <div class="row item">
+            <div class="col-md-3"><h5><%= title %></h5></div>
+            <div class="col-md-9"><%= content %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @custom_page.info? %>
+        <h5><%= CustomPage.human_attribute_name(:content_en) %></h5>
+        <div class="custom-editor" style="max-width: 800px">
+          <%= @custom_page.content_en&.html_safe %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="tab-content card-body" id="seo">
+      <%= render 'partials/admin/seo_details', item: @custom_page %>
+    </div>
+  </div>
+</div>

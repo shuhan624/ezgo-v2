@@ -1,0 +1,57 @@
+<%= simple_form_for([:admin, @user], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h5><%= pluralize(@user.errors.count, '個錯誤') %>導致<%= @user.model_name.human %>無法儲存：</h5>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= pwd_hint = (action_name.in? %w(new create)) ? '' : '若不更新可留空' %>
+    <div class="row">
+      <%= f.input :role, as: :select, collection: User::ROLES.keys.map { |role| [role, t(role, scope: 'simple_form.options.user.role')] }, label_method: :second, value_method: :first, value: "regular", wrapper_html: { class: 'col-md-6' } %>
+      <%= f.input :account_active, as: :radio_buttons, wrapper: :vertical_collection_inline, value: "true", wrapper_html: { class: 'col-md-6' } %>
+    </div>
+    <% if policy(User).new? %>
+      <%= f.input :email, input_html: { autocomplete: :off } %>
+    <div class="row">
+      <%= f.input :password, hint: pwd_hint, input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+      <%= f.input :password_confirmation, hint: '請再輸入一次相同密碼', input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+    </div>
+    <% else %>
+      <%= f.input :email, input_html: { autocomplete: :off }, readonly: true %>
+    <% end %>
+
+    <div class="row">
+      <%= f.input :name, input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+      <%= f.input :phone, input_html: { autocomplete: :off }, wrapper_html: { class: 'col-md-6' } %>
+    </div>
+
+    <div id="user-area" class="row">
+      <%= f.input :country, priority: ['TW'], format: :tw_name, wrapper_html: { class: 'col-md-4' } %>
+      <%= f.input :city, as: :select, collection: [], input_html: { data: { value: @user.city } }, wrapper_html: { class: 'col-md-4' } %>
+      <%= f.input :dist, as: :select, collection: [], input_html: { data: { value: @user.dist } }, wrapper_html: { class: 'col-md-4' } %>
+    </div>
+    <%= f.input :address %>
+    <%= f.input :note %>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_user_path(@user),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@user).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_user_path(@user),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@user).destroy? %>
+  </div>
+<% end %>

@@ -1,0 +1,46 @@
+<div class="wrap news">
+  <div class="gray-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="h1-title">
+            <h1><%= @tag %></h1>
+            <h2>Lastest News</h2>
+          </div>
+          <%= render "partials/breadcrumb", crumbs: [
+            { text: t('partials.header.news') },
+            { text: (@category ? @category.name : '') },
+          ] %>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- list-group -->
+    <div class="container">
+      <div class="list-group list-group-flush">
+        <% @articles.each do |news| %>
+          <%= link_to article_path(news.article_categories.first, news), class: 'list-group-item list-group-item-action flex-column align-items-start' do %>
+            <div class="d-flex w-100 justify-content-center justify-content-lg-start flex-lg-row flex-column">
+              <p class="mt-1"><%= news.date %></p>
+              <div>
+                <div class="mb-1 ml-lg-5"><%= news.show_tags %></div>
+                <h6 class="ml-lg-5"><%= news.title %></h3>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- pagination -->
+    <div class="container">
+      <nav aria-label="...">
+        <ul class="pagination pt-5">
+          <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+

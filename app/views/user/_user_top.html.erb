@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="user-name-banner">
+    <% display_user = @user.decorate %>
+    <%= image_tag display_user.avatar, class: 'user-avatar', alt: 'user', loading: 'lazy' %>
+    <div class="title-sm"><span>Hi,</span><%= display_user.display_name %></div>
+  </div>
+</div>

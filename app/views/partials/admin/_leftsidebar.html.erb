@@ -1,0 +1,165 @@
+<div class="leftsidebar d-flex flex-column p-3" id="leftsidebar">
+  <div class="position-sticky top-0">
+    <aside class="sidebar">
+      <div class="site-title-group">
+        <div class="sidebar-collapse">
+          <div class="collapse-inner">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <%= link_to image_tag(@admin_logo_url), root_path, class: 'header-logo' %>
+      </div>
+      <hr class="header-logo-hr">
+      <% if admin_signed_in? %>
+        <div class="menu" data-step="2" data-intro="點選主分類項目後，由此可進行項目細部管理">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="sidebar-note">一般管理</li>
+            <%= render_sidebar [
+              {
+                title: fa_icon('folder', text: t('.documents')),
+                url: admin_documents_path,
+                active: here?('documents'),
+                display: policy(Document).index?,
+              },
+              {
+                title: fa_icon('bars-progress', text: t('.custom_pages')),
+                url: admin_custom_pages_path,
+                active: here?('custom_pages'),
+                display: policy(CustomPage).index?,
+              },
+              {
+                title: fa_icon('film', text: t('.home_slides')),
+                url: admin_home_slides_path,
+                active: here?('home_slides'),
+                display: policy(HomeSlide).index?,
+              },
+              {
+                title: fa_icon('radio', text: t('.news.title')),
+                active: (here?('articles') || here?('article_categories')),
+                dropdown: [
+                  {
+                    title: t('.news.articles'),
+                    url: admin_articles_path,
+                    active: here?('articles'),
+                    display: policy(Article).index?,
+                  },
+                  {
+                    title: t('.news.article_categories'),
+                    url: admin_article_categories_path,
+                    active: here?('article_categories'),
+                    display: policy(ArticleCategory).index?,
+                  }
+                ],
+                display: policy(Article).index? || policy(ArticleCategory).index?,
+              },
+              {
+                title: fa_icon('download', text: t('.downloads.title')),
+                active: (here?('downloads') || here?('download_categories')),
+                dropdown: [
+                  {
+                    title: t('.downloads.downloads'),
+                    url: admin_downloads_path,
+                    active: here?('downloads'),
+                    display: policy(Download).index?,
+                  },
+                  {
+                    title: t('.downloads.categories'),
+                    url: admin_download_categories_path,
+                    active: here?('download_categories'),
+                    display: policy(DownloadCategory).index?,
+                  }
+                ],
+                display: policy(Download).index? || policy(DownloadCategory).index?,
+              },
+              {
+                title: fa_icon('clipboard-question', text: t('.faqs.title')),
+                active: (here?('faqs') || here?('faq_categories')),
+                dropdown: [
+                  {
+                    title: t('.faqs.faqs'),
+                    url: admin_faqs_path,
+                    active: here?('faqs'),
+                    display: policy(Faq).index?,
+                  },
+                  {
+                    title: t('.faqs.categories'),
+                    url: admin_faq_categories_path,
+                    active: here?('faq_categories'),
+                    display: policy(FaqCategory).index?,
+                  }
+                ],
+                display: policy(Faq).index? || policy(FaqCategory).index?,
+              },
+              {
+                title: fa_icon('users', text: t('.partners')),
+                url: admin_partners_path,
+                active: here?('partners'),
+                display: policy(Partner).index?,
+              },
+              {
+                title: fa_icon('calendar-days', text: t('.milestones')),
+                url: admin_milestones_path,
+                active: here?('milestones'),
+                display: policy(Milestone).index?,
+              },
+              {
+                title: fa_icon('file-signature', text: t('.contacts')),
+                url: admin_contacts_path,
+                active: here?('contacts'),
+                display: policy(Contact).index?,
+              },
+              # {
+              #   title: fa_icon('power', text: t('.sign_out', name: current_admin.name)),
+              #   url: destroy_admin_session_path,
+              #   active: false,
+              #   display: true,
+              # },
+            ] %>
+            <%# <li class="sidebar-note">電商會員</li> %>
+            <%= render_sidebar [
+              # {
+              #   title: fa_icon('user-group', text: t('.users')),
+              #   url: admin_users_path,
+              #   active: here?('users'),
+              #   display: policy(User).index?,
+              # },
+            ] %>
+            <li class="sidebar-note">其他管理</li>
+            <%= render_sidebar [
+              {
+                title: fa_icon('wrench', text: t('.settings')),
+                url: admin_settings_path,
+                active: here?('settings'),
+                display: policy(Setting).index?,
+              },
+              {
+                title: fa_icon('bars', text: t('.menus')),
+                url: admin_menus_path,
+                active: here?('menus'),
+                display: policy(Menu).index?,
+              },
+              {
+                title: fa_icon('arrows-turn-right', text: t('.redirect_rules')),
+                url: admin_redirect_rules_path,
+                active: here?('redirect_rules'),
+                display: policy(RedirectRule).index?,
+              },
+              {
+                title: fa_icon('circle-user', text: t('.admins')),
+                url: admin_admins_path,
+                active: here?('admins'),
+                display: policy(Admin).index?,
+              },
+              {
+                title: fa_icon('lock', text: t('.roles')),
+                url: admin_roles_path,
+                active: here?('roles'),
+                display: policy(Role).index?,
+              },
+            ] %>
+          </ul>
+        </div>
+      <% end %>
+    </aside>
+  </div>
+</div>

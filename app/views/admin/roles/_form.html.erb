@@ -1,0 +1,65 @@
+<%= simple_form_for([:admin, @role], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @role.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h4>
+      <ul>
+      <% @role.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <%= f.input :name %>
+    </div>
+  </div>
+
+  <fieldset class="form-group form-group-valid">
+    <%= f.simple_fields_for :permissions do |ff| %>
+      <% @permissions.each do |resource, actions| %>
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="mb-0"><%= t(resource, scope: 'activerecord.models') %></h5 class="mb-0">
+          </div>
+          <div class="card-body permisssions">
+            <%= ff.simple_fields_for resource do |fff| %>
+              <div class="row g-3">
+                <% actions.each do |action| %>
+                  <% value = (@role.send("#{resource}_permissions")&.dig(action)&.to_s == 'true') %>
+                  <div class="col-md-3 col-6">
+                    <div class="form-check">
+                      <%= fff.input action, as: :boolean,
+                            label: t(action, scope: 'permissions'),
+                            checked_value: true,
+                            input_html: { checked: value },
+                            wrapper: :inline_boolean %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </fieldset>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_role_path(@role),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@role).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_role_path(@role),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@role).destroy? %>
+  </div>
+<% end %>

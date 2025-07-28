@@ -1,0 +1,9 @@
+<% provide :page_title, render_action_i18n(:new, DownloadCategory) %>
+<% content_for :page_back do %>
+  <% if policy(DownloadCategory).index? %>
+    <%= link_to admin_download_categories_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  <% end %>
+<% end %>
+<%= render 'form' %>

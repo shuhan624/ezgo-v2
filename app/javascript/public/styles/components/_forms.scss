@@ -1,0 +1,420 @@
+.form-control {
+  display: block;
+  width: 100%;
+  height: $input-height;
+  padding: $input-padding-y $input-padding-x;
+  font-size: $input-font-size;
+  line-height: $input-line-height;
+  color: $input-color;
+  box-sizing: border-box;
+  background-color: $input-bg;
+  background-clip: padding-box;
+  border: $input-border-width solid $input-border-color;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  &::-ms-expand {
+    background-color: transparent;
+    border: 0;
+  }
+
+  &:focus {
+    color: $input-focus-color;
+    background-color: $input-focus-bg;
+    border-bottom: 1px solid $input-focus-border-color;
+    box-shadow: 0 1px 0 0 $input-focus-border-color;
+    outline: 0;
+  }
+
+  // Placeholder
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+  &:disabled,
+  &[readonly] {
+    background-color: $input-disabled-bg;
+    opacity: 1;
+  }
+}
+
+select.form-control {
+  position: relative;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 25px;
+  background-image: url("images/icon/select.svg");
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  background-size: 15px 8px;
+  &:not([size]):not([multiple]) {
+    height: $input-height;
+  }
+  &:focus,
+  &:active {
+    color: $input-color;
+    background-color: $input-bg;
+    background-image: url("images/icon/select_focus.svg");
+  }
+  > option:disabled {
+    color: $input-placeholder-color;
+  }
+
+  &.val-empty {
+    color: $input-placeholder-color;
+    &:focus,
+    &:active,
+    &:focus::-ms-value {
+      color: $input-placeholder-color;
+    }
+  }
+}
+
+
+// Make file inputs better match text inputs by forcing them to new lines.
+.form-control-file,
+.form-control-range {
+  display: block;
+  width: 100%;
+}
+
+
+// Readonly controls as plain text
+.form-control-plaintext {
+  display: block;
+  width: 100%;
+  padding-top: $input-padding-y;
+  padding-bottom: $input-padding-y;
+  margin-bottom: 0; // match inputs if this class comes on inputs with default margins
+  line-height: $input-line-height;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: $input-border-width 0;
+}
+
+// Form groups
+//.
+.form-group {
+  font-size: $input-font-size;
+  margin-bottom: 1.2em;
+  text-align: left;
+  abbr {
+    position: relative;
+    text-decoration: none;
+    color: transparent;
+    width: 1px;
+    height: 1px;
+    &:before {
+      content: "*";
+      color: $danger;
+      font-size: 0.8em;
+      position: absolute;
+      left: 0.2em;
+    }
+  }
+}
+
+.form-group-center {
+  text-align: center;
+}
+.form-group-right {
+  text-align: right;
+}
+
+.form-text {
+  display: block;
+  text-align: left;
+  color: $input-unit-color;
+  padding: 0.5em 0.5em 0;
+  line-height: 1.3;
+  box-sizing: border-box;
+}
+
+.form-note {
+  text-align: left;
+  font-size: 15px;
+  color: $input-unit-color;
+  line-height: 1.5;
+  padding: 0 0.5em 0.5em;
+}
+
+// form-input-group
+.form-input-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -0.6rem;
+  margin-right: -0.6rem;
+  .form-check,
+  .form-group {
+    padding: 0 0.6rem;
+  }
+  &.group-all {
+    .form-check,
+    .form-group {
+      flex: 1;
+    }
+  }
+  &.group-phone {
+    @media (max-width: $media-max-phone) {
+      display: block;
+    }
+    .form-check,
+    .form-group {
+      flex: 1;
+    }
+  }
+  &.group-pad {
+    .form-check,
+    .form-group{
+      @media (max-width: $media-max-pad) {
+        display: block;
+      }
+      @media (min-width: $media-min-pad) {
+        flex: 1;
+      }
+    }
+  }
+}
+.form-input-size-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2em;
+  .input-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid $input-border-color;
+    &:has(.form-control:focus) {
+      border-color: $input-focus-border-color;
+    }
+  }
+  .form-group {
+    flex: 1;
+    margin-bottom: 0;
+    +.form-group {
+      position: relative;
+      &:before {
+        content: "~";
+        position: absolute;
+        top: calc(50% - 0.5em);
+        left: -0.4em;
+        font-size: 1em;
+        color: $input-placeholder-color;
+      }
+    }
+    .form-control {
+      border: none;
+    }
+  }
+  .input-group-unit {
+    font-size: 16px;
+    color: #707070;
+    margin-left: 0.5em;
+  }
+}
+
+.form-control-group-title,
+legend,
+label {
+  display: block;
+  color: $input-label-color;
+  font-size: $input-label-font-size;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.form-control-group-title {
+  width: 100%;
+}
+
+.form-control-group-des {
+  color: #6B6B6B;
+  display: block;
+  text-align: left;
+  font-size: 15px;
+  padding-top: 0.3em;
+  padding-bottom: 1.5em;
+  line-height: 1.7;
+}
+
+//submit
+.form-actions {
+
+}
+.form-submit,
+input.form-submit {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0.6em;
+  box-sizing: border-box;
+  background: $color-primary;
+  &.second-submit {
+    background-color: $color-second;
+  }
+  &:hover {
+    background-color: $color-third;
+  }
+  &:disabled {
+    background-color: $input-disabled-bg;
+    opacity: 1;
+    cursor: no-drop;
+  }
+
+}
+
+// Checkboxes and radios
+//
+// Indent the labels to position radios/checkboxes as hanging controls.
+
+.form-check {
+  font-size: $input-font-size;
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+}
+
+input.form-check-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  &:disabled~.form-check-label {
+    color: #999;
+  }
+  &:checked~.form-check-label {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+.form-check-label {
+  position: relative;
+  display: flex;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+  &:hover {
+    color: $color-primary;
+    &:after {
+      opacity: 0.3;
+    }
+  }
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5em;
+    border: 1px solid $color-line;
+    background-color: #fff;
+    border-radius: 0;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    mask-image: url("data:image/svg+xml;utf8,<svg width='11' height='8' viewBox='0 0 11 8' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M3.86803 8L0 4.28973L1.20818 3.13083L3.86803 5.6822L9.79184 0L11 1.15892L3.86803 8Z' fill='blue' /></svg>");
+    mask-size: 15px 10px;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    background-color: $color-primary;
+    opacity: 0;
+    transition: 0.3s;
+  }
+  a {
+    color: $color-primary;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.form-check-inline {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0; // Override base .form-check
+  margin-right: $form-check-inline-margin-x;
+
+  // Undo .form-check-input defaults and add some `margin-right`.
+  .form-check-input {
+    position: static;
+    margin-top: 0;
+    margin-right: $form-check-inline-input-margin-x;
+    margin-left: 0;
+  }
+}
+
+//radio
+.radio-buttons {
+  .col-form-label {
+    width: 100%;
+  }
+  label {
+    font-size: $input-font-size;
+    color: $input-color;
+    line-height: 1.3;
+    font-weight: normal;
+    cursor: pointer;
+    &:hover {
+      color: $color-primary;
+    }
+  }
+  .radio {
+    position: relative;
+    flex: 1;
+    padding: $input-padding-y $input-padding-x;
+    padding-left: 1.8em;
+    cursor: pointer;
+    label {
+      margin-bottom: 0;
+    }
+    .custom-control-input {
+      position: absolute;
+      top: $input-padding-y;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      @media (min-width: $media-min-phone) {
+        top: 0.5em;
+      }
+    }
+  }
+}
+.form-radio-input {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: $color-primary;
+  &.hide {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+}
+.from-radio-inline {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@include form-validation-state("valid", $form-feedback-valid-color);
+@include form-validation-state("invalid", $form-feedback-invalid-color);
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  .form-check {
+    width: 100%;
+  }
+}

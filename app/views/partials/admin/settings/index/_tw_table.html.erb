@@ -1,0 +1,184 @@
+<%# 網站資訊 %>
+<div class="tab-content active" id="site">
+  <table class="table index-list">
+    <thead>
+      <tr>
+        <th class="column-primary"><%= Setting.human_attribute_name(:name) %></th>
+        <th><%= Setting.human_attribute_name(:content_zh_tw) %></th>
+        <%= content_tag :th, '' if policy(Setting).edit? %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @site_items.each do |item| %>
+        <%= content_tag :tr, id: dom_id(item), class: "sort-#{dom_class(item)}", data: { item: dom_id(item) } do %>
+          <td data-colname="<%= Setting.human_attribute_name(:name) %>" class="column-primary">
+            <%= t(item.name, scope: 'setting') %>
+            <button class="btn" type="button" data-mobile="<%= dom_id(item) %>" class="mobile-collapse">
+              <span><i class="fa-solid fa-caret-down"></i></span>
+            </button>
+          </td>
+          <td class="desc" data-colname="<%= Setting.human_attribute_name(:content_zh_tw) %>">
+            <% if item.name == 'site_title' ||  item.name == 'copyright' %>
+              <span><%= item.content_zh_tw %></span>
+            <% elsif item.name == 'admin_logo' || item.name == 'logo' %>
+              <%= image_tag item.image, width: 150 if item.image.attached? %>
+            <% else %>
+              <%= image_tag item.image, width: 64 if item.image.attached? %>
+            <% end %>
+          </td>
+          <% if policy(item).edit? %>
+            <td class="index-table-action text-end">
+              <%= link_to t('btn.edit'), edit_admin_setting_path(item),
+                class: 'btn btn-primary me-2' if policy(item).show? %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%# SEO & 行銷管理 %>
+<div class="tab-content" id="seo">
+  <table class="table index-list">
+    <thead>
+      <tr>
+        <th class="column-primary"><%= Setting.human_attribute_name(:name) %></th>
+        <th><%= Setting.human_attribute_name(:content_zh_tw) %></th>
+        <%= content_tag(:th, '') if policy(Setting).edit? %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @seo_items.each do |item| %>
+        <%= content_tag :tr, id: dom_id(item), class: "sort-#{dom_class(item)}", data: { item: dom_id(item) } do %>
+          <td class="desc column-primary" data-colname="<%= Setting.human_attribute_name(:name) %>">
+            <%= t(item.name, scope: 'setting') %>
+            <%= content_tag(:i, nil, class: "zmdi zmdi-info", data: { toggle: 'tooltip', placement: 'right', title: t(item.name, scope: 'setting.index_hint') }) %>
+            <button class="btn" type="button" data-mobile="<%= dom_id(item) %>" class="mobile-collapse">
+              <span><i class="fa-solid fa-caret-down"></i></span>
+            </button>
+          </td>
+          <td class="desc" data-colname="<%= Setting.human_attribute_name(:content_zh_tw) %>">
+            <% if item.name == 'og_image' %>
+              <%= image_tag item.image, width: 150 if item.image.attached? %>
+            <% else %>
+              <span><%= item.content_zh_tw %></span>
+            <% end %>
+          </td>
+          <% if policy(item).edit? %>
+            <td class="index-table-action text-end">
+              <%= link_to t('btn.edit'), edit_admin_setting_path(item), class: 'btn btn-primary me-2' %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%# 聯絡資訊 %>
+<div class="tab-content" id="contact">
+  <table class="table index-list">
+    <thead>
+      <tr>
+        <th class="column-primary"><%= Setting.human_attribute_name(:name) %></th>
+        <th><%= Setting.human_attribute_name(:content_zh_tw) %></th>
+        <%= content_tag :th, '' if policy(Setting).edit? %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @contact_items.each do |contact| %>
+        <%= content_tag :tr, id: dom_id(contact), class: "sort-#{dom_class(contact)}", data: { item: dom_id(contact) } do %>
+          <td class="column-primary" data-colname="<%= Setting.human_attribute_name(:name) %>">
+            <%= t(contact.name, scope: 'setting') %>
+            <button class="btn" type="button" data-mobile="<%= dom_id(contact) %>" class="mobile-collapse">
+              <span><i class="fa-solid fa-caret-down"></i></span>
+            </button>
+          </td>
+          <td data-colname="<%= Setting.human_attribute_name(:content_zh_tw) %>"><%= contact.content_zh_tw %></td>
+          <% if policy(contact).edit? %>
+            <td class="index-table-action text-end">
+              <%= link_to t('btn.edit'), edit_admin_setting_path(contact), class: 'btn btn-primary me-2' %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%# 社群連結 %>
+<div class="tab-content" id="social">
+  <table class="table index-list">
+    <thead>
+      <tr>
+        <th class="name column-primary"><%= Setting.human_attribute_name(:name) %></th>
+        <th class='icon'><%= Setting.human_attribute_name(:image) %></th>
+        <th><%= Setting.human_attribute_name(:content_zh_tw) %></th>
+        <%= content_tag :th, '' if policy(Setting).edit? %>
+      </tr>
+    </thead>
+    <tbody <%= 'class=sortable-items data-sort-path=/settings/sort' if policy(Setting).sort? %>>
+      <% @social_items.each do |social| %>
+        <%= content_tag :tr, id: dom_id(social), class: "sort-#{dom_class(social)}", data: { item: dom_id(social) } do %>
+          <td class="name column-primary" data-colname="<%= Setting.human_attribute_name(:name) %>">
+            <%= t(social.name, scope: 'setting') %>
+            <button class="btn" type="button" data-mobile="<%= dom_id(social) %>" class="mobile-collapse">
+              <span><i class="fa-solid fa-caret-down"></i></span>
+            </button>
+          </td>
+          <td class='icon' data-colname="<%= Setting.human_attribute_name(:image) %>">
+            <% if social.image.attached? %>
+              <%= image_tag social.image, width: 30 if social.image.attached? %>
+            <% else %>
+              <%= image_tag "social-icon/round/#{social.name}.svg", class: 'social-icon' %>
+            <% end %>
+          </td>
+          <td class="title" data-colname="<%= Setting.human_attribute_name(:content_zh_tw) %>">
+            狀態：<%= t(social.status_zh_tw, scope: 'simple_form.options.setting.status') %>
+            <span><%= social.content_zh_tw %></span>
+          </td>
+          <% if policy(social).edit? %>
+            <td class="index-table-action text-end">
+              <%= link_to t('btn.edit'), edit_admin_setting_path(social), class: 'btn btn-primary me-2' %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%# 其他設定 %>
+<div class="tab-content" id="other">
+  <table class="table index-list">
+    <thead>
+      <tr>
+        <th class="column-primary"><%= Setting.human_attribute_name(:name) %></th>
+        <th><%= Setting.human_attribute_name(:content_zh_tw) %></th>
+        <%= content_tag :th, '' if policy(Setting).edit? %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @custom_items.each do |item| %>
+        <%= content_tag :tr, id: dom_id(item), class: dom_class(item) do %>
+          <td class="column-primary" data-colname="<%= Setting.human_attribute_name(:name) %>">
+            <%= t(item.name, scope: 'setting') %>
+            <button class="btn" type="button" data-mobile="<%= dom_id(item) %>" class="mobile-collapse">
+              <span><i class="fa-solid fa-caret-down"></i></span>
+            </button>
+          </td>
+          <td class="desc" data-colname="<%= Setting.human_attribute_name(:content_zh_tw) %>">
+            <!-- 重大訊息公告的內容為編輯器 使用strip_tags 過濾掉標籤，避免因編輯器放入的CSS造成格式跑掉 -->
+            <span><%= strip_tags(item.content_zh_tw) %></span>
+          </td>
+          <% if policy(Setting).edit? %>
+            <td class="index-table-action text-end">
+              <%= link_to t('btn.edit'), edit_admin_setting_path(item), class: 'btn btn-primary me-2' %>
+            </td>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

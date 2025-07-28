@@ -1,0 +1,53 @@
+<%= simple_form_for([:admin, @menu], html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <% if @menu.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@menu.errors.count, "error") %> prohibited this menu from being saved:</h4>
+      <ul>
+      <% @menu.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card mb-4">
+    <div class="tabs-group">
+      <div class="tabs-btn">
+        <a href="#zh-hant" class="tab active">中文</a>
+        <a href="#en" class="tab">英文</a>
+      </div>
+    </div>
+
+    <div class="tabs-content">
+      <div class="tab-content card-body active" id="zh-hant">
+        <%= f.input :title %>
+        <%= f.input :status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: Menu::STATUS.keys.map { |status| [t(status, scope: 'simple_form.options.menu.status'), status] } %>
+        <%= f.input :link %>
+        <%= f.input :target %>
+      </div>
+
+      <div class="tab-content card-body" id="en">
+        <%= f.input :title_en %>
+        <%= f.input :en_status, as: :radio_buttons, wrapper: :vertical_collection_inline, collection: Menu::STATUS.keys %>
+        <%= f.input :link_en %>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-btns form-actions">
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to t('btn.show'),
+          admin_menu_path(@menu),
+          class: 'btn btn-light' if controller.action_name == 'edit' && policy(@menu).show? %>
+    </div>
+    <%= link_to fa_icon(:"trash-can"), admin_menu_path(@menu),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if controller.action_name == 'edit' &&  policy(@menu).destroy? %>
+  </div>
+<% end %>

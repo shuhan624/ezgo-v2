@@ -1,0 +1,37 @@
+<%% provide :page_title, render_action_i18n(:show, <%= class_name %>) %>
+<%% content_for :page_back do %>
+  <%% if policy(<%= class_name %>).index? %>
+    <%%= link_to <%= index_helper %>_path, class: 'btn btn-light' do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <%% end %>
+  <%% end %>
+<%% end %>
+<%% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%%= "#{action_name}" %>">
+    <%%= link_to t('btn.edit'),
+        edit_<%= singular_route_name %>_path(@<%= singular_table_name %>),
+        class: 'btn btn-primary ms-2' if policy(@<%= singular_table_name %>).edit? %>
+    <%%= link_to fa_icon(:"trash-can"),
+        <%= singular_route_name %>_path(@<%= singular_table_name %>),
+        class: 'btn btn-danger-light float-end ms-2 single-icon',
+        method: :delete,
+        data: { confirm: t('confirm_message') } if policy(@<%= singular_table_name %>).destroy? %>
+  </div>
+<%% end %>
+
+<div class="card">
+  <div class="body">
+    <div class="product details">
+      <%% [<% attributes.each { |attribute| %>
+           [<%= class_name %>.human_attribute_name(:<%= attribute.name %>), <%= "@#{singular_table_name}.#{attribute.name}" %>],<% } %>
+           [<%= class_name %>.human_attribute_name(:updated_at), l(@<%= singular_table_name %>.updated_at, format: :table)],
+           [<%= class_name %>.human_attribute_name(:created_at), l(@<%= singular_table_name %>.created_at, format: :table)]
+         ].each do |title, content| %>
+        <div class="row item">
+          <div class="col-md-3"><h5><%%= title %></h5></div>
+          <div class="col-md-9"><%%= content %></div>
+        </div>
+      <%% end %>
+    </div>
+  </div>
+</div>

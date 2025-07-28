@@ -1,0 +1,324 @@
+// 會員首頁
+.user-avatar {
+  border-radius: 50%;
+}
+
+.user-reminds {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  @media (max-width: $media-max-web-content) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  @media (max-width: $media-max-phone) {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr 1fr;;
+  }
+}
+
+.user-remind {
+  background: $color-second-bg;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background: $color-primary-bg;
+
+    .title-sm {
+      color: $color-primary;
+    }
+  }
+
+  .title-sm {
+    border-bottom: 2px solid #fff;
+  }
+
+  .user-remind-number {
+    font-weight: bold;
+    box-sizing: border-box;
+    font-size: 48px;
+    color: $color-primary;
+    padding: 12px 0;
+    @media (max-width: $media-max-web-content) {
+      font-size: 36px;
+    }
+    @media (max-width: $media-max-phone) {
+      font-size: 30px;
+    }
+  }
+}
+
+// 基本資料、修改密碼
+.user-edit-profile-form {
+  .form-input-group {
+    flex-wrap: nowrap;
+    @media(max-width: $media-max-pad) {
+      flex-direction: column;
+    }
+  }
+
+  .form-group {
+    width: 100%;
+    box-sizing: border-box;
+    flex: 1;
+    &.flex-2 {
+      flex-grow: 2;
+    }
+  }
+
+  .form-control {
+    &:disabled {
+      background: #E6E6E6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// 歷史訂單、套量紀錄
+.user-histories-item {
+  margin-bottom: 1.5em;
+  border: 1px solid $color-line;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  &:before, &:after {
+    content: '';
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    transform-origin: top;
+  }
+  &:before {
+    background: $color-second-bg;
+    @media (max-width: $media-max-phone) {
+      background: transparent;
+    }
+  }
+  &:after {
+    transform: scale(0);
+    background: $color-third;
+    z-index: 2;
+  }
+  &:hover:after {
+    animation: user-menu-active 0.3s forwards;
+  }
+  &:hover .detail-group{
+    opacity: 1;
+  }
+  &:hover .detail-group:before {
+    transform: translate(0, -50%);
+  }
+  @media (max-width: $media-max-phone) {
+    flex-direction: column;
+  }
+  &.inner-page{
+    border: 0;
+    @media (max-width: $media-max-web-content) {
+      flex-direction: column;
+    }
+    &:before, &:after {
+      content: none;
+    }
+  }
+}
+
+.user-history-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $color-second;
+  padding: 1.5em;
+  width: 70%;
+  font-size: 16px;
+  box-sizing: border-box;
+  @media (max-width: $media-max-phone) {
+    padding: 1em 0.5em;
+    width: 100%;
+  }
+
+  .info-group {
+    display: flex;
+    color: #333333;
+    padding: 0.35em 0.3em;
+    align-items: center;
+
+    .info-title {
+      font-weight: bold;
+      margin-right: 1.5em;
+    }
+
+    .info-content {
+      font-weight: normal;
+    }
+  }
+
+  .detail-group {
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+    position: relative;
+    opacity: 0;
+    transition: all 0.35s;
+    transition-delay: 0.2s;
+    @media (max-width: $media-max-web-content) {
+      display: none;
+    }
+
+    span {
+      margin-right: 1em;
+    }
+
+    &:before {
+      content: '';
+      width: 12px;
+      height: 2px;
+      background: $color-primary;
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translate(-6px ,-50%);
+      transition: all 0.3s;
+      transition-delay: 0.25s;
+    }
+  }
+}
+
+.user-history-status {
+  width: 30%;
+  background: $color-second-bg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: $color-primary;
+  @media (max-width: $media-max-phone) {
+    width: 100%;
+    flex-direction: row;
+    padding: 0.5em 0;
+  }
+}
+
+.user-no-history-order {
+  text-align: center;
+
+  img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+}
+
+
+// 歷史紀錄
+.user-back-btn {
+  margin-bottom: 2em;
+  @media (max-width: $media-max-pad) {
+    margin-bottom: 0;
+  }
+}
+
+.user-histories-item.inner-page {
+  border: 0;
+  @media (max-width: $media-max-web-content) {
+    flex-direction: column;
+  }
+
+  &:before, &:after {
+    content: none;
+  }
+
+  .user-history-info {
+    padding: 0 1.5em 0 0;
+    @media (max-width: $media-max-web-content) {
+      padding: 1em 0;
+      width: 100%;
+    }
+  }
+
+  .user-history-status {
+    min-height: 120px;
+    @media (max-width: $media-max-web-content) {
+      min-height: unset;
+      width: 100%;
+      flex-direction: row;
+      padding: 0.5em 0;
+    }
+  }
+}
+
+.user-history-btns {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  @media (max-width: $media-max-pad) {
+    margin-top: 8px;
+  }
+
+  a:first-child {
+    margin-bottom: 8px;
+  }
+}
+
+.user-main .order-item {
+  padding: 12px;
+  @media (max-width: $media-max-web-content) {
+    flex-direction: column;
+  }
+
+  .order-item-content {
+    width: 40%;
+    @media (max-width: $media-max-web-content) {
+      width: 100%;
+    }
+  }
+
+  .order-item-color ,.order-item-price {
+    @media (max-width: $media-max-web-content) {
+      display: none;
+    }
+  }
+
+  .btn-checkout {
+    @media (max-width: $media-max-web-content) {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      padding: 0.3em 1.3em 0.35em;
+    }
+  }
+}
+
+.user-histories-section .deco-line {
+  width: 100%;
+  height: 2px;
+  background: $color-line;
+  margin-bottom: 30px;
+}
+
+.user-service-reply-item {
+  margin-bottom: 10px;
+  padding: 0.8em 1em;
+  background: $color-primary-bg;
+  display: flex;
+  align-items: center;
+  @media (max-width: $media-max-phone) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .date {
+    color: $color-note;
+    margin: 0 1em 0 0;
+    @media (max-width: $media-max-phone) {
+      margin: 0 0 0.2em 0;
+    }
+  }
+}

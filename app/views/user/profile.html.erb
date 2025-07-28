@@ -1,0 +1,20 @@
+<div class="frame primary-bg" data-page="user_index">
+  <%= render "user_top" %>
+  <div class="container user-main-container">
+    <%= render "user_sidebar" %>
+    <div class="user-main">
+      <div class="user-reminds">
+        <% @user_reminds = [
+            { name: 'cart', number: @cart_num, path: cart_path },
+            { name: 'order_histories', number: @processing_orders_count, path: user_orders_path },
+          ] %>
+        <% @user_reminds.each do |remind| %>
+          <%= link_to remind[:path], class: 'user-remind' do %>
+            <div class="title-sm"><%= t(".#{remind[:name]}") %></div>
+            <div class="user-remind-number font-en"><%= remind[:number] %></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

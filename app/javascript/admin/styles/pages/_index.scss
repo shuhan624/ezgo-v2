@@ -1,0 +1,113 @@
+.index-search-form {
+  margin-bottom: 40px;
+  overflow: unset;
+}
+table.index-list {
+  width: 100%;
+  border-collapse: collapse;
+  td {
+    &:not(.column-primary) {
+      max-width: 300px;
+    }
+    img {
+      object-fit: contain;
+      object-position: left center;
+      &.social-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+  }
+  .column-primary {
+    vertical-align: middle;
+    button {
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+  .check-column-th {
+    vertical-align: middle;
+    width: 36px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  .handle {
+    &:hover img {
+      opacity: 1;
+    }
+    img {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+  @media(max-width: $media-max-pad) {
+    th.column-primary ~ th {
+      display: none;
+      width: 100%;
+    }
+    td.column-primary ~ td:not(.check-column) {
+      display: none;
+    }
+    td:not(.column-primary) {
+      max-width: unset;
+    }
+    .is-expanded {
+      display: table-row;
+      width: 100%;
+    }
+    .is-expanded:not(.column-primary) td {
+      display: block !important;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      padding-left: 40%;
+      position: relative;
+      min-height: 57px;
+      &:before {
+        position: absolute;
+        top: 1rem;
+        left: 10px;
+        display: block;
+        content: attr(data-colname);
+        font-weight: bold;
+        width: 30%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  .index-table-action {
+    right: 0;
+    font-weight: 700;
+    min-width: 100px;
+    white-space: nowrap;
+    text-align: right;
+    @media(max-width: $media-max-pad) {
+      display: table-cell;
+    }
+  }
+  .column-primary {
+    position: relative;
+  }
+  [data-mobile] {
+    display: none;
+    @media(max-width: $media-max-pad) {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0.8rem 1.2rem;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+    }
+  }
+}
+.table-footer {
+  color: $gray-500;
+  padding: 0 0.5rem;
+  font-weight: normal;
+  font-size: 14px;
+}

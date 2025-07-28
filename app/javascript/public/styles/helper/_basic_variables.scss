@@ -1,0 +1,21 @@
+// media size
+$media-max-size: 2000px;
+$media-max-web: 1600px;
+$media-min-web: $media-max-web + 1;
+$media-max-web-content: 1280px;
+$media-min-web-content: $media-max-web-content + 1;
+$media-max-pad: 800px;
+$media-min-pad: $media-max-pad + 1;
+$media-max-phone: 640px;
+$media-min-phone: $media-max-phone + 1;
+$media-max-phone-min: 375px;
+$media-min-phone-min: $media-max-phone-min + 1;
+
+$color-primary: #182C80;
+$color-second: #1F1F1F;
+$color-third: #2649A4;
+$color-primary-bg: #F1F1F1;
+$color-second-bg: #EAEEF3;
+$color-line: #EAEEF3;
+
+

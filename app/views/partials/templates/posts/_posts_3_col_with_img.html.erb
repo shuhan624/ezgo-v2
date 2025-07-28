@@ -1,0 +1,25 @@
+<!-- article 模板3 一列三則文章，含 16:9 圖片 -->
+<div class="post-items posts_3_col_with_img">
+  <% @posts.each do |post| %>
+    <%= link_to post.link(@category), class: 'post-item', target: (post.post_type == 'link' ? '_blank' : '_self') do %>
+      <div class="imgbox">
+        <% if post.image.attached? %>
+          <%= content_tag :picture do %>
+            <%= content_tag(:source, nil, srcset: rails_storage_proxy_url(post.image.variant(resize_to_fill: [600, 600], convert: :webp, format: :webp, saver: { strip: true, quality: 80 }).processed, only_path: true), type: "image/webp") %>
+            <%= image_tag post.image, class: 'img-cover', alt: (post.alt.present? ? post.alt : post.title), loading: 'lazy' %>
+          <% end %>
+        <% else %>
+          <%= image_tag '/images/tmp/default-image.jpg', class: 'img-ab-cover', alt: (post.alt.present? ? post.alt : post.title) %>
+        <% end %>
+      </div>
+      <div class="post-group">
+        <div class="post-info">
+          <div class="post-date"><%= post.published_at %></div>
+          <div class="post-category"><%= post.category_i18n(@category) %></div>
+        </div>
+        <div class="post-title title-md"><%= post.title_i18n %></div>
+        <div class="post-abstract"><%= post.abstract_i18n %></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

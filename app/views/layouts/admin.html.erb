@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="<%= @site_title %> 管理後台">
+    <title>管理後台 - <%= @site_title %></title>
+    <%= favicon_helper %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'admin.scss' %>
+    <%= vite_javascript_tag 'admin' %>
+  </head>
+
+  <% if devise_controller? %>
+    <body class="theme-default"><%= yield %></body>
+  <% else %>
+    <body class="theme-default" data-routes-name="<%= "#{controller_name}-#{action_name}" %>">
+      <div class="theme-bg"><span class="theme-deco t1"></span><span class="theme-deco t2"></span></div>
+      <%= render 'partials/env_ribbon' unless Rails.env.production? %>
+      <%= render 'partials/admin/header' %>
+
+      <section class="content container-fluid" data-step="3" data-intro="藉由儀表板了解近期系統提示內容">
+        <div class="row vh-100 frame-outer">
+          <%= render 'partials/admin/leftsidebar' %>
+           <main class="admin-main col px-md-4">
+            <!-- 頁面標題和操作按鈕 -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+              <div class="d-flex align-items-center">
+                <div class="me-2 back-arrow"><%= yield :page_back %></div>
+                <div class="mb-0">
+                  <h2 class="mb-0"><%= yield :page_title %></h2>
+                </div>
+              </div>
+              <%= yield :page_actions %>
+            </div>
+            <!-- 主要內容 -->
+            <%= yield %>
+          </main>
+        </div>
+      </section>
+
+      <%= render 'partials/admin/notice' if flash.present? %>
+      <%= yield(:modal) %>
+      <%= render 'partials/admin/intro' unless Rails.env.test? %>
+    </body>
+  <% end %>
+</html>

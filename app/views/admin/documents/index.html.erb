@@ -1,0 +1,68 @@
+<% provide :page_title, render_action_i18n(:list, Document) %>
+
+<% content_for :page_actions do %>
+  <div class="float-btns" data-action="<%= "#{action_name}" %>">
+    <%= link_to fa_icon(:plus, text: t('btn.new')), new_admin_document_url, class: 'btn btn-primary float-end' if policy(Document).new? %>
+  </div>
+<% end %>
+
+<div class="index-search-form">
+  <%= search_form_for @q, url: admin_documents_path, class: 'form-inline search-form' do |f| %>
+    <div class="row g-3">
+      <div class="col-md-2 mb-1">
+        <%= f.select :language_eq, options_for_select(Document::LANGUAGE.map { |k,v| [t(k, scope: 'simple_form.options.document.language'), k] }, @q.language_eq), {include_blank: t('search_form.language')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-2 mb-1">
+        <%= f.select :file_type_eq, options_for_select(Document::FILE_TYPE.map { |k,v| [t(k, scope: 'simple_form.options.document.file_type'), k] }, @q.file_type_eq), {include_blank: t('search_form.file_type')}, class: 'form-select' %>
+      </div>
+      <div class="col-md-5 mb-1">
+        <%= f.search_field :title_or_slug_cont, placeholder: t('search_form.keywords'), class: 'form-control' %>
+      </div>
+      <div class="col-md-3 mb-1">
+        <%= f.submit t('action.search'), class: 'btn btn-primary', data: { disable_with: t('action.searching') } %>
+        <%= link_to t('action.reset'), request.path, class: 'btn btn-light' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<table class="table index-list">
+  <thead>
+    <tr>
+      <%# 如有勾選、挪動等操作再打開 check-column %>
+      <%# <td class="check-column"></td> %>
+      <th><%= Document.human_attribute_name(:title) %></th>
+      <th><%= Document.human_attribute_name(:file_type) %></th>
+      <th><%= Document.human_attribute_name(:language) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @documents.each do |document| %>
+      <%= content_tag :tr, id: dom_id(document) do %>
+        <%# <th class="check-column"></th> %>
+        <td class="title"><span><%= document.title %></span></td>
+        <td><%= document.show_file_type %></td>
+        <td><%= document.show_language %></td>
+        <td class="index-table-action text-end">
+          <%= link_to t('btn.show'), admin_document_path(document), class: 'btn btn-primary me-2' if policy(document).show? %>
+
+          <div class="dropdown d-inline-block">
+            <a href="#" class="link-dark text-decoration-none btn dropdown-more" id="edit_<%= dom_id(document) %>" data-bs-toggle="dropdown" aria-expanded="false">
+              <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="edit_<%= dom_id(document) %>">
+              <%= link_to t('btn.edit'), edit_admin_document_path(document), class: 'dropdown-item' if policy(document).edit? %>
+              <%# <li><hr class="dropdown-divider"></li> %>
+            </ul>
+          </div>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="table-footer text-black-50">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  <%== pagy_info(@pagy) %>
+</div>
