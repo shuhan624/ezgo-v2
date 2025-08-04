@@ -107,3 +107,90 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+//Back to Top
+document.addEventListener("DOMContentLoaded", function () {
+  const backToTopBtn = document.getElementById("backToTopBtn");
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
+
+//tab
+document.querySelectorAll('.tab-item').forEach(tab => {
+  tab.addEventListener('click', () => {
+    // 切換 tab 標籤
+    document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
+    tab.classList.add('active');
+
+    // 顯示對應內容
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    document.getElementById(target).classList.add('active');
+  });
+});
+
+//country
+document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll(".hero-tabs li");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", function () {
+      // 切換 active 樣式
+      tabs.forEach(t => t.classList.remove("active"));
+      this.classList.add("active");
+
+      // 捲動至對應 section
+      const targetSelector = this.getAttribute("data-tab-target");
+      const targetSection = document.querySelector(targetSelector);
+      if (targetSection) {
+        window.scrollTo({
+          top: targetSection.offsetTop - 100, // 調整 offset
+          behavior: "smooth"
+        });
+      }
+    });
+  });
+});
+
+const swiper = new Swiper('.mySwiper', {
+  loop: true,
+  spaceBetween: 24,
+  slidesPerView: 3,
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1.2, // 手機時顯示
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 3, // 桌面三張
+    },
+  },
+});
+
+document.querySelectorAll('.news-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+
+    // 切換 tab 樣式
+    document.querySelectorAll('.news-tabs .tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    // 切換內容區
+    document.querySelectorAll('.tab-content-news').forEach(c => {
+      c.classList.toggle('active', c.dataset.tab === target);
+    });
+  });
+});

@@ -1,0 +1,106 @@
+<div class="cloud-bg">
+  <%= image_tag 'cloud-bg.png', alt: '易齊國際' %>
+</div>
+<div class="about-header">
+  <%= image_tag 'hot-air2.png', alt: '易齊國際', style: "width: 54px; margin-bottom: 20px;" %>
+  <h1>聯絡我們</h1>
+</div>
+<section class="contact-form-section">
+  <div class="container">
+    <div class="form-left">
+      <h3>歡迎選擇您偏好的聯繫方式</h3>
+      <p>
+        易齊提供免費諮詢服務，期待能為您提供專業協助！<br>
+或請不吝填妥填寫右方表單，讓我們能更深入地了解您的需求。
+      </p>
+      <div class="social-icons">
+        <a href="">
+          <%= image_tag 'email-icon.png', alt: '易齊國際' %>
+        </a>
+        <a href="">
+          <%= image_tag 'phone-icon.png', alt: '易齊國際' %>
+        </a>
+        <a href="">
+          <%= image_tag 'line-icon.png', alt: '易齊國際' %>
+        </a>
+        <a href="">
+          <%= image_tag 'facebook-icon.png', alt: '易齊國際' %>
+        </a>
+        <a href="">
+          <%= image_tag 'whatsapp-icon.png', alt: '易齊國際' %>
+        </a>
+      </div>
+      <%= image_tag 'island.png', alt: '易齊國際', style:' max-width: 440px;margin-top: 1rem;'  %>
+    </div>
+
+    <div class="form-right">
+      <form>
+        <input type="text" placeholder="姓名 *" required />
+        <input type="email" placeholder="電子信箱 *" required />
+        <input type="text" placeholder="聯絡電話" />
+        <input type="text" placeholder="LINE ID 或其他通訊軟體或社群 ID" />
+        <textarea placeholder="簡要描述需求和問題 *" required></textarea>
+        <button type="submit">提交表單</button>
+      </form>
+    </div>
+  </div>
+</section>
+<div class="section">
+  <div class="container">
+    <div class="steps-section">
+      <!-- 裝飾圖層 -->
+      <div class="deco deco-left-top">
+        <%= image_tag 'cloud-top-left.png', alt: '易齊國際', style:'width: 280px;margin-top: 20px;margin-left: -35px;' %>
+      </div>
+      <div class="deco deco-right-bottom">
+        <%= image_tag 'cloud-bottom-right.png', alt: '易齊國際', style:'width: 120px;margin-right: 40px;' %>
+      </div>
+
+      <div class="container">
+       <div class="section-title">
+      <%= image_tag 'decor-2.png', alt: '易齊國際', style: 'filter: brightness(0) invert(1); width: 17px; margin-bottom: 16px; margin-top: 20px; margin-left: -35px;' %>
+
+          <h2>免費諮詢，安心委任</h2>
+        </div>
+        <h2 class="section-title"></h2>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-content">
+              <div class="step-number">1</div>
+              <div class="step-icon"><img src="<%= image_path('icon-phone.png') %>" alt="免費諮詢" /></div>
+              <h3>免費諮詢</h3>
+              <p>了解個案狀況和需求</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-content">
+              <div class="step-number">2</div>
+              <div class="step-icon"><img src="<%= image_path('icon-plan.png') %>" alt="移民提案" /></div>
+              <h3>移民提案</h3>
+              <p>詳細說明合適的移民方案內容</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-content">
+              <div class="step-number">3</div>
+              <div class="step-icon"><img src="<%= image_path('icon-sign.png') %>" alt="簽署委任" /></div>
+              <h3>簽署委任</h3>
+              <p>消除疑慮後安心簽約</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-content">
+              <div class="step-number">4</div>
+              <div class="step-icon"><img src="<%= image_path('icon-doc.png') %>" alt="開始申辦" /></div>
+              <h3>開始申辦</h3>
+              <p>易齊為您和家人提供專業服務</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

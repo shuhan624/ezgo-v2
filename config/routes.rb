@@ -9,10 +9,11 @@ Rails.application.routes.draw do
       draw(:old_path_redirects)
 
       # 新聞
-      get '/news', to: 'articles#index', as: :articles
+      get '/news', to: 'pages#news', as: :articles
       get '/news/:article_category', to: "articles#index", as: :cate_articles
       get '/news/:article_category/:id', to: "articles#show", as: :article
       get '/preview/news/:article_category/:id', to: "articles#preview", as: :preview_article
+   
 
       # 常見問題
       # get "/faqs", to: "faqs#index", as: :faqs
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
       get '/file/:id', to: "documents#show", as: :document
 
       # 靜態頁面
-      %w(about privacy terms thanks global_immigration international_schools).each do |action|
+      %w(about privacy terms thanks global_immigration international_schools country countryIntroduction newsDetail schoolsDetail contactUs thanks).each do |action|
         get action.dasherize, to: "pages##{action}", param: :slug
       end
 

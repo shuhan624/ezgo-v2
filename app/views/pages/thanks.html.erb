@@ -1,9 +1,8 @@
-<div class="wrap">
+<section class="form-success">
   <div class="container">
-    <%= content_tag(:h1, @page.title_i18n, class: 'title-lg') %>
-    <%= content_tag(:h2, @page.title_en, class: 'title-sm') %>
-    <div class="custom-editor">
-      <%= @page.content_i18n&.html_safe %>
-    </div>
+ <%= image_tag 'ballon.png', alt: 'icon', style: 'width: 80px;' %>
+    <h1>表單已成功送出</h1>
+    <p class="message">專業移民顧問將盡快與您聯繫<br>感謝您的耐心等候</p>
+    <a href="/" class="btn-back-btn">回首頁</a>
   </div>
-</div>
+</section>
