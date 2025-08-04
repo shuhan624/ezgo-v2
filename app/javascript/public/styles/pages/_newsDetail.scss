@@ -1,0 +1,243 @@
+body[data-routes-name="pages-newsDetail"] {
+  background: #F9FBFB;
+}
+
+.color-bg-wrap{
+  position: absolute;
+}
+.color-bg{
+  z-index: -1;
+  top: -70px;
+  position: absolute;
+  height: 378px;
+  width: 100vw;
+  background: #E5F0F4;
+}
+.news-detail {
+  padding: 4rem 0;
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .news-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 0;
+
+  .news-title-group {
+    max-width: 80%;
+  }
+
+  .breadcrumb {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #358A8C;
+    margin-bottom: 0.5rem;
+
+    a {
+      color: #7aa5a8;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .arrow {
+      margin: 0 0.8rem;
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 6px solid #6ec2c2;
+    }
+  }
+
+  .news-title {
+    font-size: 1.5rem;
+    color: #1F1F1F;
+  }
+
+  .news-date {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    position: relative;
+    min-width: 60px;
+    gap: .6rem;
+
+    .date-day {
+      font-size: 2.25rem;
+      font-weight: 500;
+      color: #2F8082;
+    }
+
+    .date-ym {
+      margin-right: 1rem;
+      font-size: 0.75rem;
+      color: #808284;
+      text-align: left;
+    }
+
+    .date-line {
+      width: 5px;
+      height: 40px;
+      background-color: #7CCACB;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+
+  .cover-image {
+    margin-bottom: 1rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+  }
+
+  .content {
+    font-size: 1rem;
+
+    p + p {
+      margin-top: 1rem;
+    }
+  }
+
+
+  .table-container {
+    padding: 2rem 0;
+    border-radius: 8px;
+
+    table {
+      background: #fff;
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+
+      thead {
+        background-color: #137a75;
+        color: #fff;
+
+        th {
+          padding: .6rem;
+          text-align: left;
+          font-weight: 500;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #E7E7E7;
+
+          &.highlight td{
+          background-color: #F0F5F5; 
+          font-weight: 500;
+        }
+
+          td {
+            border: 1px solid #E7E7E7; 
+            padding: .6rem;
+            vertical-align: top;
+            font-size: 1rem;
+            line-height: 1.6;
+
+            &:first-child {
+              width: 50%;
+            }
+           
+          }
+
+          &:last-child td {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+    
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 2rem 0;
+
+      .tag {
+        border: 1px solid #358A8C;
+        color: #358A8C;
+        padding: 0.3rem 0.75rem;
+        font-size: 0.85rem;
+      }
+    }
+
+ .post-nav {
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(to right, #ECF3F3, rgba(236, 243, 243, 0), #ECF3F3);
+  border-radius: 999px;
+  padding: 2rem;
+  gap: 1rem;
+
+  .post-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 50%;
+
+    &.next {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .arrow {
+      font-size: 1.25rem;
+      color: #C1905B;
+    }
+
+    .text-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .label {
+        font-size: 0.875rem; 
+        color: #007A7A;
+      }
+
+      .title {
+        font-size: 0.9375rem; 
+        color: #444;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+
+
+  }
+
+}
+@media (max-width: 768px) {
+  .post-nav {
+    flex-direction: column;
+    padding: 2rem;
+
+    .post-nav-item {
+      width: 100%;
+    }
+  }
+}
+
+.more-news{
+  background: linear-gradient(to bottom, #E7F1F5, #F9FBFB);
+}

@@ -1,0 +1,698 @@
+body[data-routes-name="pages-country_introduction"] {
+  background: #F9FBFB;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.75rem;
+  color: #124740;
+  margin-bottom: 2rem;
+}
+
+.country-bg-top{
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  img{
+    width: 100vw;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.hero-image {
+  position: relative;
+
+  img {
+    width: 100%;
+    display: block;
+  }
+
+  .country-name {
+    position: absolute;
+    bottom: 10%;
+    left: 3%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .label-wrap {
+      margin-bottom: 1rem;
+
+      .label {
+        background-color: #fff;
+        color: #358A8C;
+        border-radius: 50px;
+        padding: 0.3rem 2rem;
+        font-size: 1.25rem;
+        display: inline-block;
+      }
+    }
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .title-main {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.5rem;
+        color: #9eeaec;
+      }
+
+      .title-sub {
+        font-size: 2rem;
+        font-weight: 400;
+        color: #fff;
+      }
+    }
+
+    .divider {
+      width: 227px; 
+      height: 2px;
+      background-image: linear-gradient(to left,transparent 0%,#fff 100%,transparent 100%);
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .hero-image .country-name {
+    top: 10%;
+    left: 5%;
+
+    .title-main {
+      font-size: 2rem;
+    }
+
+    .title-sub {
+      font-size: 1.2rem;
+    }
+
+    .label {
+      font-size: 0.875rem;
+      padding: 0.2rem 0.8rem;
+    }
+
+    .divider {
+      width: 50px;
+    }
+  }
+}
+
+.country-hero-intro {
+  border-radius: 2rem;
+  overflow: hidden;
+
+  .hero-wrapper {
+    position: relative;
+    border-radius: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    width: max-content;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+    .country-flag {
+      background: #fff;
+      border-radius: 999px;
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: #12726f;
+      font-weight: bold;
+
+      img {
+        width: 30px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+
+    .country-name {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #124740;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .hero-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      border-radius: 999px;
+      overflow: hidden;
+
+      li {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        color: #333;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &.active {
+          color: #00a6a6;
+          font-weight: 600;
+          border-bottom: 2px solid #00a6a6;
+        }
+
+        &:hover {
+          color: #00a6a6;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      width: 90%;
+      padding: 1rem;
+
+      .hero-tabs {
+        flex-direction: column;
+        border-radius: 1rem;
+      }
+    }
+  }
+}
+
+
+// Section - 申請條件
+.application-conditions {
+  padding: 4rem 1rem 12rem;
+  background: url(/vite-dev/images/icon/country-bg-5.png) no-repeat bottom;
+  background-size: contain;
+
+  .condition-block {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid #ccc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .condition-left {
+      flex: 0 0 200px;
+
+      h3 {
+        font-family: Poppins, sans-serif;
+        font-size: 2.5rem;
+        color: #0E5557;
+        margin-bottom: 0.5rem;
+      }
+
+      .sub {
+        font-family: Poppins, sans-serif;
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .tag {
+        font-size: 1.25rem;
+        color: #358A8C;
+      }
+    }
+
+    .condition-right {
+      flex: 1;
+      font-size: 1rem;
+
+      ol {
+        padding-left: 1.5rem;
+        margin: 0 0 1rem;
+
+        ol {
+          margin-top: 0.6rem;
+          padding-left: 1rem;
+        }
+
+        li {
+          margin-bottom: 0.5rem;
+          list-style: decimal;
+          font-family: monospace;
+
+            ol{
+              
+              li{
+                 list-style: lower-alpha;
+                 font-family: monospace;
+              }
+            }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .condition-block {
+      flex-direction: column;
+
+      .condition-left {
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        .sub,
+        .tag {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+.eb5-left, .eb5-right {
+  box-sizing: border-box;
+}
+.eb5-info-section {
+  display: flex;
+  justify-content: center;
+
+  .eb5-left {
+        position: relative;
+    width: 55%;
+    background-color: #e8f4f5;
+    padding: 4rem 6rem;
+    color: #124740;
+
+    .title-group {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      img{
+        width: 64px;
+        height: 64px;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: #0E5557;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+        
+      }
+
+      .main-title {
+        font-size: 2.5rem;
+        color: #1F1F1F;
+      }
+    }
+
+    .reason-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        gap: 1rem;
+
+        .reason-number {
+          font-family: 'Pragati Narrow', sans-serif;
+          font-weight: bold;
+          width: 45px;
+          height: 45px;
+          border: 1px solid #68BCBE;
+          color: #358A8C;
+          font-size: 1.5rem;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .reason-content {
+          h3 {
+            font-size: 1.5rem;
+            color: #1F1F1F;
+            margin: 0 0 0.25rem;
+          }
+
+          p {
+            font-size: 1rem;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .eb5-right {
+      width: 45%;
+      background: url(/vite-dev/images/icon/country-intro-bg.png) no-repeat center center;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+    .info-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 400px;
+      padding: 4rem 0 0;
+      color: #fff;
+
+      h3 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .info-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+
+       li a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fffffff2;
+        border-radius: 10px;
+        padding: 1.8rem 1.5rem;
+        color: #1f1f1f;
+        text-decoration: none;
+        box-shadow: 0 2px 8px #0000001a;
+      }
+
+      .circle-button {
+        width: 35px;
+        height: 35px;
+        background-color: #C3996B; 
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .circle-button img {
+        width: 13px;
+        height: 13px;
+      }
+
+      .info-item {
+        font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .info-item img {
+        width: 51px;
+        flex-shrink: 0;
+      }
+            }
+          }
+        }
+      }
+
+
+
+
+// Section - 其他國家移民方案
+.other-countries-im {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.slider-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.slider-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.method-card {
+  flex: 0 0 300px;
+  background: #e7f4f7;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  cursor: grab;
+}
+.method-card {
+  flex: 0 0 90%; // 手機
+
+  @media (min-width: 768px) {
+    flex: 0 0 300px;
+  }
+}
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.method-card {
+  flex: 0 0 300px;
+  background: #e7f4f7;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  cursor: grab;
+}
+
+
+.swiper-wrap {
+  overflow: hidden;
+  position: relative;
+
+  .swiper {
+    position: relative;
+    padding: 0rem 3rem;
+
+    .swiper-wrapper {
+      align-items: stretch;
+    }
+
+    .swiper-slide {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+        
+    .method-card {
+      display: flex;
+      background: #E7F4F7;
+      border-radius: 10px;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease;
+      gap: 0.9rem;
+
+      &:hover {
+        transform: translateY(-4px);
+      }
+
+    }
+
+    .method-number {
+      flex-shrink: 0;
+      font-family: 'Pragati Narrow', sans-serif;
+      background: #4FA1A4;
+      color: #F9FBFB;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .method-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .method-title {
+      font-size: 1.5rem;
+      color: #1F1F1F;
+      margin: 0;
+    }
+
+    .method-description {
+      font-size: 1rem;
+    }
+
+    .method-arrow {
+      position: absolute;
+      right: 1.5rem;
+      bottom: -1.1rem;
+      background: #C3996B;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    
+   
+    .swiper-slide {
+      padding: 1rem 0 1.2rem 0;
+      flex-direction: row;
+    }
+   
+  }
+   .swiper-button-prev,
+    .swiper-button-next {
+      position: absolute;
+      top: 60%;
+      transform: translateY(-50%);
+      display: block;
+
+      img {
+        width: 29px;
+      }
+    }
+
+    .swiper-button-prev {
+      left: 4px;
+    }
+
+    .swiper-button-next {
+      right: 4px;
+    }
+     .swiper-button-prev:after, .swiper-button-next:after{
+      display: none;
+    }
+
+}
+.other-countries-wrap {
+  position: relative;
+  background-image: url(/vite-dev/images/icon/star-bg.png);
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 239px;
+}
+
+.other-countries {
+    margin-top: 6rem;
+
+    .info-group {
+
+      .info-cards {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+
+        .info-card {
+          width: 100%;
+          max-width: 374px;
+          text-align: left;
+
+          img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+          }
+
+          p {
+            font-size: 1rem;
+            margin-top: 0.75rem;
+          }
+        }
+      }
+  }
+}
+
+// 避免跳動時 sticky header 被蓋住，調整 margin-top
+.application-conditions,
+.program-benefits-other-info,
+.other-pathways {
+  scroll-margin-top: 100px;
+}
+
+// 手機版 tab 固定在底部（可選）
+@media (max-width: 768px) {
+  .country-hero .hero-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    li {
+      flex: 0 0 auto;
+      padding: 0.5rem 1rem;
+    }
+  }
+}

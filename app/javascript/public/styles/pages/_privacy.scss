@@ -1,0 +1,57 @@
+body[data-routes-name="pages-privacy"] {
+  background: linear-gradient(to bottom, #E7F1F5, #F9FBFB);
+  .about-header h1{
+     color: #1F1F1F;
+  }
+}
+.privacy-policy {
+  ol, ul, li{
+    list-style: unset;
+  }
+  .container {
+    margin: 3rem auto;
+  }
+
+  .intro {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .policy-section {
+    margin-bottom: 1.8rem;
+
+    h2 {
+      font-size: 1.25rem;
+      color: #358A8C;
+      margin-bottom: 0.5rem;
+
+    }
+
+    p {
+      font-size: 1rem;
+      text-align: justify;
+      margin-bottom: 1rem;
+    }
+
+    ol {
+      padding-left: 1.5rem;
+      list-style-type: decimal;
+
+      li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      list-style-type: disc;
+
+      li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

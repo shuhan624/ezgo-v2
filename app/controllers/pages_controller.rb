@@ -21,6 +21,7 @@ class PagesController < PublicController
     set_meta_info
     check_lang_display(@page)
   end
+  
 
   def robots
     openness = ('admin'.in?(request.subdomains) || %w(nier2b.com cw1.dev).include?(request.domain)) ? 'block' : 'public'

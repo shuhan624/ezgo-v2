@@ -1,0 +1,329 @@
+.cloud-bg{
+    position: relative;
+  img{
+    position: absolute;
+    top: -5vw;
+    width: 100vw;
+    max-width: 100%;
+    height: auto;
+    z-index: -1;
+  }
+}
+.about-header {
+  text-align: center;
+  padding: 40px 20px 40px;
+
+  h1 {
+    font-size: 3.375rem;
+    color: #0E5557;
+  }
+}
+
+.about-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 40px;
+
+  .tab-item {
+    text-align: center;
+    color: #1F7274;
+    cursor: pointer;
+    padding: 30px 20px 5px;
+    position: relative;
+
+    .tab-icon {
+      width: 16px;
+      height: 16px;
+      margin: 0 auto;
+      background-image: url('/vite-dev/images/decor-gold.png'); 
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    p {
+      font-size: 1.25rem;
+    }
+
+    &.active {
+      background-color: #F9FBFB;
+      border-radius: 200px 200px 0 0;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 47px;
+        width: 1px;
+        background-color: #68BCBE;
+      }
+    }
+  }
+}
+
+.tab-content {
+    background: #f9fbfb;
+    text-align: center;
+
+  .tab-panel {
+    display: none;
+    font-size: 1.125rem;
+    color: #333;
+
+    &.active {
+      display: block;
+    }
+  }
+}
+//tab1 content
+.about-intro {
+  position: relative;
+  background: url('/vite-dev/images/about-company-bg.png') no-repeat center;
+  background-size: cover;
+  padding: 12rem 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1rem;
+    background-position: top center;
+  }
+
+  &__content {
+    max-width: 800px;
+    padding: 2rem;
+    border-radius: 16px;
+
+    h2 {
+      font-size: 2rem;
+      color: #1F1F1F;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1.125rem;
+      line-height: 2;
+      color: #808284;
+    }
+  }
+}
+
+
+.features-video {
+  background-color: #edfafa;
+  border-radius: 1rem;
+  padding: 5rem 2rem 4rem;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  margin-top:9rem;
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    top: -2rem; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3.375rem;
+    color: #124740;
+    margin: 0; 
+    }
+
+  .video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  }
+  .video-item {
+    flex: 1 1 calc(33.333% - 2rem);
+    max-width: calc(33.333% - 2rem);
+    position: relative;
+
+    .video-thumb {
+      width: 100%;
+      padding-top: 100%; // 1:1 aspect ratio
+      background-size: cover;
+      background-position: center;
+      border-radius: 0.5rem;
+      position: relative;
+    }
+
+    .play-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: url('/vite-dev/images/about-company-bg.png') no-repeat center;
+      background-size: 50%;
+
+      img{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 15px; 
+        height: auto;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+//second page2
+
+.why-choose-us {
+  padding: 4rem 1rem;
+  background-color: #fdfdfd;
+
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: #1F1F1F;
+  }
+
+  .features-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 0 5rem;
+
+  .feature-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+
+    .feature-image, .feature-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .feature-image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .feature-text {
+      h3 {
+      font-size: 2rem;
+      color: #358A8C;
+      margin-bottom: 0.6rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-block {
+      flex-direction: column;
+      text-align: center;
+
+      .feature-image {
+        order: -1;
+      }
+
+      .feature-text {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
+
+}
+//tab3
+.team{
+    padding: 4rem 1rem;
+
+    p{
+      color: #808284;
+      font-size: 1.125rem;
+    }
+}
+.person-block {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 4rem 0rem 2rem 0rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .person-info {
+    background: #E7F4F7;
+    padding: 2rem 14rem 2rem 3rem;
+    border-radius: 10px;
+    flex: 1;
+    z-index: 1;
+    max-width: 700px;
+    text-align: left;
+
+    &.reverse {
+      padding: 2rem 3rem 2rem 14rem;
+    }
+    
+    .title-wrap {
+      margin-left: -100px;
+      transform: translate(100px, -62px);
+    }
+
+    h2 {
+      font-size: 3.375rem;
+      color: #0E5557;
+      margin-bottom: 0.5rem;
+      font-family: Poppins, sans-serif;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      color: #535353;
+      margin-bottom:0;
+    }
+
+    p {
+      padding-top: 0;
+      font-size: 1.125rem;
+      color: #808284;
+      line-height: 1.8;
+    }
+  }
+
+  .person-photo {
+    flex-shrink: 0;
+    margin-left: -100px;
+    z-index: 2;
+    transform: translate(0, 40px); 
+
+    &.reverse{
+      transform: translate(160px, 40px);
+    }
+
+    img {
+      width: 360px;
+      height: auto;
+    }
+  }
+
+  // 響應式：改為上下排列
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .person-photo {
+      margin-left: 0;
+      margin-top: 1.5rem;
+      align-self: center;
+    }
+  }
+}
+

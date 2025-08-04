@@ -1,0 +1,106 @@
+.cloud-bg{
+    position: relative;
+  img{
+    position: absolute;
+    top: -5vw;
+    width: 100vw;
+    max-width: 100%;
+    height: auto;
+  }
+}
+.news-section{
+  padding-bottom: 200px;
+    background-image: url(/vite-dev/images/section-5-bg.png);
+    background-repeat: no-repeat, no-repeat;
+    background-size: contain;
+    position: relative;
+    background-position: center bottom, center center;
+}
+
+.news-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1rem;
+}
+
+.news-tabs .tab {
+  padding: 8px 20px;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  color: #444;
+}
+
+.news-tabs .tab.active {
+  background: #2F8082;
+  color: white;
+}
+
+.tab-content-news {
+  display: none;
+}
+
+.tab-content-news.active {
+  display: block;
+}
+.pagination-container {
+  position: relative;
+  width:367px;
+  margin: 3rem auto;
+  background: #ECF3F3;
+  border-radius: 40px;
+  padding: 12px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  .page-arrow {
+    position: absolute;
+    top: 48%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #C3996B;
+    cursor: pointer;
+
+    img{
+      width: 14px;
+    }
+
+    &.prev {
+      left: 16px;
+    }
+
+    &.next {
+      right: 16px;
+    }
+  }
+
+  .page-list {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .page-number {
+      cursor: pointer;
+      color: #2F8082;
+      font-size: 1rem;
+
+      &.active {
+        color: #2F8082;
+      }
+
+      &:hover {
+        color: #C3996B;
+      }
+    }
+
+    .dots {
+      color: #2F8082;
+      pointer-events: none;
+    }
+  }
+}
